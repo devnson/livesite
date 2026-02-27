@@ -1,65 +1,71 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Layout: Studio → Creative Lead → Ops → Spine → Team
- * Animation: blocks flow left→right, then up/down the spine, then branch to each role.
+ * Desktop: Studio → Creative → Ops → spine → stacked team (right)
+ * Mobile: Center column (Studio → Creative → Ops) → 2x2 grid team (under Ops)
+ * Animation: blocks flow along trunk, then spine, then branch to each role.
+ *
+ * Updates per your feedback:
+ * - Studio card: logo-only
+ * - Avatar tuning per member (size + position)
+ *
+ * Blur fixes:
+ * - foreignObject x/y rounded to avoid half-pixel rendering
+ * - background images: translateZ(0) + willChange
+ * - optional: imageRendering / smoothing hints
+ *
+ * IMPORTANT:
+ * If you zoom to 200%+ and your source PNG is small, it WILL blur.
+ * Export illustrations at 512px or 1024px square for crisp results.
  */
 
-const teamMembers = [
-  { name: "Design Lead", role: "Visual Systems", initials: "DL" },
-  { name: "Storyboard", role: "Story + Structure", initials: "SB" },
-  { name: "Motion Lead", role: "Animation", initials: "ML" },
-  { name: "Sound Lead", role: "Sound + Polish", initials: "SL" },
+type Member = {
+  name: string;
+  role: string;
+  initials?: string;
+  photo?: string; // /public/illustrations/*.png
+};
+
+const studio: Member = { name: "Tanosei Studio", role: "", initials: "" };
+const creative: Member = {
+  name: "Creative Lead",
+  role: "",
+  initials: "S",
+  photo: "/illustrations/sushan.png",
+};
+const ops: Member = { name: "Ops", role: "", initials: "OP" };
+
+const teamMembers: Member[] = [
+  { name: "Design Lead", role: "", initials: "DL", photo: "/illustrations/sakshyam.png" },
+  { name: "Storyboard", role: "", initials: "SB", photo: "/illustrations/sunil.png" },
+  { name: "Motion Lead", role: "", initials: "ML", photo: "/illustrations/avisek.png" },
+  { name: "Motion Designer", role: "", initials: "MD", photo: "/illustrations/rohil.png" },
 ];
 
-const studio = { name: "Tanosei", role: "Studio", initials: "" };
-const creative = { name: "Creative Lead", role: "Direction", initials: "S" };
-const ops = { name: "Ops", role: "Delivery", initials: "OP" };
+// ---- Avatar tuning (per member) ----
+const avatarTuning: Record<
+  string,
+  {
+    size?: number; // percent; 200 = zoomed in
+    pos?: string; // background-position, e.g. "50% 60%"
+  }
+> = {
+  "Creative Lead": { size: 200, pos: "60% 30%" },
+  "Design Lead": { size: 180, pos: "60% 22%" },
+  "Storyboard": { size: 110, pos: "60% 10%" },
+  "Motion Lead": { size: 230, pos: "50% 15%" },
+  "Motion Designer": { size: 140, pos: "15% 2%" },
+};
 
 // Card sizing
 const CW = 130;
 const CH = 130;
-
-// Spacing
-const VGAP = 22;
-const HGAP = 90;
-
-// Right-side team stack height
-const TEAM_TOTAL_H = teamMembers.length * CH + (teamMembers.length - 1) * VGAP;
-const VCENTER = TEAM_TOTAL_H / 2;
-
-// Columns
-const COL_STUDIO = 0;
-const COL_CREATIVE = COL_STUDIO + CW + HGAP;
-const COL_OPS = COL_CREATIVE + CW + HGAP;
-const COL_TEAM = COL_OPS + CW + HGAP;
-
-// Spine X (between Ops and Team)
-const spineX = COL_OPS + CW + HGAP / 2;
-
-// Y positions
-const STUDIO_Y = VCENTER - CH / 2;
-const CREATIVE_Y = VCENTER - CH / 2;
-const OPS_Y = VCENTER - CH / 2;
-
-const memberY = (i: number) => i * (CH + VGAP);
-
-const studioMY = STUDIO_Y + CH / 2;
-const creativeMY = CREATIVE_Y + CH / 2;
-const opsMY = OPS_Y + CH / 2;
-
-const topMY = memberY(0) + CH / 2;
-const botMY = memberY(teamMembers.length - 1) + CH / 2;
-
-// Canvas size
-const W = COL_TEAM + CW + 30;
-const H = TEAM_TOTAL_H + 10;
 
 // ────────────────────────── Segment math ──────────────────────────
 type Seg = { x1: number; y1: number; x2: number; y2: number; len: number };
@@ -90,45 +96,9 @@ function posAt(segs: Seg[], total: number, d: number) {
   return { x: l.x2, y: l.y2 };
 }
 
-// ────────────────────────── Paths ──────────────────────────
-
-// Trunk path: Studio → Creative → Ops → Spine junction
-const TRUNK_PTS: [number, number][] = [
-  [COL_STUDIO + CW, studioMY],
-  [COL_CREATIVE, creativeMY],
-  [COL_CREATIVE + CW, creativeMY],
-  [COL_OPS, opsMY],
-  [COL_OPS + CW, opsMY],
-  [spineX, opsMY],
-];
-const TRUNK = buildSegs(TRUNK_PTS);
-
-// Spine paths: from junction, split UP and DOWN
-const SPINE_UP = buildSegs([
-  [spineX, opsMY],
-  [spineX, topMY],
-]);
-const SPINE_DOWN = buildSegs([
-  [spineX, opsMY],
-  [spineX, botMY],
-]);
-
-// Branch path for each role (from spine to card center)
-function buildBranch(mi: number): [number, number][] {
-  const y = memberY(mi) + CH / 2;
-  return [
-    [spineX, y],
-    [COL_TEAM, y],
-    [COL_TEAM + CW / 2, y],
-  ];
-}
-const BRANCHES = teamMembers.map((_, i) => buildSegs(buildBranch(i)));
-
 // ────────────────────────── Animation constants ──────────────────────────
 const SPEED = 150; // px/sec
 const SPAWN_INTERVAL = 0.38;
-
-// block sizes / fade distances
 const FADE_IN = 22;
 const FADE_OUT = 28;
 
@@ -137,23 +107,251 @@ let _uid = 0;
 const uid = () => ++_uid;
 
 type TrunkBlock = { id: number; dist: number; spawnedSpine: boolean };
-type SpineBlock = {
-  id: number;
-  dir: "up" | "down";
-  dist: number;
-  emitted: boolean[]; // per lane
-};
+type SpineBlock = { id: number; dist: number; emitted: boolean[] };
 type BranchBlock = { id: number; lane: number; dist: number };
+
+type LayoutDesktop = {
+  mode: "desktop";
+  W: number;
+  H: number;
+
+  COL_STUDIO: number;
+  COL_CREATIVE: number;
+  COL_OPS: number;
+  COL_TEAM: number;
+  spineX: number;
+
+  STUDIO_Y: number;
+  CREATIVE_Y: number;
+  OPS_Y: number;
+  memberY: (i: number) => number;
+
+  studioMY: number;
+  creativeMY: number;
+  opsMY: number;
+  topMY: number;
+  botMY: number;
+
+  TRUNK: ReturnType<typeof buildSegs>;
+  SPINE_UP: ReturnType<typeof buildSegs>;
+  SPINE_DOWN: ReturnType<typeof buildSegs>;
+  BRANCHES: ReturnType<typeof buildSegs>[];
+};
+
+type LayoutMobile = {
+  mode: "mobile";
+  W: number;
+  H: number;
+
+  centerX: number;
+
+  STUDIO_Y: number;
+  CREATIVE_Y: number;
+  OPS_Y: number;
+
+  studioMY: number;
+  creativeMY: number;
+  opsMY: number;
+
+  gridLeftX: number;
+  gridRightX: number;
+  gridRow1Y: number;
+  gridRow2Y: number;
+  lanes: { x: number; y: number }[];
+
+  spineX: number;
+  spineBotY: number;
+
+  TRUNK: ReturnType<typeof buildSegs>;
+  SPINE_DOWN: ReturnType<typeof buildSegs>;
+  BRANCHES: ReturnType<typeof buildSegs>[];
+};
+
+type Layout = LayoutDesktop | LayoutMobile;
 
 export default function Team() {
   const headerRef = useRef<HTMLDivElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [hov, setHov] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 860px)");
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener?.("change", apply);
+    return () => mq.removeEventListener?.("change", apply);
+  }, []);
+
+  const layout: Layout = useMemo(() => {
+    if (!isMobile) {
+      const VGAP = 22;
+      const HGAP = 90;
+      const TOP_PAD = 10;
+
+      const TEAM_TOTAL_H = teamMembers.length * CH + (teamMembers.length - 1) * VGAP;
+      const H = TEAM_TOTAL_H + TOP_PAD * 2;
+      const VCENTER = H / 2;
+
+      const COL_STUDIO = 0;
+      const COL_CREATIVE = COL_STUDIO + CW + HGAP;
+      const COL_OPS = COL_CREATIVE + CW + HGAP;
+      const COL_TEAM = COL_OPS + CW + HGAP;
+
+      const spineX = COL_OPS + CW + HGAP / 2;
+
+      const STUDIO_Y = VCENTER - CH / 2;
+      const CREATIVE_Y = VCENTER - CH / 2;
+      const OPS_Y = VCENTER - CH / 2;
+
+      const memberY = (i: number) => TOP_PAD + i * (CH + VGAP);
+
+      const studioMY = STUDIO_Y + CH / 2;
+      const creativeMY = CREATIVE_Y + CH / 2;
+      const opsMY = OPS_Y + CH / 2;
+
+      const topMY = memberY(0) + CH / 2;
+      const botMY = memberY(teamMembers.length - 1) + CH / 2;
+
+      const W = COL_TEAM + CW + 30;
+
+      const TRUNK = buildSegs([
+        [COL_STUDIO + CW, studioMY],
+        [COL_CREATIVE, creativeMY],
+        [COL_CREATIVE + CW, creativeMY],
+        [COL_OPS, opsMY],
+        [COL_OPS + CW, opsMY],
+        [spineX, opsMY],
+      ]);
+
+      const SPINE_UP = buildSegs([
+        [spineX, opsMY],
+        [spineX, topMY],
+      ]);
+
+      const SPINE_DOWN = buildSegs([
+        [spineX, opsMY],
+        [spineX, botMY],
+      ]);
+
+      const BRANCHES = teamMembers.map((_, i) => {
+        const y = memberY(i) + CH / 2;
+        return buildSegs([
+          [spineX, y],
+          [COL_TEAM, y],
+          [COL_TEAM + CW / 2, y],
+        ]);
+      });
+
+      return {
+        mode: "desktop",
+        W,
+        H,
+        COL_STUDIO,
+        COL_CREATIVE,
+        COL_OPS,
+        COL_TEAM,
+        spineX,
+        STUDIO_Y,
+        CREATIVE_Y,
+        OPS_Y,
+        memberY,
+        studioMY,
+        creativeMY,
+        opsMY,
+        topMY,
+        botMY,
+        TRUNK,
+        SPINE_UP,
+        SPINE_DOWN,
+        BRANCHES,
+      };
+    }
+
+    // MOBILE
+    const VSTEP = 96;
+    const TOP_PAD = 10;
+
+    const STUDIO_Y = TOP_PAD;
+    const CREATIVE_Y = STUDIO_Y + CH + VSTEP;
+    const OPS_Y = CREATIVE_Y + CH + VSTEP;
+
+    const studioMY = STUDIO_Y + CH / 2;
+    const creativeMY = CREATIVE_Y + CH / 2;
+    const opsMY = OPS_Y + CH / 2;
+
+    const GRID_GAP_X = 22;
+    const GRID_GAP_Y = 22;
+
+    const gridTopY = OPS_Y + CH + 84;
+    const gridRow1Y = gridTopY;
+    const gridRow2Y = gridTopY + CH + GRID_GAP_Y;
+
+    const gridW = CW * 2 + GRID_GAP_X;
+
+    const W = Math.max(gridW + 40, CW + 40);
+    const centerX = W / 2;
+
+    const gridLeftX = centerX - gridW / 2;
+    const gridRightX = gridLeftX + CW + GRID_GAP_X;
+
+    const lanes = [
+      { x: gridLeftX + CW / 2, y: gridRow1Y + CH / 2 },
+      { x: gridRightX + CW / 2, y: gridRow1Y + CH / 2 },
+      { x: gridLeftX + CW / 2, y: gridRow2Y + CH / 2 },
+      { x: gridRightX + CW / 2, y: gridRow2Y + CH / 2 },
+    ];
+
+    const spineX = centerX;
+    const spineBotY = (lanes[0].y + lanes[2].y) / 2;
+
+    const H = gridRow2Y + CH + 18;
+
+    const TRUNK = buildSegs([
+      [spineX, studioMY],
+      [spineX, creativeMY],
+      [spineX, opsMY],
+    ]);
+
+    const SPINE_DOWN = buildSegs([
+      [spineX, opsMY],
+      [spineX, spineBotY],
+    ]);
+
+    const BRANCHES = lanes.map((p) =>
+      buildSegs([
+        [spineX, p.y],
+        [p.x, p.y],
+      ])
+    );
+
+    return {
+      mode: "mobile",
+      W,
+      H,
+      centerX,
+      STUDIO_Y,
+      CREATIVE_Y,
+      OPS_Y,
+      studioMY,
+      creativeMY,
+      opsMY,
+      gridLeftX,
+      gridRightX,
+      gridRow1Y,
+      gridRow2Y,
+      lanes,
+      spineX,
+      spineBotY,
+      TRUNK,
+      SPINE_DOWN,
+      BRANCHES,
+    };
+  }, [isMobile]);
 
   const trunkBlocks = useRef<TrunkBlock[]>([{ id: uid(), dist: 0, spawnedSpine: false }]);
   const spineBlocks = useRef<SpineBlock[]>([]);
   const branchBlocks = useRef<BranchBlock[]>([]);
-
   const lastTsRef = useRef<number | null>(null);
   const spawnTimerRef = useRef(0);
   const [, redraw] = useState(0);
@@ -162,14 +360,34 @@ export default function Team() {
     gsap.fromTo(
       headerRef.current,
       { opacity: 0, y: 24 },
-      { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: headerRef.current, start: "top 88%" } }
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: { trigger: headerRef.current, start: "top 88%" },
+      }
     );
     gsap.fromTo(
       wrapRef.current,
       { opacity: 0, y: 18 },
-      { opacity: 1, y: 0, duration: 0.75, ease: "power3.out", scrollTrigger: { trigger: wrapRef.current, start: "top 85%" } }
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.75,
+        ease: "power3.out",
+        scrollTrigger: { trigger: wrapRef.current, start: "top 85%" },
+      }
     );
   }, []);
+
+  useEffect(() => {
+    trunkBlocks.current = [{ id: uid(), dist: 0, spawnedSpine: false }];
+    spineBlocks.current = [];
+    branchBlocks.current = [];
+    lastTsRef.current = null;
+    spawnTimerRef.current = 0;
+  }, [layout.mode]);
 
   useEffect(() => {
     let raf: number;
@@ -181,64 +399,78 @@ export default function Team() {
 
       const move = SPEED * dt;
 
-      // Spawn trunk blocks steadily
       spawnTimerRef.current += dt;
       while (spawnTimerRef.current >= SPAWN_INTERVAL) {
         spawnTimerRef.current -= SPAWN_INTERVAL;
         trunkBlocks.current.push({ id: uid(), dist: 0, spawnedSpine: false });
       }
 
-      // Advance trunk blocks; when reaching junction, spawn spine flow up & down
       trunkBlocks.current = trunkBlocks.current.reduce<TrunkBlock[]>((acc, b) => {
         const next = b.dist + move;
+        const trunkTotal = layout.TRUNK.total;
 
-        if (!b.spawnedSpine && next >= TRUNK.total) {
+        if (!b.spawnedSpine && next >= trunkTotal) {
           const emitted = new Array(teamMembers.length).fill(false);
-          spineBlocks.current.push({ id: uid(), dir: "up", dist: 0, emitted: [...emitted] });
-          spineBlocks.current.push({ id: uid(), dir: "down", dist: 0, emitted: [...emitted] });
-        }
-
-        // keep trunk until it exits the junction a bit
-        if (next <= TRUNK.total + 30) {
-          acc.push({ ...b, dist: next, spawnedSpine: b.spawnedSpine || next >= TRUNK.total });
-        }
-        return acc;
-      }, []);
-
-      // Advance spine blocks + emit branch blocks as they pass each lane y
-      spineBlocks.current = spineBlocks.current.reduce<SpineBlock[]>((acc, s) => {
-        const path = s.dir === "up" ? SPINE_UP : SPINE_DOWN;
-        const next = s.dist + move;
-
-        // current pos along spine
-        const p = posAt(path.segs, path.total, next);
-
-        // emit when close to a lane y (and in correct direction region)
-        for (let i = 0; i < teamMembers.length; i++) {
-          if (s.emitted[i]) continue;
-
-          const laneY = memberY(i) + CH / 2;
-
-          // Only emit if the lane lies on this direction side
-          const isLaneAbove = laneY <= opsMY;
-          const laneMatchesDir = s.dir === "up" ? isLaneAbove : !isLaneAbove;
-          if (!laneMatchesDir) continue;
-
-          // emit when spine block is within threshold of that laneY
-          if (Math.abs(p.y - laneY) < 10) {
-            s.emitted[i] = true;
-            branchBlocks.current.push({ id: uid(), lane: i, dist: 0 });
+          if (layout.mode === "desktop") {
+            spineBlocks.current.push({ id: uid(), dist: 0, emitted: [...emitted] });
+            spineBlocks.current.push({ id: uid(), dist: 0, emitted: [...emitted] });
+          } else {
+            spineBlocks.current.push({ id: uid(), dist: 0, emitted: [...emitted] });
           }
         }
 
-        // keep spine block until end
-        if (next <= path.total + 30) acc.push({ ...s, dist: next });
+        if (next <= trunkTotal + 30) acc.push({ ...b, dist: next, spawnedSpine: b.spawnedSpine || next >= trunkTotal });
         return acc;
       }, []);
 
-      // Advance branch blocks
+      if (layout.mode === "desktop") {
+        spineBlocks.current = spineBlocks.current.reduce<SpineBlock[]>((acc, s, idx) => {
+          const isUp = idx % 2 === 0;
+          const path = isUp ? layout.SPINE_UP : layout.SPINE_DOWN;
+          const next = s.dist + move;
+
+          const p = posAt(path.segs, path.total, next);
+
+          for (let i = 0; i < teamMembers.length; i++) {
+            if (s.emitted[i]) continue;
+
+            const laneY = layout.memberY(i) + CH / 2;
+            const isLaneAbove = laneY <= layout.opsMY;
+            const laneMatchesDir = isUp ? isLaneAbove : !isLaneAbove;
+            if (!laneMatchesDir) continue;
+
+            if (Math.abs(p.y - laneY) < 10) {
+              s.emitted[i] = true;
+              branchBlocks.current.push({ id: uid(), lane: i, dist: 0 });
+            }
+          }
+
+          if (next <= path.total + 30) acc.push({ ...s, dist: next });
+          return acc;
+        }, []);
+      } else {
+        spineBlocks.current = spineBlocks.current.reduce<SpineBlock[]>((acc, s) => {
+          const path = layout.SPINE_DOWN;
+          const next = s.dist + move;
+
+          const p = posAt(path.segs, path.total, next);
+
+          for (let i = 0; i < teamMembers.length; i++) {
+            if (s.emitted[i]) continue;
+            const laneY = layout.lanes[i].y;
+            if (Math.abs(p.y - laneY) < 10) {
+              s.emitted[i] = true;
+              branchBlocks.current.push({ id: uid(), lane: i, dist: 0 });
+            }
+          }
+
+          if (next <= path.total + 30) acc.push({ ...s, dist: next });
+          return acc;
+        }, []);
+      }
+
       branchBlocks.current = branchBlocks.current.reduce<BranchBlock[]>((acc, b) => {
-        const br = BRANCHES[b.lane];
+        const br = layout.BRANCHES[b.lane];
         const next = b.dist + move;
         if (next <= br.total + 25) acc.push({ ...b, dist: next });
         return acc;
@@ -250,9 +482,8 @@ export default function Team() {
 
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [layout]);
 
-  // ────────────────────────── Render blocks ──────────────────────────
   const renderBlock = (key: string, x: number, y: number, alpha: number) => (
     <g key={key} opacity={Math.max(0, Math.min(alpha, 1))}>
       <rect x={x - 6} y={y - 6} width={12} height={12} rx={2.5} fill="rgba(140,200,255,0.08)" />
@@ -262,45 +493,123 @@ export default function Team() {
 
   const blocks: React.ReactNode[] = [];
 
-  // trunk
   for (const b of trunkBlocks.current) {
-    const p = posAt(TRUNK.segs, TRUNK.total, b.dist);
+    const p = posAt(layout.TRUNK.segs, layout.TRUNK.total, b.dist);
     const fadeIn = Math.min(b.dist / FADE_IN, 1);
-    const fadeOut = Math.min((TRUNK.total - b.dist) / FADE_OUT, 1);
+    const fadeOut = Math.min((layout.TRUNK.total - b.dist) / FADE_OUT, 1);
     blocks.push(renderBlock(`t-${b.id}`, p.x, p.y, fadeIn * fadeOut));
   }
 
-  // spine
-  for (const s of spineBlocks.current) {
-    const path = s.dir === "up" ? SPINE_UP : SPINE_DOWN;
-    const p = posAt(path.segs, path.total, s.dist);
-    const fadeIn = Math.min(s.dist / FADE_IN, 1);
-    const fadeOut = Math.min((path.total - s.dist) / FADE_OUT, 1);
-    blocks.push(renderBlock(`s-${s.id}`, p.x, p.y, fadeIn * fadeOut));
+  if (layout.mode === "desktop") {
+    for (let idx = 0; idx < spineBlocks.current.length; idx++) {
+      const s = spineBlocks.current[idx];
+      const isUp = idx % 2 === 0;
+      const path = isUp ? layout.SPINE_UP : layout.SPINE_DOWN;
+      const p = posAt(path.segs, path.total, s.dist);
+      const fadeIn = Math.min(s.dist / FADE_IN, 1);
+      const fadeOut = Math.min((path.total - s.dist) / FADE_OUT, 1);
+      blocks.push(renderBlock(`s-${s.id}-${idx}`, p.x, p.y, fadeIn * fadeOut));
+    }
+  } else {
+    for (const s of spineBlocks.current) {
+      const path = layout.SPINE_DOWN;
+      const p = posAt(path.segs, path.total, s.dist);
+      const fadeIn = Math.min(s.dist / FADE_IN, 1);
+      const fadeOut = Math.min((path.total - s.dist) / FADE_OUT, 1);
+      blocks.push(renderBlock(`s-${s.id}`, p.x, p.y, fadeIn * fadeOut));
+    }
   }
 
-  // branches
   for (const b of branchBlocks.current) {
-    const br = BRANCHES[b.lane];
+    const br = layout.BRANCHES[b.lane];
     const p = posAt(br.segs, br.total, b.dist);
     const fadeIn = Math.min(b.dist / FADE_IN, 1);
     const fadeOut = Math.min((br.total - b.dist) / FADE_OUT, 1);
     blocks.push(renderBlock(`b-${b.id}`, p.x, p.y, fadeIn * fadeOut));
   }
 
-  // ────────────────────────── Card styles ──────────────────────────
   const cardFill = "rgb(12,12,12)";
   const strokeIdle = "rgba(255,255,255,0.10)";
   const strokeHover = "rgba(255,255,255,0.22)";
 
-  const card = (x: number, y: number, m: { name: string; role: string; initials: string }, isHover: boolean, rx = 18) => (
-    <g transform={`translate(${x}, ${y})`} onMouseEnter={() => setHov(m.name)} onMouseLeave={() => setHov(null)}>
+  const Avatar = ({ m, isHover }: { m: Member; isHover: boolean }) => {
+    const r = 22;
+    const cx = CW / 2;
+    const cy = 40;
+
+    // ROUND these to avoid SVG half-pixel blur
+    const x = Math.round(cx - r);
+    const y = Math.round(cy - r);
+
+    const tune = avatarTuning[m.name] || {};
+    const bgSize = `${tune.size ?? 165}%`;
+    const bgPos = tune.pos ?? "50% 55%";
+
+    return (
+      <>
+        <circle
+          cx={cx}
+          cy={cy}
+          r={r}
+          fill="rgba(255,255,255,0.04)"
+          stroke={isHover ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.10)"}
+          strokeWidth="1"
+        />
+
+        {m.photo ? (
+          <foreignObject x={x} y={y} width={r * 2} height={r * 2}>
+            <div
+              style={{
+                width: r * 2,
+                height: r * 2,
+                borderRadius: 999,
+                overflow: "hidden",
+                backgroundImage: `url(${m.photo})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: bgSize,
+                backgroundPosition: bgPos,
+
+                // crispness helpers
+                transform: "translateZ(0)",
+                willChange: "transform",
+                imageRendering: "auto",
+
+                boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.06)",
+              }}
+            />
+          </foreignObject>
+        ) : (
+          <text
+            x={cx}
+            y={cy + 6}
+            textAnchor="middle"
+            fontFamily="var(--font-dm)"
+            fontSize="13"
+            fontWeight="800"
+            fill="rgba(255,255,255,0.55)"
+          >
+            {m.initials || ""}
+          </text>
+        )}
+
+        {m.photo ? <circle cx={cx} cy={cy} r={r} fill="rgba(0,0,0,0.08)" /> : null}
+      </>
+    );
+  };
+
+  const card = (x: number, y: number, m: Member, isHover: boolean, rx = 18) => (
+    <g transform={`translate(${x}, ${y})`} onMouseEnter={() => setHov(m.name)} onMouseLeave={() => setHov(null)} style={{ cursor: "default" }}>
       <rect x={0} y={0} width={CW} height={CH} rx={rx} fill={cardFill} stroke={isHover ? strokeHover : strokeIdle} strokeWidth="1" />
-      <circle cx={CW / 2} cy={40} r={22} fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)" strokeWidth="1" />
-      <text x={CW / 2} y={46} textAnchor="middle" fontFamily="var(--font-dm)" fontSize="13" fontWeight="700" fill="rgba(255,255,255,0.55)">
-        {m.initials}
-      </text>
-      <text x={CW / 2} y={83} textAnchor="middle" fontFamily="var(--font-dm)" fontSize="12" fontWeight="700" fill={isHover ? "rgba(255,255,255,0.78)" : "rgba(255,255,255,0.50)"}>
+      <Avatar m={m} isHover={isHover} />
+      <text
+        x={CW / 2}
+        y={83}
+        textAnchor="middle"
+        fontFamily="var(--font-dm)"
+        fontSize="12"
+        fontWeight="800"
+        fill={isHover ? "rgba(255,255,255,0.78)" : "rgba(255,255,255,0.50)"}
+      >
         {m.name}
       </text>
       <text x={CW / 2} y={100} textAnchor="middle" fontFamily="var(--font-dm)" fontSize="9.5" fill="rgba(255,255,255,0.22)">
@@ -328,59 +637,90 @@ export default function Team() {
           </h2>
         </div>
 
-        <div ref={wrapRef} style={{ display: "flex", justifyContent: "center", overflowX: "auto", opacity: 0 }}>
-          <svg width={W} height={H} style={{ overflow: "visible", display: "block" }}>
+        <div
+          ref={wrapRef}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            overflowX: "auto",
+            opacity: 0,
+            paddingBottom: 8,
+          }}
+        >
+          <svg
+            viewBox={`0 0 ${layout.W} ${layout.H}`}
+            style={{
+              width: "min(100%, 980px)",
+              height: "auto",
+              overflow: "visible",
+              display: "block",
+            }}
+          >
             {/* WIRES */}
-            <line x1={COL_STUDIO + CW} y1={studioMY} x2={COL_CREATIVE} y2={creativeMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
-            <line x1={COL_CREATIVE + CW} y1={creativeMY} x2={COL_OPS} y2={opsMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
-            <line x1={COL_OPS + CW} y1={opsMY} x2={spineX} y2={opsMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
-            <line x1={spineX} y1={topMY} x2={spineX} y2={botMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
-            {teamMembers.map((_, i) => (
-              <line
-                key={i}
-                x1={spineX}
-                y1={memberY(i) + CH / 2}
-                x2={COL_TEAM}
-                y2={memberY(i) + CH / 2}
-                stroke="rgba(255,255,255,0.10)"
-                strokeWidth="1.5"
-                strokeDasharray="6 9"
-              />
-            ))}
+            {layout.mode === "desktop" ? (
+              <>
+                <line x1={layout.COL_STUDIO + CW} y1={layout.studioMY} x2={layout.COL_CREATIVE} y2={layout.creativeMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
+                <line x1={layout.COL_CREATIVE + CW} y1={layout.creativeMY} x2={layout.COL_OPS} y2={layout.opsMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
+                <line x1={layout.COL_OPS + CW} y1={layout.opsMY} x2={layout.spineX} y2={layout.opsMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
+                <line x1={layout.spineX} y1={layout.topMY} x2={layout.spineX} y2={layout.botMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
+                {teamMembers.map((_, i) => (
+                  <line key={i} x1={layout.spineX} y1={layout.memberY(i) + CH / 2} x2={layout.COL_TEAM} y2={layout.memberY(i) + CH / 2} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
+                ))}
+              </>
+            ) : (
+              <>
+                <line x1={layout.spineX} y1={layout.studioMY} x2={layout.spineX} y2={layout.creativeMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
+                <line x1={layout.spineX} y1={layout.creativeMY} x2={layout.spineX} y2={layout.opsMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
+                <line x1={layout.spineX} y1={layout.opsMY} x2={layout.spineX} y2={layout.spineBotY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
+                {teamMembers.map((_, i) => {
+                  const p = layout.lanes[i];
+                  return <line key={i} x1={layout.spineX} y1={p.y} x2={p.x} y2={p.y} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />;
+                })}
+              </>
+            )}
 
             {/* BLOCKS */}
             {blocks}
 
-            {/* STUDIO */}
-            <g transform={`translate(${COL_STUDIO}, ${STUDIO_Y})`}>
-              <rect x={0} y={0} width={CW} height={CH} rx={22} fill="rgb(12,12,12)" stroke="rgba(255,255,255,0.14)" strokeWidth="1" />
-              {/* minimal logo mark */}
-              <g transform="translate(26, 18) scale(0.22)">
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M71.211 258.453L71.211 163.678L71.211 87.162C71.211 74.4614 83.7004 67.488 92.7003 72.6307L152.706 107.171L152.706 265.423L130.571 269.742L130.572 276.101L152.706 271.472L162.723 269.375L274.349 246.21V335.3L152.393 334.675C101.22 334.675 71.211 290.544 71.211 258.453Z"
-                  fill="rgba(255,255,255,0.86)"
-                />
-                <path
-                  d="M213.42 193.732L161.703 223.687L161.821 163.659L165.881 161.265C167.856 163.644 169.986 165.935 172.271 168.125C184.107 179.473 198.472 186.554 213.462 189.409L213.42 193.732Z"
-                  fill="rgba(255,255,255,0.86)"
-                />
-              </g>
-            </g>
+            {/* CARDS */}
+            {layout.mode === "desktop" ? (
+              <>
+                {/* STUDIO (logo-only) */}
+                <g transform={`translate(${layout.COL_STUDIO}, ${layout.STUDIO_Y})`}>
+                  <rect x={0} y={0} width={CW} height={CH} rx={22} fill="rgb(12,12,12)" stroke="rgba(255,255,255,0.14)" strokeWidth="1" />
+                  <g transform="translate(26, 18) scale(0.22)">
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M71.211 258.453L71.211 163.678L71.211 87.162C71.211 74.4614 83.7004 67.488 92.7003 72.6307L152.706 107.171L152.706 265.423L130.571 269.742L130.572 276.101L152.706 271.472L162.723 269.375L274.349 246.21V335.3L152.393 334.675C101.22 334.675 71.211 290.544 71.211 258.453Z"
+                      fill="rgba(255,255,255,0.86)"
+                    />
+                    <path
+                      d="M213.42 193.732L161.703 223.687L161.821 163.659L165.881 161.265C167.856 163.644 169.986 165.935 172.271 168.125C184.107 179.473 198.472 186.554 213.462 189.409L213.42 193.732Z"
+                      fill="rgba(255,255,255,0.86)"
+                    />
+                  </g>
+                </g>
 
-            {/* CREATIVE */}
-            {card(COL_CREATIVE, CREATIVE_Y, creative, hov === creative.name, 22)}
+                {card(layout.COL_CREATIVE, layout.CREATIVE_Y, creative, hov === creative.name, 22)}
+                {card(layout.COL_OPS, layout.OPS_Y, ops, hov === ops.name, 22)}
+                {teamMembers.map((m, i) => card(layout.COL_TEAM, layout.memberY(i), m, hov === m.name, 18))}
+              </>
+            ) : (
+              <>
+                {card(layout.centerX - CW / 2, layout.STUDIO_Y, studio, hov === studio.name, 22)}
+                {card(layout.centerX - CW / 2, layout.CREATIVE_Y, creative, hov === creative.name, 22)}
+                {card(layout.centerX - CW / 2, layout.OPS_Y, ops, hov === ops.name, 22)}
 
-            {/* OPS */}
-            {card(COL_OPS, OPS_Y, ops, hov === ops.name, 22)}
-
-            {/* TEAM (RIGHT STACK) */}
-            {teamMembers.map((m, i) => card(COL_TEAM, memberY(i), m, hov === m.name, 18))}
+                {card(layout.gridLeftX, layout.gridRow1Y, teamMembers[0], hov === teamMembers[0].name, 18)}
+                {card(layout.gridRightX, layout.gridRow1Y, teamMembers[1], hov === teamMembers[1].name, 18)}
+                {card(layout.gridLeftX, layout.gridRow2Y, teamMembers[2], hov === teamMembers[2].name, 18)}
+                {card(layout.gridRightX, layout.gridRow2Y, teamMembers[3], hov === teamMembers[3].name, 18)}
+              </>
+            )}
           </svg>
         </div>
 
-        {/* CTA */}
         <div style={{ display: "flex", justifyContent: "center", marginTop: "64px" }}>
           <a
             href="/team"

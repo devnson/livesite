@@ -1,46 +1,96 @@
 "use client";
 
-const logos = [
-  "Ramp",
-  "SecurityPal",
-  "Aleph",
-  "Thera",
-  "Sunsama",
-  "Openmart",
-  "Niural AI",
-  "reAlpha",
-  "Eleftra",
-  "Saral",
+import Image from "next/image";
+
+type Logo = {
+  name: string;
+  src: string;
+  w: number;
+  url: string;
+};
+
+const logos: Logo[] = [
+  {
+    name: "Composio",
+    src: "/logos/white/Composio.svg",
+    w: 150,
+    url: "https://www.linkedin.com/company/composiohq/",
+  },
+  {
+    name: "DocUnlock",
+    src: "/logos/white/docunlock.svg",
+    w: 120,
+    url: "https://www.linkedin.com/company/docunlock-ai",
+  },
+  {
+    name: "Niural",
+    src: "/logos/white/niural.svg",
+    w: 160,
+    url: "https://www.linkedin.com/company/niural/",
+  },
+  {
+    name: "reAlpha",
+    src: "/logos/white/realpha.svg",
+    w: 135,
+    url: "https://www.linkedin.com/company/realpha-homes/",
+  },
+  {
+    name: "SecurityPal",
+    src: "/logos/white/SecurityPal.svg",
+    w: 185,
+    url: "https://www.linkedin.com/company/securitypalhq/",
+  },
+  {
+    name: "Thera",
+    src: "/logos/white/thera.svg",
+    w: 120,
+    url: "https://www.linkedin.com/company/getthera/",
+  },
+  {
+    name: "Aleph",
+    src: "/logos/white/aleph.svg",
+    w: 115,
+    url: "https://www.linkedin.com/company/getaleph/",
+  },
 ];
 
-export default function LogoMarquee() {
-  // Duplicate list so the animation can loop seamlessly
-  const loop = [...logos, ...logos];
+function Strip({ ariaHidden }: { ariaHidden?: boolean }) {
+  return (
+    <div className="logoStrip" aria-hidden={ariaHidden ? "true" : undefined}>
+      {logos.map((logo) => (
+        <a
+          key={logo.name}
+          href={logo.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="logoItem"
+          title={`Visit ${logo.name}`}
+        >
+          <div className="logoBox" style={{ width: `${logo.w}px` }}>
+            <Image
+              src={logo.src}
+              alt={logo.name}
+              fill
+              className="logoImg"
+              sizes="200px"
+            />
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
 
+export default function LogoMarquee() {
   return (
     <section className="logoMarquee">
-      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px" }}>
-        <div
-          style={{
-            textAlign: "center",
-            fontSize: 11,
-            letterSpacing: "0.18em",
-            color: "rgba(255,255,255,0.28)",
-            marginBottom: 24,
-            fontWeight: 600,
-          }}
-        >
-          TRUSTED BY TEAMS AT
-        </div>
+      <div className="logoContainer">
+        <div className="logoKicker">TRUSTED BY TEAMS AT</div>
 
-        <div style={{ position: "relative" }}>
-          <div className="logoTrack" aria-label="Client logos marquee">
-            {loop.map((name, i) => (
-              <div className="logoItem" key={`${name}-${i}`}>
-                <strong>{name}</strong>
-                <span className="logoDot" />
-              </div>
-            ))}
+        <div className="logoRow">
+          <div className="logoMarqueeInner">
+            <Strip />
+            <Strip ariaHidden />
           </div>
         </div>
       </div>

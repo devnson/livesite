@@ -26,13 +26,13 @@ export default function Thesis() {
       ref={ref}
       style={{
         padding: "120px 28px",
-        borderTop: "1px solid rgba(255,255,255,0.06)",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
       }}
     >
       <div style={{ maxWidth: "1160px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "start" }}>
 
-        {/* ── LEFT: THESIS STATEMENT ── START ── */}
+        {/* LEFT: THESIS STATEMENT */}
         <div>
           <h2
             className="thesis-line"
@@ -43,17 +43,19 @@ export default function Thesis() {
               letterSpacing: "-0.035em",
               lineHeight: 1.05,
               margin: "0 0 32px 0",
+              color: "#fff",
               opacity: 0,
             }}
           >
             <span style={{ fontWeight: 300 }}>Complexity is a</span>{" "}
             revenue bottleneck.
           </h2>
+          {/* was 0.45 — bumped to 0.72 */}
           <p
             className="thesis-line"
             style={{
               fontSize: "15px",
-              color: "rgba(255,255,255,0.45)",
+              color: "rgba(255,255,255,0.72)",
               lineHeight: 1.8,
               maxWidth: "400px",
               opacity: 0,
@@ -62,9 +64,8 @@ export default function Thesis() {
             When buyers can't understand your product quickly, every part of your go-to-market works harder than it should.
           </p>
         </div>
-        {/* ── LEFT ── END ── */}
 
-        {/* ── RIGHT: CONSEQUENCE LIST ── START ── */}
+        {/* RIGHT: CONSEQUENCE LIST */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
           {[
             { problem: "Demos carry too much weight.", fix: "A clear video does the first 60 seconds of every call." },
@@ -77,20 +78,28 @@ export default function Thesis() {
               className="thesis-line"
               style={{
                 padding: "24px 0",
-                borderBottom: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                borderBottom: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none",
                 opacity: 0,
               }}
             >
-              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", marginBottom: "6px", lineHeight: 1.5, textDecoration: "line-through", textDecorationColor: "rgba(255,255,255,0.12)" }}>
+              {/* was 0.35 — bumped to 0.52 so it's readable as "problem" text */}
+              <p style={{
+                fontSize: "14px",
+                color: "rgba(255,255,255,0.52)",
+                marginBottom: "6px",
+                lineHeight: 1.5,
+                textDecoration: "line-through",
+                textDecorationColor: "rgba(255,255,255,0.22)",
+              }}>
                 {item.problem}
               </p>
-              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.7)", lineHeight: 1.6, margin: 0 }}>
+              {/* was 0.7 — bumped to 0.88 */}
+              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.88)", lineHeight: 1.6, margin: 0 }}>
                 {item.fix}
               </p>
             </div>
           ))}
         </div>
-        {/* ── RIGHT ── END ── */}
 
       </div>
     </section>

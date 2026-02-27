@@ -42,19 +42,12 @@ export default function FAQ() {
     gsap.fromTo(
       headerRef.current,
       { opacity: 0, y: 32 },
-      {
-        opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
-        scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
-      }
+      { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: headerRef.current, start: "top 85%" } }
     );
-
     gsap.fromTo(
       listRef.current,
       { opacity: 0, y: 24 },
-      {
-        opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
-        scrollTrigger: { trigger: listRef.current, start: "top 85%" },
-      }
+      { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: listRef.current, start: "top 85%" } }
     );
   }, []);
 
@@ -62,9 +55,9 @@ export default function FAQ() {
     <section
       style={{
         padding: "120px 24px",
-        background: "rgba(255,255,255,0.012)",
-        borderTop: "1px solid rgba(255,255,255,0.06)",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
+        background: "#0d0d0d",
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
       }}
     >
       <div
@@ -77,49 +70,35 @@ export default function FAQ() {
           alignItems: "start",
         }}
       >
-
-        {/* ── SECTION HEADER ── START ── */}
+        {/* HEADER */}
         <div ref={headerRef} style={{ opacity: 0, position: "sticky", top: "100px" }}>
-          <p
-            style={{
-              fontSize: "11px",
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.3)",
-              marginBottom: "16px",
-              fontWeight: 500,
-            }}
-          >
+          {/* was 0.3 — bumped to 0.52 */}
+          <p style={{ fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "16px", fontWeight: 600 }}>
             FAQ
           </p>
           <h2
             style={{
-              fontFamily: "var(--font-syne)",
+              fontFamily: "var(--font-dm)",
               fontWeight: 800,
               fontSize: "clamp(28px, 4vw, 44px)",
               letterSpacing: "-0.03em",
               lineHeight: 1.1,
               margin: "0 0 20px 0",
+              color: "#fff",
             }}
           >
-            <span style={{ fontWeight: 300 }}>Common</span>{" "}
-            questions.
+            <span style={{ fontWeight: 300 }}>Common</span>{" "}questions.
           </h2>
-          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", lineHeight: 1.7 }}>
+          {/* was 0.35 — bumped to 0.60 */}
+          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.60)", lineHeight: 1.7 }}>
             Anything else? Book a call and ask directly.
           </p>
         </div>
-        {/* ── SECTION HEADER ── END ── */}
 
-        {/* ── FAQ ACCORDION ── START ── */}
+        {/* FAQ ACCORDION */}
         <div ref={listRef} style={{ opacity: 0 }}>
           {faqs.map((faq, i) => (
-            <div
-              key={i}
-              style={{
-                borderBottom: "1px solid rgba(255,255,255,0.07)",
-              }}
-            >
+            <div key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.09)" }}>
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 style={{
@@ -135,12 +114,13 @@ export default function FAQ() {
                   gap: "16px",
                 }}
               >
+                {/* was 0.7 closed / 0.95 open — now 0.84 / 0.98 */}
                 <span
                   style={{
-                    fontFamily: "var(--font-syne)",
+                    fontFamily: "var(--font-dm)",
                     fontWeight: 600,
                     fontSize: "16px",
-                    color: open === i ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.7)",
+                    color: open === i ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,0.84)",
                     transition: "color 0.2s",
                   }}
                 >
@@ -149,15 +129,12 @@ export default function FAQ() {
                 <span
                   style={{
                     flexShrink: 0,
-                    width: "24px",
-                    height: "24px",
+                    width: "24px", height: "24px",
                     borderRadius: "50%",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: "16px",
-                    color: "rgba(255,255,255,0.4)",
+                    color: "rgba(255,255,255,0.55)",  // was 0.4
                     transition: "all 0.3s",
                     transform: open === i ? "rotate(45deg)" : "rotate(0deg)",
                   }}
@@ -173,10 +150,11 @@ export default function FAQ() {
                   transition: "max-height 0.4s cubic-bezier(0.2, 1, 0.2, 1)",
                 }}
               >
+                {/* was 0.45 — bumped to 0.72 */}
                 <p
                   style={{
                     fontSize: "14px",
-                    color: "rgba(255,255,255,0.45)",
+                    color: "rgba(255,255,255,0.72)",
                     lineHeight: 1.75,
                     paddingBottom: "24px",
                     margin: 0,
@@ -188,7 +166,6 @@ export default function FAQ() {
             </div>
           ))}
         </div>
-        {/* ── FAQ ACCORDION ── END ── */}
 
       </div>
     </section>
