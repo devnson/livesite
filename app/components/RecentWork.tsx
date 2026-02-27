@@ -18,7 +18,6 @@ type CardData = {
 };
 type ModalData = CardData["modal"] & { gt: string };
 
-// No dark gradient tints — pure black + the GIF carries the visual weight
 const cards: CardData[] = [
   {
     tag: "AI Infra · SaaS",
@@ -100,7 +99,6 @@ function PlayIcon() {
   );
 }
 
-// Card component — clean, bright, no emoji
 function WorkCard({
   card,
   onClick,
@@ -135,7 +133,6 @@ function WorkCard({
         boxShadow: hovered ? "0 24px 64px rgba(0,0,0,0.7)" : "none",
       }}
     >
-      {/* GIF — high opacity, scale on hover */}
       <img
         src={card.gif}
         alt=""
@@ -143,7 +140,6 @@ function WorkCard({
           position: "absolute", inset: 0,
           width: "100%", height: "100%",
           objectFit: "cover",
-          // Key: was 0.55 — now 0.82 so GIF is clearly visible
           opacity: hovered ? 0.92 : 0.82,
           transform: hovered ? "scale(1.04)" : "scale(1)",
           transition: "opacity 0.4s, transform 0.6s cubic-bezier(0.2,0.8,0.3,1)",
@@ -151,17 +147,12 @@ function WorkCard({
         onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
       />
 
-      {/* Minimal gradient — only to make text readable, not to dim the GIF */}
       <div style={{
         position: "absolute", inset: 0,
         background: "linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.82) 100%)",
       }} />
 
-      {/* Top badge */}
-      <div style={{
-        position: "absolute", top: "14px", left: "14px",
-        zIndex: 4,
-      }}>
+      <div style={{ position: "absolute", top: "14px", left: "14px", zIndex: 4 }}>
         <span style={{
           fontSize: "10px", fontWeight: 700,
           letterSpacing: "0.11em", textTransform: "uppercase",
@@ -175,7 +166,6 @@ function WorkCard({
         </span>
       </div>
 
-      {/* Play button — center, appears on hover */}
       <div style={{
         position: "absolute", inset: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
@@ -198,7 +188,6 @@ function WorkCard({
         </div>
       </div>
 
-      {/* Bottom text */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
         padding: size === "hero" ? "22px 20px" : "16px",
@@ -215,11 +204,7 @@ function WorkCard({
         }}>
           {card.name}
         </div>
-        <div style={{
-          fontSize: "11.5px",
-          color: "rgba(255,255,255,0.65)",
-          fontWeight: 400,
-        }}>
+        <div style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.65)", fontWeight: 400 }}>
           {card.where}
         </div>
       </div>
@@ -251,16 +236,6 @@ export default function RecentWork() {
         scrollTrigger: { trigger: btnRef.current, start: "top 95%" } });
   }, []);
 
-  /*
-    Layout:
-    ┌─────────────────────┬──────────────┐
-    │   Hero (DocUnlock)  │ Aleph        │  ← row 1, 55/45 split, tall
-    │                     │              │
-    ├────────┬────────────┴──────────────┤
-    │Sunsama │  Openmart  │  reAlpha     │  ← row 2, 3 equal, shorter
-    └────────┴────────────┴──────────────┘
-  */
-
   return (
     <>
       <section
@@ -290,7 +265,7 @@ export default function RecentWork() {
                 <span style={{ color: "rgba(255,255,255,0.52)", fontWeight: 400 }}>buyers confident.</span>
               </h2>
               <a
-                href="/work"
+                href="/error/"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "8px",
                   padding: "10px 20px", borderRadius: "999px",
@@ -313,8 +288,6 @@ export default function RecentWork() {
 
           {/* GRID */}
           <div ref={gridRef} style={{ opacity: 0 }}>
-
-            {/* ROW 1: Hero (55%) + Featured right (45%) */}
             <div style={{
               display: "grid",
               gridTemplateColumns: "55fr 45fr",
@@ -326,7 +299,6 @@ export default function RecentWork() {
               <WorkCard card={cards[1]} onClick={() => setModal({ ...cards[1].modal, gt: cards[1].gt })} size="normal" />
             </div>
 
-            {/* ROW 2: 3 equal cards */}
             <div style={{
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
@@ -342,7 +314,7 @@ export default function RecentWork() {
           {/* VIEW FULL LIBRARY */}
           <a
             ref={btnRef}
-            href="/work"
+            href="/error/"
             style={{
               display: "flex", alignItems: "center",
               marginTop: "8px",
@@ -392,7 +364,6 @@ export default function RecentWork() {
               boxShadow: "0 40px 120px rgba(0,0,0,0.9)",
             }}
           >
-            {/* Video */}
             <div style={{ width: "100%", aspectRatio: "16/9", position: "relative", background: "#111", overflow: "hidden" }}>
               {modal.videoId ? (
                 <iframe
@@ -411,7 +382,6 @@ export default function RecentWork() {
               )}
             </div>
 
-            {/* Body */}
             <div style={{ padding: "28px 32px 32px" }}>
               <p style={{ fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "8px", fontWeight: 600 }}>Case Study</p>
               <h3 style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: "20px", letterSpacing: "-0.025em", lineHeight: 1.2, marginBottom: "12px", color: "#fff" }}>{modal.title}</h3>
