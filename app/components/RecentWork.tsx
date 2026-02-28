@@ -151,7 +151,6 @@ function WorkCard({
         background: "linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.82) 100%)",
       }} />
 
-      {/* TAG — nowrap + ellipsis so it never wraps on small cards */}
       <div style={{ position: "absolute", top: "12px", left: "12px", right: "12px", zIndex: 4 }}>
         <span style={{
           display: "inline-block",
@@ -306,13 +305,10 @@ export default function RecentWork() {
           {/* GRID */}
           <div ref={gridRef} style={{ opacity: 0 }}>
             {isMobile ? (
-              // MOBILE: single column stack, natural heights
               <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                {/* Hero card */}
                 <div style={{ height: "240px" }}>
                   <WorkCard card={cards[0]} onClick={() => setModal({ ...cards[0].modal, gt: cards[0].gt })} size="hero" />
                 </div>
-                {/* 2-col grid for remaining */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                   {cards.slice(1).map(card => (
                     <div key={card.name} style={{ height: "180px" }}>
@@ -322,7 +318,6 @@ export default function RecentWork() {
                 </div>
               </div>
             ) : (
-              // DESKTOP: unchanged layout
               <>
                 <div style={{
                   display: "grid",
@@ -435,15 +430,18 @@ export default function RecentWork() {
                 ))}
               </div>
 
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                <a
-                  href={modal.caseUrl}
-                  style={{ padding: "11px 24px", borderRadius: "10px", background: "white", color: "black", fontSize: "13.5px", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", gap: "7px", transition: "opacity 0.15s" }}
-                  onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85"}
-                  onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "1"}
-                >
-                  View full case study →
-                </a>
+              {/* Only show case study button if caseUrl exists */}
+              <div style={{ display: "flex", justifyContent: modal.caseUrl ? "space-between" : "flex-end", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                {modal.caseUrl && (
+                  <a
+                    href={modal.caseUrl}
+                    style={{ padding: "11px 24px", borderRadius: "10px", background: "white", color: "black", fontSize: "13.5px", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", gap: "7px", transition: "opacity 0.15s" }}
+                    onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85"}
+                    onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "1"}
+                  >
+                    View full case study →
+                  </a>
+                )}
                 <button
                   onClick={() => setModal(null)}
                   style={{ padding: "11px 18px", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: "rgba(255,255,255,0.60)", fontSize: "13px", cursor: "pointer", fontFamily: "var(--font-dm)" }}
