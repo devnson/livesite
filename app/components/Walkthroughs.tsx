@@ -14,12 +14,12 @@ const walkthroughs = [
     slug: "securitypal-case",
     videoId: "azDJfHvwpEY",
     problem:
-      "Sales required 20+ minutes to explain the core process. Demo calls carried too much weight.",
+      "Security work happens behind the scenes. The product's value was difficult to visualize for enterprise buyers",
     built:
-      "90-second narrative video structured for decks, homepage, and enterprise outreach.",
+      "A clear enterprise narrative system that visualized how trust moves through their platform, structured for homepage, decks, and outbound.",
     result:
-      "Deployed across enterprise pipeline. Reduced pre-demo explanation load.",
-    tags: ["Sales deck", "Homepage asset", "Enterprise pipeline"],
+      "Made enterprise security workflows visible and defensible.",
+    tags: ["Homepage Narrative", "Enterprise Positioning", "Outbound Enablement"],
   },
   {
     client: "DocUnlock",
@@ -48,7 +48,7 @@ const walkthroughs = [
     problem:
       "Needed investor-grade authority signal. Standard agency timelines wouldn't hold.",
     built:
-      "Single hero video delivered in 7 days. Structured for press, hiring, and investor audiences.",
+      "Single hero video delivered in 12 days. Structured for press, hiring, and investor audiences.",
     result: "Used in announcement deck and hiring pipeline.",
     tags: ["Investor announcement", "Press asset", "Hiring signal"],
   },
