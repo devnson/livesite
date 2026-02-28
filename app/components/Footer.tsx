@@ -120,7 +120,7 @@ export default function Footer() {
             </div>
             {/* was 0.3 — bumped to 0.55 */}
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, maxWidth: "240px" }}>
-              Motion systems for complex B2B products.
+              Motion systems for complex tech products.
             </p>
           </div>
 
