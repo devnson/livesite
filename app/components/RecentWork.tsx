@@ -72,7 +72,7 @@ const cards: CardData[] = [
       desc: "A hard-to-explain value prop turned into an instantly legible story for buyers. Built to reduce explanation load in outbound + sales.",
       stats: [{ n: "B2B", l: "Audience" }, { n: "Product demo", l: "Type" }, { n: "Landing + outbound", l: "Used in" }],
       videoId: "qC7YyUs9YNA",
-      caseUrl: "/case-studies/niural-case",
+      caseUrl: "",
     },
   },
   {
@@ -86,7 +86,7 @@ const cards: CardData[] = [
       desc: "A product demo built to make the AI feel tangible and trustworthy — not abstract. Used as a sales + investor clarity asset.",
       stats: [{ n: "Demo", l: "Type" }, { n: "Customer", l: "Used in" }, { n: "Clarity asset", l: "Outcome" }],
       videoId: "xRGp8VLp8Us",
-      caseUrl: "/case-studies/realpha-case",
+      caseUrl: "",
     },
   },
 ];
@@ -282,7 +282,7 @@ export default function RecentWork() {
                 <span style={{ color: "rgba(255,255,255,0.52)", fontWeight: 400 }}>buyers confident.</span>
               </h2>
               <a
-                href="/error/"
+                href="/work/"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "8px",
                   padding: "10px 20px", borderRadius: "999px",
@@ -351,7 +351,7 @@ export default function RecentWork() {
           {/* VIEW FULL LIBRARY */}
           <a
             ref={btnRef}
-            href="/error/"
+            href="/work/"
             style={{
               display: "flex", alignItems: "center",
               marginTop: "8px",

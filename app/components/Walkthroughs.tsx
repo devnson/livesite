@@ -186,7 +186,7 @@ export default function Walkthroughs() {
               </div>
 
               <Link
-                href="/error/"
+                href="/case-studies/"
                 className="wt-cta wt-ctaTop"
                 style={{
                   display: "inline-flex",
@@ -597,7 +597,7 @@ export default function Walkthroughs() {
             </p>
 
             <Link
-              href="/error/"
+              href="/case-studies/"
               className="wt-cta"
               style={{
                 display: "inline-flex",
