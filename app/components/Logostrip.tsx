@@ -10,7 +10,6 @@ type Logo = {
   url: string;
 };
 
-// Normalized to match Hero.tsx logo widths exactly
 const logos: Logo[] = [
   { name: "Composio",    src: "/logos/white/Composio.svg",    w: 90,  url: "https://www.linkedin.com/company/composiohq/" },
   { name: "DocUnlock",   src: "/logos/white/docunlock.svg",   w: 80,  url: "https://www.linkedin.com/company/docunlock-ai" },
@@ -47,7 +46,7 @@ function Strip({ ariaHidden, isMobile }: { ariaHidden?: boolean; isMobile: boole
             className="logoBox"
             style={{
               width: `${Math.round(logo.w * (isMobile ? 1.1 : 1.35))}px`,
-              height: isMobile ? "28px" : "28px",
+              height: "28px",
             }}
           >
             <Image src={logo.src} alt={logo.name} fill className="logoImg" sizes="200px" />

@@ -28,7 +28,8 @@ const row1 = [
     linkedin: "https://www.linkedin.com/in/lucasgoransky/",
   },
   {
-    quote: "Despite the complexity of what we're building, they made a good video, so used to for our deck and process, the complexity got easy to understand.",
+    quote: "Despite the complexity of what we're building, they made a good video, it enabled us for the clarity and the decks we made that were used for enterprise customers, the complexity got easy to understand.",
+    name: "Kathryn Wu",
     role: "Co-founder",
     company: "Openmart",
     detail: "B2B Commerce · Seed",
@@ -187,9 +188,9 @@ export default function Testimonials() {
   const headerBottom = isMobile ? 40 : 56;
 
   const renderCard = (t: CardItem, i: number) => {
-    const initials = t.name
+    const initials = (t.name || "?")
       .split(" ")
-      .map((w) => w[0])
+      .map((w: string) => w[0])
       .join("")
       .slice(0, 2)
       .toUpperCase();
@@ -319,7 +320,6 @@ export default function Testimonials() {
         )}
 
         <div style={{ padding: `${PAD}px`, display: "flex", flexDirection: "column", gap: isMobile ? "14px" : "18px", flex: 1 }}>
-          {/* quote mark */}
           <div
             style={{
               fontSize: `${quoteMarkSize}px`,
@@ -371,7 +371,11 @@ export default function Testimonials() {
                 color: "rgba(255,255,255,0.55)",
               }}
             >
-              {t.headshot ? <img src={t.headshot} alt={t.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : initials}
+              {t.headshot ? (
+                <img src={t.headshot} alt={t.name || ""} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              ) : (
+                initials
+              )}
             </div>
 
             <div>
@@ -408,7 +412,6 @@ export default function Testimonials() {
           overflow: "hidden",
         }}
       >
-        {/* HEADER */}
         <div
           ref={headerRef}
           style={{
@@ -483,7 +486,6 @@ export default function Testimonials() {
         </div>
       </section>
 
-      {/* VIDEO LIGHTBOX */}
       {activeVideo && (
         <div
           onClick={() => setActiveVideo(null)}

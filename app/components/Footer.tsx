@@ -51,23 +51,6 @@ export default function Footer() {
         <p style={{ fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "24px", fontWeight: 600 }}>
           Ready to start
         </p>
-
-        <h2
-          style={{
-            fontFamily: "var(--font-dm)",
-            fontWeight: 800,
-            fontSize: "clamp(36px, 7vw, 80px)",
-            letterSpacing: "-0.04em",
-            lineHeight: 1.0,
-            margin: "0 0 40px 0",
-            color: "#fff",
-          }}
-        >
-          <span style={{ fontWeight: 300 }}>Let's make your</span>
-          <br />
-          product obvious.
-        </h2>
-
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
           <a
             href="https://cal.com/tanoseihito/30min"
@@ -77,7 +60,7 @@ export default function Footer() {
           >
             <span className="rimGlow" />
             <span className="btnInnerCover" />
-            <span className="btnText">Start with a Clarity Call</span>
+            <span className="btnText">Start with Clarity Call</span>
             <span className="iconBubble" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
