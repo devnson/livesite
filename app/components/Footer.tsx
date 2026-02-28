@@ -87,34 +87,7 @@ export default function Footer() {
           </a>
 
           {/* was 0.45 — bumped to 0.68 */}
-          <a
-            href="mailto:sushan@tanosei.studio"
-            style={{
-              padding: "12px 24px",
-              borderRadius: "11px",
-              fontSize: "13.5px",
-              fontWeight: 500,
-              textDecoration: "none",
-              color: "rgba(255,255,255,0.68)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              background: "rgba(255,255,255,0.04)",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={e => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.color = "#fff";
-              el.style.borderColor = "rgba(255,255,255,0.24)";
-              el.style.background = "rgba(255,255,255,0.08)";
-            }}
-            onMouseLeave={e => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.color = "rgba(255,255,255,0.68)";
-              el.style.borderColor = "rgba(255,255,255,0.12)";
-              el.style.background = "rgba(255,255,255,0.04)";
-            }}
-          >
-            sushan@tanosei.studio
-          </a>
+         
         </div>
       </div>
 
@@ -147,7 +120,7 @@ export default function Footer() {
             </div>
             {/* was 0.3 — bumped to 0.55 */}
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, maxWidth: "240px" }}>
-              B2B video and motion design for SaaS companies that want to be understood.
+              Motion systems for complex B2B products.
             </p>
           </div>
 

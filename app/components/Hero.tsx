@@ -15,8 +15,6 @@ const logos: Logo[] = [
   { name: "Aleph",       src: "/logos/white/aleph.svg",       w: 70,  url: "https://www.linkedin.com/company/getaleph/" },
 ];
 
-
-
 const words = ["obvious.", "land.", "sell."];
 
 export default function Hero() {
@@ -105,7 +103,6 @@ export default function Hero() {
             padding: 0,
           }}
         >
-          {/* Each span is a child for stagger animation */}
           <span style={{ opacity: 0, display: "block", fontWeight: 300 }}>Make complex</span>
           <span style={{ opacity: 0 }}>
             <span style={{ fontWeight: 800 }}>products </span>
@@ -160,7 +157,7 @@ export default function Hero() {
           >
             <div className="rimGlow" />
             <div className="btnInnerCover" />
-            <span className="btnText">Book a Clarity Call</span>
+            <span className="btnText">Start With a Clarity Call</span>
             <span className="iconBubble">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
@@ -175,7 +172,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* LOGO STRIP — anchored to bottom, raw logos, no pills */}
+      {/* LOGO STRIP */}
       <div ref={logoRef} style={{ width: "100%", opacity: 0 }}>
         <p style={{
           fontSize: "10px",
@@ -189,7 +186,6 @@ export default function Hero() {
           Trusted by teams at
         </p>
 
-        {/* Static logo row — no animation, centered */}
         <div style={{
           display: "flex",
           alignItems: "center",
@@ -210,12 +206,13 @@ export default function Hero() {
                 src={logo.src}
                 alt={logo.name}
                 style={{
-                  width: `${isMobile ? Math.round(logo.w * 0.72) : logo.w}px`,
-                  height: isMobile ? "15px" : "18px",
+                  // ── ONLY CHANGE: desktop logos are 1.35× bigger and 0.85 opacity ──
+                  width: `${isMobile ? Math.round(logo.w * 0.72) : Math.round(logo.w * 1.35)}px`,
+                  height: isMobile ? "15px" : "28px",
                   objectFit: "contain",
                   display: "block",
                   filter: "brightness(0) invert(1)",
-                  opacity: 0.55,
+                  opacity: isMobile ? 0.55 : 0.85,
                 }}
               />
             </a>
@@ -225,7 +222,6 @@ export default function Hero() {
         {/* Bottom rule */}
         <div style={{ height: "1px", background: "rgba(255,255,255,0.07)", marginTop: "24px" }} />
       </div>
-
 
     </section>
   );
