@@ -18,6 +18,10 @@ const bricolage = Bricolage_Grotesque({
 export const metadata: Metadata = {
   title: "Tanosei Studio",
   description: "Motion-led creative studio for tech and startup clients.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
