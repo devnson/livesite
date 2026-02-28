@@ -132,8 +132,8 @@ export default function Hero() {
             margin: `${isMobile ? 20 : 28}px 0 0 0`,
           }}
         >
-          We work alongside your marketing team to clarify positioning and turn product value into motion that shortens sales cycles and strengthens launches.{" "}
-          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>structured, deployable motion.</strong>
+          We help GTM teams turn complex products into structured, repeatable video systems that{" "}
+          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>educate buyers, strengthen positioning, and accelerate sales.</strong>
         </p>
 
         {/* CTA BUTTONS */}
