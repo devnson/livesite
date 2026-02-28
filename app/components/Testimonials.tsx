@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const row1 = [
   {
-    quote: "We'd been trying to visualize productivity concepts for social for years. Sushan understood the brand instinctively — and kept delivering across three years without us having to re-explain ourselves.",
+    quote: "We'd been trying to visualize productivity concepts for social for years. Sushan understood the brand instinctively and kept delivering across three years without us having to re-explain ourselves.",
     name: "Ashutosh Priyadarshy",
     role: "Founder",
     company: "Sunsama",
@@ -18,7 +18,7 @@ const row1 = [
     linkedin: "https://www.linkedin.com/in/ashutoshpriyadarshy/",
   },
   {
-    quote: "The process was frictionless. We had a complex concept, a tight timeline, and they just moved — clean system, no back-and-forth. The whole team was impressed.",
+    quote: "The process was frictionless. We had a complex concept, a tight timeline, and they just moved, clean system, no back-and-forth. The whole team was impressed.",
     name: "Lucas Goransky",
     role: "Co-founder",
     company: "Aleph",
@@ -28,8 +28,7 @@ const row1 = [
     linkedin: "https://www.linkedin.com/in/lucasgoransky/",
   },
   {
-    quote: "Despite the complexity of what we're building, they made it visual — and our sales team actually uses it. That's not easy to do with deep tech.",
-    name: "Kathryn Wu",
+    quote: "Despite the complexity of what we're building, they made a good video, so used to for our deck and process, the complexity got easy to understand.",
     role: "Co-founder",
     company: "Openmart",
     detail: "B2B Commerce · Seed",
@@ -48,7 +47,7 @@ const row1 = [
     linkedin: "",
   },
   {
-    quote: "They brought our PropTech concepts to life visually — three videos in, and the quality actually got sharper each time. They understood what we were building.",
+    quote: "They brought our PropTech concepts to life visually three videos in, and the quality actually got sharper each time. They understood what we were building.",
     name: "Marketing Head",
     role: "",
     company: "reAlpha",
@@ -58,7 +57,7 @@ const row1 = [
     linkedin: "",
   },
   {
-    quote: "What stuck with me wasn't just the output — it was the framework they brought. For a single video project, they gave us a clear lens on how creative strategy should work.",
+    quote: "What stuck with me wasn't just the output it was the framework they brought. For a single video project, they gave us a clear lens on how creative strategy should work.",
     name: "Nabin Banskota",
     role: "Co-founder",
     company: "Niural AI",
@@ -71,7 +70,7 @@ const row1 = [
 
 const row2 = [
   {
-    quote: "Three years, consistent quality, zero re-briefing. Sushan just gets it — the brand, the tone, the audience. That's rare.",
+    quote: "Worked with him for three years, consistent quality, zero re-briefing. Sushan just gets it, the brand, the tone, the audience. That's rare.",
     name: "Ashutosh Priyadarshy",
     role: "Founder",
     company: "Sunsama",
@@ -91,7 +90,7 @@ const row2 = [
     linkedin: "https://www.linkedin.com/in/sepehr-f/",
   },
   {
-    quote: "Efficiency was the word that kept coming up internally. They had a system — and it showed in how smooth the whole process was.",
+    quote: "Efficiency was the word that kept coming up internally. They have a system, and it showed in how smooth the whole process was.",
     name: "Yucheng He",
     role: "Co-founder",
     company: "Openmart",
@@ -101,7 +100,7 @@ const row2 = [
     linkedin: "https://www.linkedin.com/in/yuchenghe/",
   },
   {
-    quote: "They were cheap when we first worked together, and they were still better than people who charged more. The visual thinking was always there.",
+    quote: "The marketing team was new, the product was complex, and we needed to move fast. They made the whole process feel easy, and the output made our value tangible for buyers.",
     name: "Marketing Head",
     role: "",
     company: "reAlpha",
@@ -111,7 +110,7 @@ const row2 = [
     linkedin: "",
   },
   {
-    quote: "The video made our workflow feel trustworthy — not just explainable. That distinction mattered a lot for the kind of buyers we're going after.",
+    quote: "The video made our workflow feel trustworthy not just explainable. That distinction mattered a lot for the kind of buyers we're going after.",
     name: "Jonathan Moberger",
     role: "Marketing",
     company: "DocUnlock",
@@ -121,7 +120,7 @@ const row2 = [
     linkedin: "https://www.linkedin.com/in/jmoberger/",
   },
   {
-    quote: "They translated a genuinely hard product into something our non-technical prospects could grasp in 90 seconds. Sales started using it immediately.",
+    quote: "We wanted to launch something on Canada market, their creativity made it easier. They synced well with our team and delivered great work on a tight timeline.",
     name: "Nabin Banskota",
     role: "Co-founder",
     company: "Niural AI",
