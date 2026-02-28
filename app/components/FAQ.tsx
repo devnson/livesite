@@ -35,8 +35,17 @@ const faqs = [
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   useEffect(() => {
     gsap.fromTo(
@@ -54,7 +63,7 @@ export default function FAQ() {
   return (
     <section
       style={{
-        padding: "120px 24px",
+        padding: isMobile ? "80px 20px" : "120px 24px",
         background: "#0d0d0d",
         borderTop: "1px solid rgba(255,255,255,0.08)",
         borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -64,33 +73,47 @@ export default function FAQ() {
         style={{
           maxWidth: "1160px",
           margin: "0 auto",
+          // Mobile: single column stacked; Desktop: unchanged 1fr 2fr
           display: "grid",
-          gridTemplateColumns: "1fr 2fr",
-          gap: "80px",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 2fr",
+          gap: isMobile ? "40px" : "80px",
           alignItems: "start",
         }}
       >
         {/* HEADER */}
-        <div ref={headerRef} style={{ opacity: 0, position: "sticky", top: "100px" }}>
-          {/* was 0.3 — bumped to 0.52 */}
-          <p style={{ fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "16px", fontWeight: 600 }}>
+        <div
+          ref={headerRef}
+          style={{
+            opacity: 0,
+            // Only sticky on desktop
+            position: isMobile ? "static" : "sticky",
+            top: isMobile ? undefined : "100px",
+          }}
+        >
+          <p style={{
+            fontSize: "11px",
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.52)",
+            marginBottom: "16px",
+            fontWeight: 600,
+          }}>
             FAQ
           </p>
           <h2
             style={{
               fontFamily: "var(--font-dm)",
               fontWeight: 800,
-              fontSize: "clamp(28px, 4vw, 44px)",
+              fontSize: isMobile ? "clamp(32px, 9vw, 42px)" : "clamp(28px, 4vw, 44px)",
               letterSpacing: "-0.03em",
               lineHeight: 1.1,
-              margin: "0 0 20px 0",
+              margin: "0 0 16px 0",
               color: "#fff",
             }}
           >
             <span style={{ fontWeight: 300 }}>Common</span>{" "}questions.
           </h2>
-          {/* was 0.35 — bumped to 0.60 */}
-          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.60)", lineHeight: 1.7 }}>
+          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, margin: 0 }}>
             Anything else? Book a call and ask directly.
           </p>
         </div>
@@ -106,7 +129,7 @@ export default function FAQ() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  padding: "24px 0",
+                  padding: isMobile ? "20px 0" : "24px 0",
                   background: "transparent",
                   border: "none",
                   cursor: "pointer",
@@ -114,14 +137,14 @@ export default function FAQ() {
                   gap: "16px",
                 }}
               >
-                {/* was 0.7 closed / 0.95 open — now 0.84 / 0.98 */}
                 <span
                   style={{
                     fontFamily: "var(--font-dm)",
                     fontWeight: 600,
-                    fontSize: "16px",
+                    fontSize: isMobile ? "15px" : "16px",
                     color: open === i ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,0.84)",
                     transition: "color 0.2s",
+                    lineHeight: 1.4,
                   }}
                 >
                   {faq.q}
@@ -129,12 +152,15 @@ export default function FAQ() {
                 <span
                   style={{
                     flexShrink: 0,
-                    width: "24px", height: "24px",
+                    width: "24px",
+                    height: "24px",
                     borderRadius: "50%",
                     border: "1px solid rgba(255,255,255,0.16)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                     fontSize: "16px",
-                    color: "rgba(255,255,255,0.55)",  // was 0.4
+                    color: "rgba(255,255,255,0.55)",
                     transition: "all 0.3s",
                     transform: open === i ? "rotate(45deg)" : "rotate(0deg)",
                   }}
@@ -150,11 +176,10 @@ export default function FAQ() {
                   transition: "max-height 0.4s cubic-bezier(0.2, 1, 0.2, 1)",
                 }}
               >
-                {/* was 0.45 — bumped to 0.72 */}
                 <p
                   style={{
                     fontSize: "14px",
-                    color: "rgba(255,255,255,0.72)",
+                    color: "rgba(255,255,255,0.65)",
                     lineHeight: 1.75,
                     paddingBottom: "24px",
                     margin: 0,
