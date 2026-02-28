@@ -48,7 +48,7 @@ const cards: CardData[] = [
     },
   },
   {
-    tag: "Assurance Assessment · Security Questionnaire",
+    tag: "Security · Assurance",
     name: "SecurityPal Film",
     where: "SecurityPal Brand Video",
     gif: "https://framerusercontent.com/images/ncaXWYv5fXVfX9wvB6AWJycHjog.gif",
@@ -62,7 +62,7 @@ const cards: CardData[] = [
     },
   },
   {
-    tag: "B2B · Fintech · Payroll",
+    tag: "B2B · Fintech",
     name: "Niural Product Demo",
     where: "Brand clarity → landing + outbound",
     gif: "https://framerusercontent.com/images/BmmRR8wJ0tVQ7S2C55bfSfSRNQ.gif",
@@ -112,8 +112,7 @@ function WorkCard({
 
   const titleSize =
     size === "hero"   ? "clamp(16px, 1.8vw, 22px)" :
-    size === "normal" ? "15px" :
-    "13.5px";
+    size === "normal" ? "15px" : "13.5px";
 
   return (
     <div
@@ -152,15 +151,24 @@ function WorkCard({
         background: "linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.82) 100%)",
       }} />
 
-      <div style={{ position: "absolute", top: "14px", left: "14px", zIndex: 4 }}>
+      {/* TAG — nowrap + ellipsis so it never wraps on small cards */}
+      <div style={{ position: "absolute", top: "12px", left: "12px", right: "12px", zIndex: 4 }}>
         <span style={{
-          fontSize: "10px", fontWeight: 700,
-          letterSpacing: "0.11em", textTransform: "uppercase",
+          display: "inline-block",
+          maxWidth: "100%",
+          fontSize: "9px",
+          fontWeight: 700,
+          letterSpacing: "0.10em",
+          textTransform: "uppercase",
           color: "rgba(255,255,255,0.82)",
           background: "rgba(0,0,0,0.52)",
           backdropFilter: "blur(10px)",
-          padding: "3px 10px", borderRadius: "999px",
+          padding: "3px 8px",
+          borderRadius: "999px",
           border: "1px solid rgba(255,255,255,0.14)",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
         }}>
           {card.tag}
         </span>
@@ -190,7 +198,7 @@ function WorkCard({
 
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
-        padding: size === "hero" ? "22px 20px" : "16px",
+        padding: size === "hero" ? "22px 20px" : "14px",
         zIndex: 4,
       }}>
         <div style={{
@@ -200,11 +208,11 @@ function WorkCard({
           color: "#ffffff",
           letterSpacing: "-0.02em",
           lineHeight: 1.25,
-          marginBottom: "5px",
+          marginBottom: "4px",
         }}>
           {card.name}
         </div>
-        <div style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.65)", fontWeight: 400 }}>
+        <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.65)", fontWeight: 400, lineHeight: 1.4 }}>
           {card.where}
         </div>
       </div>
@@ -217,7 +225,16 @@ export default function RecentWork() {
   const headerRef  = useRef<HTMLDivElement>(null);
   const gridRef    = useRef<HTMLDivElement>(null);
   const btnRef     = useRef<HTMLAnchorElement>(null);
-  const [modal, setModal] = useState<ModalData | null>(null);
+  const [modal, setModal]     = useState<ModalData | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = modal ? "hidden" : "";
@@ -241,24 +258,24 @@ export default function RecentWork() {
       <section
         id="recent-work"
         ref={sectionRef}
-        style={{ padding: "120px 28px 0", borderTop: "1px solid rgba(255,255,255,0.08)" }}
+        style={{ padding: isMobile ? "80px 16px 0" : "120px 28px 0", borderTop: "1px solid rgba(255,255,255,0.08)" }}
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
 
           {/* HEADER */}
-          <div ref={headerRef} style={{ marginBottom: "36px", opacity: 0 }}>
+          <div ref={headerRef} style={{ marginBottom: "28px", opacity: 0 }}>
             <div style={{
               display: "flex", alignItems: "center", gap: "10px",
               fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase",
-              color: "rgba(255,255,255,0.52)", marginBottom: "14px", fontWeight: 600,
+              color: "rgba(255,255,255,0.52)", marginBottom: "12px", fontWeight: 600,
             }}>
               <span style={{ display: "inline-block", width: "18px", height: "1px", background: "rgba(255,255,255,0.28)", flexShrink: 0 }} />
               Recent Work
             </div>
-            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "20px", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "flex-end", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", gap: "16px" }}>
               <h2 style={{
                 fontFamily: "var(--font-dm)", fontWeight: 700,
-                fontSize: "clamp(28px, 3.8vw, 50px)",
+                fontSize: isMobile ? "clamp(24px, 7vw, 34px)" : "clamp(28px, 3.8vw, 50px)",
                 letterSpacing: "-0.035em", lineHeight: 1.06, margin: 0, color: "#fff",
               }}>
                 Every frame built to make{" "}
@@ -288,27 +305,47 @@ export default function RecentWork() {
 
           {/* GRID */}
           <div ref={gridRef} style={{ opacity: 0 }}>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "55fr 45fr",
-              gap: "8px",
-              marginBottom: "8px",
-              height: "420px",
-            }}>
-              <WorkCard card={cards[0]} onClick={() => setModal({ ...cards[0].modal, gt: cards[0].gt })} size="hero" />
-              <WorkCard card={cards[1]} onClick={() => setModal({ ...cards[1].modal, gt: cards[1].gt })} size="normal" />
-            </div>
-
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "8px",
-              height: "270px",
-            }}>
-              {cards.slice(2).map(card => (
-                <WorkCard key={card.name} card={card} onClick={() => setModal({ ...card.modal, gt: card.gt })} size="small" />
-              ))}
-            </div>
+            {isMobile ? (
+              // MOBILE: single column stack, natural heights
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                {/* Hero card */}
+                <div style={{ height: "240px" }}>
+                  <WorkCard card={cards[0]} onClick={() => setModal({ ...cards[0].modal, gt: cards[0].gt })} size="hero" />
+                </div>
+                {/* 2-col grid for remaining */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                  {cards.slice(1).map(card => (
+                    <div key={card.name} style={{ height: "180px" }}>
+                      <WorkCard card={card} onClick={() => setModal({ ...card.modal, gt: card.gt })} size="small" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              // DESKTOP: unchanged layout
+              <>
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "55fr 45fr",
+                  gap: "8px",
+                  marginBottom: "8px",
+                  height: "420px",
+                }}>
+                  <WorkCard card={cards[0]} onClick={() => setModal({ ...cards[0].modal, gt: cards[0].gt })} size="hero" />
+                  <WorkCard card={cards[1]} onClick={() => setModal({ ...cards[1].modal, gt: cards[1].gt })} size="normal" />
+                </div>
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: "8px",
+                  height: "270px",
+                }}>
+                  {cards.slice(2).map(card => (
+                    <WorkCard key={card.name} card={card} onClick={() => setModal({ ...card.modal, gt: card.gt })} size="small" />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
 
           {/* VIEW FULL LIBRARY */}
@@ -362,6 +399,8 @@ export default function RecentWork() {
               background: "#0d0d0d",
               overflow: "hidden",
               boxShadow: "0 40px 120px rgba(0,0,0,0.9)",
+              maxHeight: "90vh",
+              overflowY: "auto",
             }}
           >
             <div style={{ width: "100%", aspectRatio: "16/9", position: "relative", background: "#111", overflow: "hidden" }}>
@@ -382,21 +421,21 @@ export default function RecentWork() {
               )}
             </div>
 
-            <div style={{ padding: "28px 32px 32px" }}>
+            <div style={{ padding: isMobile ? "20px" : "28px 32px 32px" }}>
               <p style={{ fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "8px", fontWeight: 600 }}>Case Study</p>
-              <h3 style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: "20px", letterSpacing: "-0.025em", lineHeight: 1.2, marginBottom: "12px", color: "#fff" }}>{modal.title}</h3>
+              <h3 style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: isMobile ? "17px" : "20px", letterSpacing: "-0.025em", lineHeight: 1.2, marginBottom: "12px", color: "#fff" }}>{modal.title}</h3>
               <p style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.75)", lineHeight: 1.75, marginBottom: "22px" }}>{modal.desc}</p>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1px", background: "rgba(255,255,255,0.09)", borderRadius: "10px", overflow: "hidden", marginBottom: "24px" }}>
                 {modal.stats.map(s => (
-                  <div key={s.l} style={{ background: "#0d0d0d", padding: "18px 14px", textAlign: "center" }}>
-                    <div style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: "17px", letterSpacing: "-0.02em", marginBottom: "4px", color: "#fff" }}>{s.n}</div>
-                    <div style={{ fontSize: "10.5px", color: "rgba(255,255,255,0.52)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.l}</div>
+                  <div key={s.l} style={{ background: "#0d0d0d", padding: "16px 10px", textAlign: "center" }}>
+                    <div style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: "15px", letterSpacing: "-0.02em", marginBottom: "4px", color: "#fff" }}>{s.n}</div>
+                    <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.52)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.l}</div>
                   </div>
                 ))}
               </div>
 
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
                 <a
                   href={modal.caseUrl}
                   style={{ padding: "11px 24px", borderRadius: "10px", background: "white", color: "black", fontSize: "13.5px", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", gap: "7px", transition: "opacity 0.15s" }}
