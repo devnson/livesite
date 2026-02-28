@@ -132,8 +132,8 @@ export default function Hero() {
             margin: `${isMobile ? 20 : 28}px 0 0 0`,
           }}
         >
-          We work alongside your marketing team to clarify positioning and turn product value into motion that {" "}
-          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>shortens sales cycles and strengthens launches.</strong>
+          We help GTM teams turn complex products into structured, repeatable video systems that{" "}
+          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>educate buyers, strengthen positioning, and accelerate sales.</strong>
         </p>
 
         {/* CTA BUTTONS */}
@@ -143,7 +143,7 @@ export default function Hero() {
             marginTop: isMobile ? "28px" : "36px",
             display: "flex",
             flexDirection: "column",
-            gap: "12px",
+            gap: "20px",
             width: isMobile ? "100%" : "auto",
             opacity: 0,
           }}
@@ -157,7 +157,7 @@ export default function Hero() {
           >
             <div className="rimGlow" />
             <div className="btnInnerCover" />
-            <span className="btnText">Start With a Clarity Call</span>
+            <span className="btnText">Book a Clarity Call</span>
             <span className="iconBubble">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
@@ -166,7 +166,15 @@ export default function Hero() {
             </span>
           </a>
 
-          <a href="#walkthroughs" className="ghostBtn" style={{ textAlign: "center" }}>
+          <a
+            href="#recent-work"
+            className="ghostBtn"
+            style={{ textAlign: "center" }}
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("recent-work")?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
             See How It Works
           </a>
         </div>

@@ -178,7 +178,7 @@ function WorkCard({
         position: "absolute", inset: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
         zIndex: 3, pointerEvents: "none",
-        opacity: hovered ? 1 : 0,
+        opacity: 1,
         transition: "opacity 0.22s",
       }}>
         <div style={{

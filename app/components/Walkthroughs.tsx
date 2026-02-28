@@ -171,7 +171,7 @@ export default function Walkthroughs() {
                     color: "#fff",
                   }}
                 >
-                  Selected Work.
+                  Proven Systems.
                 </h2>
                 <p
                   style={{
