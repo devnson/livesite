@@ -28,14 +28,14 @@ const walkthroughs = [
     videoId: "0WjL6oWzHUg",
     thumb: "",
     context:
-      "AI-powered document tool with a feature set that requires more than a screenshot to understand.",
+      "Automates customs entry writing by turning shipping documents into ready-to-file entries inside existing ABI tools.",
     problem:
-      "Landing page visitors weren't converting because they had to be told what the product did — not shown.",
+      "Entry writing is high-volume and high-risk. Automation often fails because it disrupts broker workflows.",
     built:
-      "90-second buyer-legible walkthrough built around the moment of insight. Structured for landing page hero placement.",
+      "A 90-second walkthrough visualizing the end-to-end flow, documents in, AI extraction, entries delivered inside ABI.",
     result:
-      "Deployed on landing page and used in sales outreach. Reduced explanation load in early-stage conversations.",
-    tags: ["Landing page asset", "Sales enablement", "Feature walkthrough"],
+      "Made workflow fit, accuracy, and scalability instantly clear. Deployed across homepage and outbound.",
+    tags: ["Workflow integration", "Homepage Narrative", "Feature walkthrough"],
   },
   {
     client: "Aleph",
