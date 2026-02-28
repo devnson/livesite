@@ -135,8 +135,8 @@ export default function Hero() {
             margin: `${isMobile ? 20 : 28}px 0 0 0`,
           }}
         >
-          We work alongside your marketing team to clarify positioning and turn product value into{" "}
-          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>structured, deployable motion.</strong>
+          We work alongside your marketing team to clarify positioning and turn product value into motion that {" "}
+          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>shortens sales cycles and strengthens launches.</strong>
         </p>
 
         {/* CTA BUTTONS */}
