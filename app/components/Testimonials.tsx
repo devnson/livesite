@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -8,107 +8,127 @@ gsap.registerPlugin(ScrollTrigger);
 
 const row1 = [
   {
-    quote:
-      "Tanosei took our security platform's story and made it feel like something people actually want to watch. Our sales team now leads every enterprise call with the video.",
-    name: "Head of Marketing",
-    company: "SecurityPal",
-    detail: "Series B · Enterprise Security",
-    headshot: "",
+    quote: "We'd been trying to visualize productivity concepts for social for years. Sushan understood the brand instinctively — and kept delivering across three years without us having to re-explain ourselves.",
+    name: "Ashutosh Priyadarshy",
+    role: "Founder",
+    company: "Sunsama",
+    detail: "Productivity · Social Content",
+    headshot: "https://media.licdn.com/dms/image/v2/C4D03AQEsfB4yQxh1rQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1516525779905?e=1773878400&v=beta&t=eSAfUJhEeZalrDX2Fu4XnAT95xD0hTinaIIMeaAcvq0",
     videoId: "",
+    linkedin: "https://www.linkedin.com/in/ashutoshpriyadarshy/",
   },
   {
-    quote:
-      "What surprised me was how quickly they got the narrative right. One brief, one round of feedback, and we had something we're proud to put in front of CFOs.",
-    name: "VP of Revenue",
-    company: "Thera",
-    detail: "Series A · Global Payroll",
-    headshot: "",
+    quote: "The process was frictionless. We had a complex concept, a tight timeline, and they just moved — clean system, no back-and-forth. The whole team was impressed.",
+    name: "Lucas Goransky",
+    role: "Co-founder",
+    company: "Aleph",
+    detail: "Fintech · Series B",
+    headshot: "https://media.licdn.com/dms/image/v2/D4D03AQFtv5upv1ad3g/profile-displayphoto-scale_400_400/B4DZfB26VGGUAg-/0/1751304087625?e=1773878400&v=beta&t=67zhD5R7x72865ZICP4U7loAjl6_JCZ5M9MLzskuXd0",
     videoId: "",
+    linkedin: "https://www.linkedin.com/in/lucasgoransky/",
   },
   {
-    quote:
-      "We've worked with bigger agencies that took longer and understood us less. Tanosei felt like a creative partner who actually cared about the outcome.",
-    name: "Founder",
+    quote: "Despite the complexity of what we're building, they made it visual — and our sales team actually uses it. That's not easy to do with deep tech.",
+    name: "Kathryn Wu",
+    role: "Co-founder",
     company: "Openmart",
-    detail: "Seed · B2B Commerce",
-    headshot: "",
+    detail: "B2B Commerce · Seed",
+    headshot: "https://media.licdn.com/dms/image/v2/D5603AQEN_mLXZdnWbA/profile-displayphoto-scale_400_400/B56Zhsyjg7HQAk-/0/1754171849346?e=1773878400&v=beta&t=3OWE2VwmYaszvXR8VAU-hwTJLOPvr0HsaruaWstc0Zk",
     videoId: "",
+    linkedin: "https://www.linkedin.com/in/kathrynwoohoo/",
   },
   {
-    quote:
-      "The motion system they built scaled to every channel we needed — ads, social, product. We stopped treating video as a one-off.",
-    name: "Marketing Lead",
-    company: "Niural AI",
-    detail: "Series A · HR Tech",
-    headshot: "",
-    videoId: "",
-  },
-  {
-    quote: "14 days from brief to final file. No chasing, no re-briefs. Just clean execution every time.",
-    name: "Head of Growth",
+    quote: "They broke down our legal tech in a way that felt approachable without dumbing it down. The video went straight into our marketing stack.",
+    name: "Team",
+    role: "",
     company: "Elefta",
-    detail: "Seed · Legal Tech",
+    detail: "Legal Tech · Seed",
     headshot: "",
     videoId: "",
+    linkedin: "",
   },
   {
-    quote: "We had a complex story about AI in real estate. They turned it into something investors could understand in 90 seconds.",
-    name: "Co-founder",
+    quote: "They brought our PropTech concepts to life visually — three videos in, and the quality actually got sharper each time. They understood what we were building.",
+    name: "Marketing Head",
+    role: "",
     company: "reAlpha",
-    detail: "Series A · PropTech",
+    detail: "PropTech · Series A",
     headshot: "",
     videoId: "",
+    linkedin: "",
+  },
+  {
+    quote: "What stuck with me wasn't just the output — it was the framework they brought. For a single video project, they gave us a clear lens on how creative strategy should work.",
+    name: "Nabin Banskota",
+    role: "Co-founder",
+    company: "Niural AI",
+    detail: "HR Tech · Series A",
+    headshot: "https://media.licdn.com/dms/image/v2/D5603AQEY5CWac6klMQ/profile-displayphoto-scale_400_400/B56ZfhAbICGQAk-/0/1751826674923?e=1773878400&v=beta&t=WFwJYbkO8bsNcZnojZl8WKWjPrMRvDWIIMQs4PV94Ws",
+    videoId: "",
+    linkedin: "https://www.linkedin.com/in/nabinbanskota/",
   },
 ];
 
 const row2 = [
   {
-    quote: "They nailed the tone on the first pass. No generic explainer energy — it actually sounded like us.",
-    name: "Head of Brand",
+    quote: "Three years, consistent quality, zero re-briefing. Sushan just gets it — the brand, the tone, the audience. That's rare.",
+    name: "Ashutosh Priyadarshy",
+    role: "Founder",
     company: "Sunsama",
-    detail: "Series A · Productivity",
-    headshot: "",
+    detail: "Productivity · Social Content",
+    headshot: "https://media.licdn.com/dms/image/v2/C4D03AQEsfB4yQxh1rQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1516525779905?e=1773878400&v=beta&t=eSAfUJhEeZalrDX2Fu4XnAT95xD0hTinaIIMeaAcvq0",
     videoId: "",
+    linkedin: "https://www.linkedin.com/in/ashutoshpriyadarshy/",
   },
   {
-    quote: "Every asset came with cutdowns we didn't have to ask for. They just thought ahead.",
-    name: "Demand Gen Lead",
-    company: "Ramp",
-    detail: "Series C · Fintech",
-    headshot: "",
+    quote: "We had complex customs automation to explain to an audience that's skeptical by default. They made it legible without losing the technical credibility.",
+    name: "Sepehr F.",
+    role: "Founder",
+    company: "DocUnlock",
+    detail: "Trade Compliance · AI",
+    headshot: "https://media.licdn.com/dms/image/v2/D5603AQEepBbTI5j0Yw/profile-displayphoto-shrink_400_400/B56ZVEI0CUHsAo-/0/1740604916477?e=1773878400&v=beta&t=ETt3C1q9NHvtfp1f3Q-MkxtMiko4IdfmXwm41T0ize4",
     videoId: "",
+    linkedin: "https://www.linkedin.com/in/sepehr-f/",
   },
   {
-    quote: "The video became our best-performing outbound asset within two weeks of going live.",
-    name: "VP of Sales",
-    company: "Aleph",
-    detail: "Series B · Finance",
-    headshot: "",
+    quote: "Efficiency was the word that kept coming up internally. They had a system — and it showed in how smooth the whole process was.",
+    name: "Yucheng He",
+    role: "Co-founder",
+    company: "Openmart",
+    detail: "B2B Commerce · Seed",
+    headshot: "https://media.licdn.com/dms/image/v2/D5635AQGNVyV6K0ZBXA/profile-framedphoto-shrink_400_400/B56ZYcg6kWH0Ak-/0/1744235113112?e=1772870400&v=beta&t=CiFSsAl5YQlOI77YuWjr5fN_GPg2sux3MT7OeKutlSA",
     videoId: "",
+    linkedin: "https://www.linkedin.com/in/yuchenghe/",
   },
   {
-    quote: "We went into the call thinking we knew our story. Tanosei showed us a sharper version we hadn't considered.",
-    name: "CEO",
-    company: "Saral",
-    detail: "Seed · Influencer Marketing",
-    headshot: "",
-    videoId: "",
-  },
-  {
-    quote: "Fast, sharp, and zero handholding. Exactly what a lean marketing team needs.",
-    name: "Marketing Manager",
-    company: "Elefta",
-    detail: "Seed · Legal Tech",
-    headshot: "",
-    videoId: "",
-  },
-  {
-    quote: "Our investors watched it before the pitch. That's when we knew it worked.",
-    name: "Founder",
+    quote: "They were cheap when we first worked together, and they were still better than people who charged more. The visual thinking was always there.",
+    name: "Marketing Head",
+    role: "",
     company: "reAlpha",
-    detail: "Series A · PropTech",
+    detail: "PropTech · Series A",
     headshot: "",
     videoId: "",
+    linkedin: "",
+  },
+  {
+    quote: "The video made our workflow feel trustworthy — not just explainable. That distinction mattered a lot for the kind of buyers we're going after.",
+    name: "Jonathan Moberger",
+    role: "Marketing",
+    company: "DocUnlock",
+    detail: "Trade Compliance · AI",
+    headshot: "https://media.licdn.com/dms/image/v2/D4E03AQFaKE9crxHfOw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1681855699853?e=1773878400&v=beta&t=9TBeKtwNuOZ5GtkrYEuXNcYFMY2Z_EC9C2rM4qJb7vw",
+    videoId: "",
+    linkedin: "https://www.linkedin.com/in/jmoberger/",
+  },
+  {
+    quote: "They translated a genuinely hard product into something our non-technical prospects could grasp in 90 seconds. Sales started using it immediately.",
+    name: "Nabin Banskota",
+    role: "Co-founder",
+    company: "Niural AI",
+    detail: "HR Tech · Series A",
+    headshot: "https://media.licdn.com/dms/image/v2/D5603AQEY5CWac6klMQ/profile-displayphoto-scale_400_400/B56ZfhAbICGQAk-/0/1751826674923?e=1773878400&v=beta&t=WFwJYbkO8bsNcZnojZl8WKWjPrMRvDWIIMQs4PV94Ws",
+    videoId: "",
+    linkedin: "https://www.linkedin.com/in/nabinbanskota/",
   },
 ];
 
@@ -149,8 +169,7 @@ export default function Testimonials() {
   const doubled1 = useMemo(() => [...row1, ...row1], []);
   const doubled2 = useMemo(() => [...row2, ...row2], []);
 
-  // ✅ Mobile shrink controls (only affects <= 520px)
-  const S = isMobile ? 0.86 : 1; // overall scale factor for card typography + paddings
+  const S = isMobile ? 0.86 : 1;
   const CARD_W = isMobile ? 288 : 340;
   const PAD = Math.round((isMobile ? 18 : 24) * S);
   const GAP = isMobile ? 12 : 16;
@@ -178,29 +197,65 @@ export default function Testimonials() {
 
     const thumbUrl = t.videoId ? `https://img.youtube.com/vi/${t.videoId}/hqdefault.jpg` : null;
 
+    const CardWrapper = ({ children }: { children: React.ReactNode }) =>
+      t.linkedin ? (
+        <a
+          href={t.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            width: `${CARD_W}px`,
+            flexShrink: 0,
+            borderRadius: isMobile ? "14px" : "16px",
+            border: "1px solid rgba(255,255,255,0.09)",
+            background: "rgba(255,255,255,0.03)",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+            transition: "border-color 0.2s, background 0.2s",
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "pointer",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.22)";
+            (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.05)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.09)";
+            (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.03)";
+          }}
+        >
+          {children}
+        </a>
+      ) : (
+        <div
+          style={{
+            width: `${CARD_W}px`,
+            flexShrink: 0,
+            borderRadius: isMobile ? "14px" : "16px",
+            border: "1px solid rgba(255,255,255,0.09)",
+            background: "rgba(255,255,255,0.03)",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+            transition: "border-color 0.2s, background 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.18)";
+            (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.05)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.09)";
+            (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.03)";
+          }}
+        >
+          {children}
+        </div>
+      );
+
     return (
-      <div
-        key={i}
-        style={{
-          width: `${CARD_W}px`,
-          flexShrink: 0,
-          borderRadius: isMobile ? "14px" : "16px",
-          border: "1px solid rgba(255,255,255,0.09)",
-          background: "rgba(255,255,255,0.03)",
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-          transition: "border-color 0.2s, background 0.2s",
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.18)";
-          (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.05)";
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.09)";
-          (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.03)";
-        }}
-      >
+      <CardWrapper key={i}>
         {thumbUrl && (
           <div
             onClick={() => setActiveVideo(t.videoId)}
@@ -321,14 +376,25 @@ export default function Testimonials() {
             </div>
 
             <div>
-              <p style={{ fontSize: `${nameFont}px`, fontWeight: 600, color: "rgba(255,255,255,0.82)", margin: "0 0 2px 0" }}>{t.name}</p>
+              <p style={{ fontSize: `${nameFont}px`, fontWeight: 600, color: "rgba(255,255,255,0.82)", margin: "0 0 2px 0" }}>
+                {t.name}
+                {t.linkedin && (
+                  <span style={{ display: "inline-flex", alignItems: "center", marginLeft: "5px", opacity: 0.4 }}>
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </span>
+                )}
+              </p>
               <p style={{ fontSize: `${metaFont}px`, color: "rgba(255,255,255,0.48)", margin: 0 }}>
-                {t.company} · {t.detail}
+                {t.role ? `${t.role}, ` : ""}{t.company}
               </p>
             </div>
           </div>
         </div>
-      </div>
+      </CardWrapper>
     );
   };
 
@@ -381,10 +447,10 @@ export default function Testimonials() {
           </h2>
         </div>
 
-        {/* ROW 1 */}
+        {/* ROW 1 — LTR */}
         <div style={{ position: "relative", width: "100%", overflow: "hidden", marginBottom: `${GAP}px` }} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${fadeW}px`, background: "linear-gradient(to right, #080808, transparent)", zIndex: 2, pointerEvents: "none" }} />
-          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: `${fadeW}px`, background: "linear-gradient(to left, #080808, transparent)", zIndex: 2, pointerEvents: "none" }} />
+          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${fadeW}px`, background: "linear-gradient(to right, #0d0d0d, transparent)", zIndex: 2, pointerEvents: "none" }} />
+          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: `${fadeW}px`, background: "linear-gradient(to left, #0d0d0d, transparent)", zIndex: 2, pointerEvents: "none" }} />
           <div
             style={{
               display: "flex",
@@ -399,10 +465,10 @@ export default function Testimonials() {
           </div>
         </div>
 
-        {/* ROW 2 */}
+        {/* ROW 2 — RTL */}
         <div style={{ position: "relative", width: "100%", overflow: "hidden" }} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${fadeW}px`, background: "linear-gradient(to right, #080808, transparent)", zIndex: 2, pointerEvents: "none" }} />
-          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: `${fadeW}px`, background: "linear-gradient(to left, #080808, transparent)", zIndex: 2, pointerEvents: "none" }} />
+          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${fadeW}px`, background: "linear-gradient(to right, #0d0d0d, transparent)", zIndex: 2, pointerEvents: "none" }} />
+          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: `${fadeW}px`, background: "linear-gradient(to left, #0d0d0d, transparent)", zIndex: 2, pointerEvents: "none" }} />
           <div
             style={{
               display: "flex",
@@ -418,6 +484,7 @@ export default function Testimonials() {
         </div>
       </section>
 
+      {/* VIDEO LIGHTBOX */}
       {activeVideo && (
         <div
           onClick={() => setActiveVideo(null)}
@@ -475,11 +542,6 @@ export default function Testimonials() {
         @keyframes tickerRTL {
           0%   { transform: translateX(-50%); }
           100% { transform: translateX(0); }
-        }
-
-        /* Extra tightening for very small devices */
-        @media (max-width: 380px) {
-          /* This section is already responsive via JS, but this keeps it safe */
         }
       `}</style>
     </>
