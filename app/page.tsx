@@ -12,10 +12,13 @@ import Team from "./components/Team";
 import FAQ from "./components/FAQ";
 import LogoStrip from "./components/Logostrip";
 import Footer from "./components/Footer";
+import { Analytics } from '@vercel/analytics/next';
+
 
 export default function Home() {
   return (
-    <main style={{ background: "#080808", minHeight: "100vh" }}>
+    <main style={{ background: "#080808", minHeight: "100vh" }}>        <Analytics />
+      <Analytics />
       <Nav />
       <Hero />
       <RecentWork />
