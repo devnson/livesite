@@ -24,55 +24,7 @@ export default function Footer() {
   return (
     <footer style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
 
-      {/* CTA BLOCK */}
-      <div
-        ref={ctaRef}
-        style={{
-          padding: "120px 24px",
-          textAlign: "center",
-          opacity: 0,
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute", top: "50%", left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "600px", height: "300px",
-            borderRadius: "50%",
-            background: "rgba(255,255,255,0.025)",
-            filter: "blur(80px)",
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* was 0.3 — bumped to 0.52 */}
-        <p style={{ fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "24px", fontWeight: 600 }}>
-          Ready to start
-        </p>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
-          <a
-            href="https://cal.com/tanoseihito/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="premiumBtn"
-          >
-            <span className="rimGlow" />
-            <span className="btnInnerCover" />
-            <span className="btnText">Start with Clarity Call</span>
-            <span className="iconBubble" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </span>
-          </a>
-
-          {/* was 0.45 — bumped to 0.68 */}
-         
-        </div>
-      </div>
+      
 
       {/* FOOTER LINKS */}
       <div
