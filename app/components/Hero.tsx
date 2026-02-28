@@ -132,8 +132,8 @@ export default function Hero() {
             margin: `${isMobile ? 20 : 28}px 0 0 0`,
           }}
         >
-          We help GTM teams turn complex products into structured, repeatable video systems that{" "}
-          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>educate buyers, strengthen positioning, and accelerate sales.</strong>
+          We work alongside your marketing team to clarify positioning and turn product value into motion that shortens sales cycles and strengthens launches.{" "}
+          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>structured, deployable motion.</strong>
         </p>
 
         {/* CTA BUTTONS */}
@@ -199,7 +199,8 @@ export default function Hero() {
           alignItems: "center",
           justifyContent: isMobile ? "flex-start" : "center",
           flexWrap: "wrap",
-          gap: isMobile ? "24px 20px" : "0 44px",
+          gap: isMobile ? "20px 16px" : "16px 28px",
+          width: "100%",
         }}>
           {logos.map((logo) => (
             <a
@@ -214,9 +215,8 @@ export default function Hero() {
                 src={logo.src}
                 alt={logo.name}
                 style={{
-                  // ── ONLY CHANGE: desktop logos are 1.35× bigger and 0.85 opacity ──
-                  width: `${isMobile ? Math.round(logo.w * 0.72) : Math.round(logo.w * 1.35)}px`,
-                  height: isMobile ? "15px" : "28px",
+                  width: isMobile ? `${Math.round(logo.w * 0.72)}px` : `min(${Math.round(logo.w * 1.2)}px, ${(logo.w * 1.2 / 1100 * 100).toFixed(1)}vw)`,
+                  height: isMobile ? "15px" : "clamp(18px, 2vw, 26px)",
                   objectFit: "contain",
                   display: "block",
                   filter: "brightness(0) invert(1)",

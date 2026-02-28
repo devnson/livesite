@@ -9,39 +9,39 @@ gsap.registerPlugin(ScrollTrigger);
 const solutions = [
   {
     number: "01",
-    title: "Sales Enablement Video",
-    desc: "Demo videos, case studies, and explainers that give your sales team something worth sending — and buyers something worth watching.",
-    detail: "Avg. 14-day turnaround",
+    title: "Sales Enablement System",
+    desc: "Structured product narratives, case-driven explainers, and pre-demo assets that reduce explanation load and move buyers forward before the call begins.",
+    detail: "Standardized assets for every funnel stage",
   },
   {
     number: "02",
     title: "Category Narrative",
-    desc: "Brand films and vision videos that position you in a category of one. Not feature tours — story-first, emotion-led.",
-    detail: "Script + production",
+    desc: "Vision-led films and strategic story assets that position you beyond features, defining your category, framing your advantage, and aligning your market around your thesis.",
+    detail: "Positioning + script + production",
   },
   {
     number: "03",
     title: "Reusable Visual Library",
-    desc: "A system of motion assets, icon animations, and UI walkthroughs you can repurpose across every channel.",
-    detail: "12–20 assets per sprint",
+    desc: "A modular motion asset system, UI walkthroughs, icon animations, transitions, and branded elements, built once and deployed across every GTM channel.",
+    detail: "Multi-channel asset pack per sprint",
   },
   {
     number: "04",
-    title: "Launch Campaigns",
-    desc: "Feature launch videos, product update content, and announcement visuals — timed to your roadmap, not ours.",
-    detail: "Ships with your calendar",
+    title: "Launch Velocity",
+    desc: "Feature releases, product updates, and roadmap moments turned into structured motion drops, timed to your calendar and built to amplify adoption.",
+    detail: "Ships with your product roadmap",
   },
   {
     number: "05",
     title: "Motion Design System",
-    desc: "2D and 3D animation in your brand language. Built once, used everywhere — ads, decks, social, product.",
-    detail: "Brand-matched output",
+    desc: "A defined 2D and 3D animation language for your brand, establishing consistency across ads, decks, landing pages, and product surfaces.",
+    detail: "Brand-matched, repeatable framework",
   },
   {
     number: "06",
     title: "Embedded Retainer",
-    desc: "A dedicated creative pod inside your team. Ongoing production capacity without the agency overhead.",
-    detail: "Monthly engagement",
+    desc: "A dedicated creative pod operating inside your team, consistent output, strategic alignment, and predictable production capacity.",
+    detail: "Monthly strategic engagement",
   },
 ];
 
