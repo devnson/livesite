@@ -134,6 +134,7 @@ export default function Hero() {
         >
           We help GTM teams turn complex products into structured, repeatable video systems that{" "}
           <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>educate buyers, strengthen positioning, and accelerate sales.</strong>
+
         </p>
 
         {/* CTA BUTTONS */}
@@ -194,38 +195,87 @@ export default function Hero() {
           Trusted by teams at
         </p>
 
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: isMobile ? "flex-start" : "center",
-          flexWrap: "wrap",
-          gap: isMobile ? "20px 16px" : "16px 28px",
-          width: "100%",
-        }}>
-          {logos.map((logo) => (
-            <a
-              key={logo.name}
-              href={logo.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={logo.name}
-              style={{ display: "inline-flex", alignItems: "center", textDecoration: "none", flexShrink: 0 }}
-            >
-              <img
-                src={logo.src}
-                alt={logo.name}
-                style={{
-                  width: isMobile ? `${Math.round(logo.w * 0.72)}px` : `min(${Math.round(logo.w * 1.2)}px, ${(logo.w * 1.2 / 1100 * 100).toFixed(1)}vw)`,
-                  height: isMobile ? "15px" : "clamp(18px, 2vw, 26px)",
-                  objectFit: "contain",
-                  display: "block",
-                  filter: "brightness(0) invert(1)",
-                  opacity: isMobile ? 0.55 : 0.85,
-                }}
-              />
-            </a>
-          ))}
-        </div>
+        {isMobile ? (
+          /* MOBILE: auto-scrolling marquee — 28px logos matching SecurityPal */
+          <>
+            <style>{`
+              @keyframes heroLogoScroll {
+                0%   { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+              }
+              .heroLogoTrack {
+                display: flex;
+                align-items: center;
+                width: max-content;
+                animation: heroLogoScroll 20s linear infinite;
+              }
+              .heroLogoTrack:hover { animation-play-state: paused; }
+            `}</style>
+            <div style={{ overflow: "hidden", width: "100%", position: "relative" }}>
+              <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "48px", background: "linear-gradient(90deg, #000 60%, transparent)", zIndex: 2, pointerEvents: "none" }} />
+              <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "48px", background: "linear-gradient(270deg, #000 60%, transparent)", zIndex: 2, pointerEvents: "none" }} />
+              <div className="heroLogoTrack">
+                {[...logos, ...logos].map((logo, i) => (
+                  <a
+                    key={`${logo.name}-${i}`}
+                    href={logo.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={logo.name}
+                    style={{ display: "inline-flex", alignItems: "center", textDecoration: "none", flexShrink: 0, marginRight: "40px" }}
+                  >
+                    <img
+                      src={logo.src}
+                      alt={logo.name}
+                      style={{
+                        width: `${Math.round(logo.w * 1.1)}px`,
+                        height: "28px",
+                        objectFit: "contain",
+                        display: "block",
+                        filter: "brightness(0) invert(1)",
+                        opacity: 0.75,
+                      }}
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          /* DESKTOP: static centered row — unchanged */
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: "16px 28px",
+            width: "100%",
+          }}>
+            {logos.map((logo) => (
+              <a
+                key={logo.name}
+                href={logo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={logo.name}
+                style={{ display: "inline-flex", alignItems: "center", textDecoration: "none", flexShrink: 0 }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  style={{
+                    width: `min(${Math.round(logo.w * 1.2)}px, ${(logo.w * 1.2 / 1100 * 100).toFixed(1)}vw)`,
+                    height: "clamp(18px, 2vw, 26px)",
+                    objectFit: "contain",
+                    display: "block",
+                    filter: "brightness(0) invert(1)",
+                    opacity: 0.85,
+                  }}
+                />
+              </a>
+            ))}
+          </div>
+        )}
 
         {/* Bottom rule */}
         <div style={{ height: "1px", background: "rgba(255,255,255,0.07)", marginTop: "24px" }} />

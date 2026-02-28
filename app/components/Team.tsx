@@ -40,7 +40,6 @@ const avatarTuning: Record<string, { size?: number; pos?: [number, number] }> = 
 const CW = 130;
 const CH = 130;
 
-// ─── Segment math ───────────────────────────────────────────────
 type Seg = { x1: number; y1: number; x2: number; y2: number; len: number };
 function buildSegs(pts: [number, number][]) {
   const segs: Seg[] = [];
@@ -67,7 +66,6 @@ function posAt(segs: Seg[], total: number, d: number) {
   return { x: l.x2, y: l.y2 };
 }
 
-// ─── Animation constants ─────────────────────────────────────────
 const SPEED = 150;
 const SPAWN_INTERVAL = 0.38;
 const FADE_IN = 22;
@@ -80,7 +78,6 @@ type TrunkBlock = { id: number; dist: number; spawnedSpine: boolean };
 type SpineBlock  = { id: number; dist: number; emitted: boolean[] };
 type BranchBlock = { id: number; lane: number; dist: number };
 
-// ─── Layout types ────────────────────────────────────────────────
 type LayoutDesktop = {
   mode: "desktop";
   W: number; H: number;
@@ -111,94 +108,43 @@ type LayoutMobile = {
 };
 type Layout = LayoutDesktop | LayoutMobile;
 
-// ─── Avatar rendered via SVG <image> (works everywhere) ──────────
 function Avatar({ m, isHover }: { m: Member; isHover: boolean }) {
   const r  = 22;
   const cx = CW / 2;
   const cy = 40;
   const tune = avatarTuning[m.name] || {};
-
-  // Convert percentage-based size/pos into SVG viewBox crop values.
-  // size% means the image width = r*2 * (size/100), so we offset negatively.
   const imgSize = ((tune.size ?? 165) / 100) * (r * 2);
-  const px = (tune.pos?.[0] ?? 50) / 100; // 0–1
+  const px = (tune.pos?.[0] ?? 50) / 100;
   const py = (tune.pos?.[1] ?? 50) / 100;
   const imgX = Math.round(cx - r - (imgSize - r * 2) * px);
   const imgY = Math.round(cy - r - (imgSize - r * 2) * py);
-
   const clipId = `clip-${m.name.replace(/\s+/g, "-")}`;
 
   return (
     <>
-      {/* Clip circle */}
       <defs>
         <clipPath id={clipId}>
           <circle cx={cx} cy={cy} r={r} />
         </clipPath>
       </defs>
-
-      {/* Background circle */}
-      <circle
-        cx={cx} cy={cy} r={r}
-        fill="rgba(255,255,255,0.04)"
-        stroke={isHover ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.10)"}
-        strokeWidth="1"
-      />
-
+      <circle cx={cx} cy={cy} r={r} fill="rgba(255,255,255,0.04)" stroke={isHover ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.10)"} strokeWidth="1" />
       {m.photo ? (
-        // SVG <image> with clipPath — works on all browsers including mobile Safari
-        <image
-          href={m.photo}
-          x={imgX}
-          y={imgY}
-          width={imgSize}
-          height={imgSize}
-          clipPath={`url(#${clipId})`}
-          preserveAspectRatio="xMidYMid slice"
-        />
+        <image href={m.photo} x={imgX} y={imgY} width={imgSize} height={imgSize} clipPath={`url(#${clipId})`} preserveAspectRatio="xMidYMid slice" />
       ) : (
-        <text
-          x={cx} y={cy + 6}
-          textAnchor="middle"
-          fontFamily="var(--font-dm)"
-          fontSize="13"
-          fontWeight="800"
-          fill="rgba(255,255,255,0.55)"
-        >
-          {m.initials || ""}
-        </text>
+        <text x={cx} y={cy + 6} textAnchor="middle" fontFamily="var(--font-dm)" fontSize="13" fontWeight="800" fill="rgba(255,255,255,0.55)">{m.initials || ""}</text>
       )}
-
-      {/* Subtle overlay to blend edges */}
       {m.photo && <circle cx={cx} cy={cy} r={r} fill="rgba(0,0,0,0.06)" />}
     </>
   );
 }
 
-// ─── Studio logo-only card (shared between desktop + mobile) ─────
 function StudioCard({ x, y }: { x: number; y: number }) {
   return (
     <g transform={`translate(${x}, ${y})`}>
-      <rect x={0} y={0} width={CW} height={CH} rx={22}
-        fill="rgb(12,12,12)"
-        stroke="rgba(255,255,255,0.14)"
-        strokeWidth="1"
-      />
-      {/* Tanosei logo SVG, centered in card
-          Logo bbox: x≈71–274 (w≈203), y≈67–335 (h≈268)
-          At scale 0.14: rendered w≈28, h≈38
-          Offset to center: x = CW/2 - 28/2 - 71*0.14, y = CH/2 - 38/2 - 67*0.14
-      */}
+      <rect x={0} y={0} width={CW} height={CH} rx={22} fill="rgb(12,12,12)" stroke="rgba(255,255,255,0.14)" strokeWidth="1" />
       <g transform={`translate(${Math.round(CW / 2 - 14 - 71 * 0.14)}, ${Math.round(CH / 2 - 19 - 67 * 0.14)}) scale(0.14)`}>
-        <path
-          fillRule="evenodd" clipRule="evenodd"
-          d="M71.211 258.453L71.211 163.678L71.211 87.162C71.211 74.4614 83.7004 67.488 92.7003 72.6307L152.706 107.171L152.706 265.423L130.571 269.742L130.572 276.101L152.706 271.472L162.723 269.375L274.349 246.21V335.3L152.393 334.675C101.22 334.675 71.211 290.544 71.211 258.453Z"
-          fill="rgba(255,255,255,0.86)"
-        />
-        <path
-          d="M213.42 193.732L161.703 223.687L161.821 163.659L165.881 161.265C167.856 163.644 169.986 165.935 172.271 168.125C184.107 179.473 198.472 186.554 213.462 189.409L213.42 193.732Z"
-          fill="rgba(255,255,255,0.86)"
-        />
+        <path fillRule="evenodd" clipRule="evenodd" d="M71.211 258.453L71.211 163.678L71.211 87.162C71.211 74.4614 83.7004 67.488 92.7003 72.6307L152.706 107.171L152.706 265.423L130.571 269.742L130.572 276.101L152.706 271.472L162.723 269.375L274.349 246.21V335.3L152.393 334.675C101.22 334.675 71.211 290.544 71.211 258.453Z" fill="rgba(255,255,255,0.86)" />
+        <path d="M213.42 193.732L161.703 223.687L161.821 163.659L165.881 161.265C167.856 163.644 169.986 165.935 172.271 168.125C184.107 179.473 198.472 186.554 213.462 189.409L213.42 193.732Z" fill="rgba(255,255,255,0.86)" />
       </g>
     </g>
   );
@@ -207,11 +153,12 @@ function StudioCard({ x, y }: { x: number; y: number }) {
 export default function Team() {
   const headerRef = useRef<HTMLDivElement>(null);
   const wrapRef   = useRef<HTMLDivElement>(null);
-  const [hov, setHov]         = useState<string | null>(null);
+  const [hov, setHov]           = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
+  // ── ONLY CHANGE: 860px → 640px so tablet/split-screen stays on desktop layout ──
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 860px)");
+    const mq = window.matchMedia("(max-width: 640px)");
     const apply = () => setIsMobile(mq.matches);
     apply();
     mq.addEventListener?.("change", apply);
@@ -239,14 +186,13 @@ export default function Team() {
       const topMY        = memberY(0) + CH / 2;
       const botMY        = memberY(teamMembers.length - 1) + CH / 2;
       const W            = COL_TEAM + CW + 30;
-      const TRUNK    = buildSegs([[COL_STUDIO + CW, studioMY],[COL_CREATIVE, creativeMY],[COL_CREATIVE + CW, creativeMY],[COL_OPS, opsMY],[COL_OPS + CW, opsMY],[spineX, opsMY]]);
+      const TRUNK      = buildSegs([[COL_STUDIO + CW, studioMY],[COL_CREATIVE, creativeMY],[COL_CREATIVE + CW, creativeMY],[COL_OPS, opsMY],[COL_OPS + CW, opsMY],[spineX, opsMY]]);
       const SPINE_UP   = buildSegs([[spineX, opsMY],[spineX, topMY]]);
       const SPINE_DOWN = buildSegs([[spineX, opsMY],[spineX, botMY]]);
       const BRANCHES   = teamMembers.map((_, i) => { const y = memberY(i) + CH / 2; return buildSegs([[spineX, y],[COL_TEAM, y],[COL_TEAM + CW / 2, y]]); });
       return { mode: "desktop", W, H, COL_STUDIO, COL_CREATIVE, COL_OPS, COL_TEAM, spineX, STUDIO_Y, CREATIVE_Y, OPS_Y, memberY, studioMY, creativeMY, opsMY, topMY, botMY, TRUNK, SPINE_UP, SPINE_DOWN, BRANCHES };
     }
 
-    // MOBILE
     const VSTEP = 96, TOP_PAD = 10;
     const STUDIO_Y   = TOP_PAD;
     const CREATIVE_Y = STUDIO_Y   + CH + VSTEP;
@@ -269,22 +215,21 @@ export default function Team() {
       { x: gridLeftX  + CW / 2, y: gridRow2Y + CH / 2 },
       { x: gridRightX + CW / 2, y: gridRow2Y + CH / 2 },
     ];
-    const spineX   = centerX;
+    const spineX    = centerX;
     const spineBotY = (lanes[0].y + lanes[2].y) / 2;
-    const H        = gridRow2Y + CH + 18;
+    const H         = gridRow2Y + CH + 18;
     const TRUNK      = buildSegs([[spineX, studioMY],[spineX, creativeMY],[spineX, opsMY]]);
     const SPINE_DOWN = buildSegs([[spineX, opsMY],[spineX, spineBotY]]);
     const BRANCHES   = lanes.map((p) => buildSegs([[spineX, p.y],[p.x, p.y]]));
     return { mode: "mobile", W, H, centerX, STUDIO_Y, CREATIVE_Y, OPS_Y, studioMY, creativeMY, opsMY, gridLeftX, gridRightX, gridRow1Y, gridRow2Y, lanes, spineX, spineBotY, TRUNK, SPINE_DOWN, BRANCHES };
   }, [isMobile]);
 
-  // ─── Animation state ─────────────────────────────────────────
-  const trunkBlocks  = useRef<TrunkBlock[]>([{ id: uid(), dist: 0, spawnedSpine: false }]);
-  const spineBlocks  = useRef<SpineBlock[]>([]);
-  const branchBlocks = useRef<BranchBlock[]>([]);
-  const lastTsRef    = useRef<number | null>(null);
+  const trunkBlocks   = useRef<TrunkBlock[]>([{ id: uid(), dist: 0, spawnedSpine: false }]);
+  const spineBlocks   = useRef<SpineBlock[]>([]);
+  const branchBlocks  = useRef<BranchBlock[]>([]);
+  const lastTsRef     = useRef<number | null>(null);
   const spawnTimerRef = useRef(0);
-  const [, redraw]   = useState(0);
+  const [, redraw]    = useState(0);
 
   useEffect(() => {
     gsap.fromTo(headerRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: headerRef.current, start: "top 88%" } });
@@ -314,8 +259,8 @@ export default function Team() {
       }
 
       trunkBlocks.current = trunkBlocks.current.reduce<TrunkBlock[]>((acc, b) => {
-        const next        = b.dist + move;
-        const trunkTotal  = layout.TRUNK.total;
+        const next       = b.dist + move;
+        const trunkTotal = layout.TRUNK.total;
         if (!b.spawnedSpine && next >= trunkTotal) {
           const emitted = new Array(teamMembers.length).fill(false);
           if (layout.mode === "desktop") {
@@ -337,8 +282,8 @@ export default function Team() {
           const p    = posAt(path.segs, path.total, next);
           for (let i = 0; i < teamMembers.length; i++) {
             if (s.emitted[i]) continue;
-            const laneY        = layout.memberY(i) + CH / 2;
-            const isLaneAbove  = laneY <= layout.opsMY;
+            const laneY          = layout.memberY(i) + CH / 2;
+            const isLaneAbove    = laneY <= layout.opsMY;
             const laneMatchesDir = isUp ? isLaneAbove : !isLaneAbove;
             if (!laneMatchesDir) continue;
             if (Math.abs(p.y - laneY) < 10) { s.emitted[i] = true; branchBlocks.current.push({ id: uid(), lane: i, dist: 0 }); }
@@ -412,25 +357,11 @@ export default function Team() {
   const strokeHover = "rgba(255,255,255,0.22)";
 
   const card = (x: number, y: number, m: Member, isHover: boolean, rx = 18) => (
-    <g
-      key={m.name}
-      transform={`translate(${x}, ${y})`}
-      onMouseEnter={() => setHov(m.name)}
-      onMouseLeave={() => setHov(null)}
-      style={{ cursor: "default" }}
-    >
-      <rect x={0} y={0} width={CW} height={CH} rx={rx}
-        fill={cardFill}
-        stroke={isHover ? strokeHover : strokeIdle}
-        strokeWidth="1"
-      />
+    <g key={m.name} transform={`translate(${x}, ${y})`} onMouseEnter={() => setHov(m.name)} onMouseLeave={() => setHov(null)} style={{ cursor: "default" }}>
+      <rect x={0} y={0} width={CW} height={CH} rx={rx} fill={cardFill} stroke={isHover ? strokeHover : strokeIdle} strokeWidth="1" />
       <Avatar m={m} isHover={isHover} />
-      <text x={CW / 2} y={83} textAnchor="middle" fontFamily="var(--font-dm)" fontSize="12" fontWeight="800" fill={isHover ? "rgba(255,255,255,0.78)" : "rgba(255,255,255,0.50)"}>
-        {m.name}
-      </text>
-      <text x={CW / 2} y={100} textAnchor="middle" fontFamily="var(--font-dm)" fontSize="9.5" fill="rgba(255,255,255,0.22)">
-        {m.role}
-      </text>
+      <text x={CW / 2} y={83} textAnchor="middle" fontFamily="var(--font-dm)" fontSize="12" fontWeight="800" fill={isHover ? "rgba(255,255,255,0.78)" : "rgba(255,255,255,0.50)"}>{m.name}</text>
+      <text x={CW / 2} y={100} textAnchor="middle" fontFamily="var(--font-dm)" fontSize="9.5" fill="rgba(255,255,255,0.22)">{m.role}</text>
     </g>
   );
 
@@ -447,9 +378,8 @@ export default function Team() {
         <div ref={wrapRef} style={{ display: "flex", justifyContent: "center", overflowX: "auto", opacity: 0, paddingBottom: 8 }}>
           <svg
             viewBox={`0 0 ${layout.W} ${layout.H}`}
-            style={{ width: "min(100%, 980px)", height: "auto", overflow: "visible", display: "block" }}
+            style={{ width: isMobile ? "min(100%, 320px)" : "min(100%, 980px)", height: "auto", overflow: "visible", display: "block" }}
           >
-            {/* WIRES */}
             {layout.mode === "desktop" ? (
               <>
                 <line x1={layout.COL_STUDIO + CW} y1={layout.studioMY} x2={layout.COL_CREATIVE} y2={layout.creativeMY} stroke="rgba(255,255,255,0.10)" strokeWidth="1.5" strokeDasharray="6 9" />
@@ -471,13 +401,10 @@ export default function Team() {
               </>
             )}
 
-            {/* BLOCKS */}
             {blocks}
 
-            {/* CARDS */}
             {layout.mode === "desktop" ? (
               <>
-                {/* Studio: logo-only card on desktop */}
                 <StudioCard x={layout.COL_STUDIO} y={layout.STUDIO_Y} />
                 {card(layout.COL_CREATIVE, layout.CREATIVE_Y, creative, hov === creative.name, 22)}
                 {card(layout.COL_OPS,      layout.OPS_Y,      ops,     hov === ops.name,     22)}
@@ -485,7 +412,6 @@ export default function Team() {
               </>
             ) : (
               <>
-                {/* Studio: logo-only card on mobile too */}
                 <StudioCard x={layout.centerX - CW / 2} y={layout.STUDIO_Y} />
                 {card(layout.centerX - CW / 2, layout.CREATIVE_Y, creative, hov === creative.name, 22)}
                 {card(layout.centerX - CW / 2, layout.OPS_Y,      ops,     hov === ops.name,     22)}
@@ -511,6 +437,7 @@ export default function Team() {
             </svg>
           </a>
         </div>
+
       </div>
     </section>
   );

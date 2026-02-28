@@ -63,9 +63,8 @@ function StepCard({ step, glowRef, compact = false }: {
   const baseBorder = isClient ? "rgba(96,165,250,0.18)"  : "rgba(255,255,255,0.10)";
   const pillBg     = isClient ? "rgba(96,165,250,0.16)"  : "rgba(255,255,255,0.08)";
   const pillBorder = isClient ? "rgba(96,165,250,0.28)"  : "rgba(255,255,255,0.14)";
-  const pillText   = isClient ? "rgba(220,235,255,0.95)" : "rgba(255,255,255,0.70)"; // was 0.55
-  // Description: CLIENT was 0.55, TANOSEI was 0.38 — both bumped
-  const descCol    = isClient ? "rgba(225,235,255,0.78)" : "rgba(255,255,255,0.68)"; // was 0.55 / 0.38
+  const pillText   = isClient ? "rgba(220,235,255,0.95)" : "rgba(255,255,255,0.70)";
+  const descCol    = isClient ? "rgba(225,235,255,0.78)" : "rgba(255,255,255,0.68)";
 
   return (
     <div ref={glowRef} className="step-card-ui" style={{
@@ -85,11 +84,9 @@ function StepCard({ step, glowRef, compact = false }: {
             padding: "2px 7px", borderRadius: "5px",
             background: pillBg, color: pillText, border: `1px solid ${pillBorder}`,
           }}>{step.label}</span>
-          {/* was 0.25 — bumped to 0.50 */}
           <span style={{ fontSize: compact ? "9px" : "9.5px", color: "rgba(255,255,255,0.50)", letterSpacing: "0.06em" }}>{step.num}</span>
           <span style={{ marginLeft: "auto", width: compact ? "5px" : "6px", height: compact ? "5px" : "6px", borderRadius: "50%", background: accent, opacity: 0.9 }} />
         </div>
-        {/* title: was 0.92 — kept, already good */}
         <h3 style={{
           fontFamily: "var(--font-dm)", fontWeight: 750,
           fontSize: compact ? "13px" : "13.5px",
@@ -135,8 +132,9 @@ export default function HowWeWork() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [stepIdx,   setStepIdx]   = useState(0);
 
+  // ── ONLY CHANGE: 1024 → 640 so tablet/split-screen stays on desktop layout ──
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024);
+    const check = () => setIsMobile(window.innerWidth < 640);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -339,13 +337,11 @@ export default function HowWeWork() {
         <div style={{ maxWidth: "520px", margin: "0 auto", padding: "0 24px", marginBottom: "52px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
             <span style={{ width: "18px", height: "1px", background: "rgba(255,255,255,0.28)", display: "inline-block" }} />
-            {/* was 0.3 — bumped to 0.52 */}
             <span style={{ fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", fontWeight: 600 }}>How We Work</span>
           </div>
           <h2 style={{ fontFamily: "var(--font-dm)", fontWeight: 850, fontSize: "clamp(26px,7vw,38px)", letterSpacing: "-0.04em", lineHeight: 1.05, margin: "0 0 10px", color: "#fff" }}>
             <span style={{ fontWeight: 300 }}>14 days.</span> Brief to buyer-ready.
           </h2>
-          {/* was 0.28 — bumped to 0.60 */}
           <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.60)", lineHeight: 1.7, margin: 0 }}>Predictable, fast, and built so you never have to chase us.</p>
         </div>
 
@@ -408,7 +404,6 @@ export default function HowWeWork() {
         <div ref={headerRef} style={{ opacity: 0, marginBottom: "64px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
             <span style={{ width: "18px", height: "1px", background: "rgba(255,255,255,0.28)", display: "inline-block" }} />
-            {/* was 0.3 — bumped to 0.52 */}
             <span style={{ fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", fontWeight: 650 }}>How We Work</span>
           </div>
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "18px" }}>
@@ -420,12 +415,10 @@ export default function HowWeWork() {
                 {([["CLIENT SIDE", CLIENT_ACCENT], ["OUR PROCESS", TANOSEI_ACCENT]] as const).map(([label, col]) => (
                   <div key={label} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
                     <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: col, display: "inline-block" }} />
-                    {/* was 0.42 — bumped to 0.60 */}
                     <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.60)", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>{label}</span>
                   </div>
                 ))}
               </div>
-              {/* was 0.28 — bumped to 0.62 */}
               <p style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.62)", lineHeight: 1.7, margin: 0, maxWidth: "320px" }}>Predictable, fast, and built so you never have to chase us.</p>
             </div>
           </div>
@@ -492,7 +485,6 @@ export default function HowWeWork() {
 
         {/* FOOTER */}
         <div style={{ marginTop: "62px", paddingTop: "32px", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "18px" }}>
-          {/* was 0.22 — bumped to 0.55 */}
           <p style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", margin: 0 }}>Every sprint starts with a 30-minute call. No commitment required.</p>
           <a href="https://cal.com/tanoseihito/30min" target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "11px 22px", borderRadius: "999px", border: "1px solid rgba(255,255,255,0.16)", background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.80)", fontSize: "13.5px", fontWeight: 650, textDecoration: "none", transition: "all 0.25s ease" }}
@@ -516,7 +508,6 @@ export default function HowWeWork() {
           <button onClick={() => goToStep(stepIdx + 1)} disabled={stepIdx === STEP_LABELS.length - 1} style={{ background: "none", border: "none", cursor: stepIdx === STEP_LABELS.length - 1 ? "default" : "pointer", padding: "4px 8px", borderRadius: "6px", color: stepIdx === STEP_LABELS.length - 1 ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.75)", fontSize: "14px", lineHeight: 1 }}>›</button>
           <div style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.12)", margin: "0 2px" }} />
           <button onClick={togglePlay} style={{ background: "none", border: "none", cursor: "pointer", padding: "4px 8px", color: "rgba(255,255,255,0.65)", fontSize: "12px", lineHeight: 1 }}>{isPlaying ? "⏸" : "▶"}</button>
-          {/* was 0.35 / 0.18 — bumped to 0.55 / 0.40 */}
           <div style={{ marginLeft: "4px", fontSize: "10px", color: "rgba(255,255,255,0.55)", letterSpacing: "0.08em", whiteSpace: "nowrap" }}>{STEP_LABELS[stepIdx]}</div>
           <div style={{ marginLeft: "6px", fontSize: "9px", color: "rgba(255,255,255,0.40)", letterSpacing: "0.06em" }}>Shift+P to exit</div>
         </div>
