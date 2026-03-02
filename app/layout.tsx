@@ -16,6 +16,21 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.png", apple: "/apple-icon.png" },
 };
 
+
+<script
+  dangerouslySetInnerHTML={{
+    __html: `
+      (function(m,a,v,e,n){
+        m.UsermavenObject=n;m[n]=m[n]||function(){(m[n].q=m[n].q||[]).push(arguments)};
+        var s=a.createElement('script');s.async=1;s.src=v;
+        a.getElementsByTagName('head')[0].appendChild(s);
+      })(window,document,'https://t.usermaven.com/lib.js','um');
+      um('init', { key: '${process.env.NEXT_PUBLIC_USERMAVEN_KEY}', tracking_host: 'https://events.usermaven.com', autocapture: true });
+      um('pageview');
+    `,
+  }}
+/>
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${bricolage.variable}`}>
