@@ -16,21 +16,6 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.png", apple: "/apple-icon.png" },
 };
 
-
-<script
-  dangerouslySetInnerHTML={{
-    __html: `
-      (function(m,a,v,e,n){
-        m.UsermavenObject=n;m[n]=m[n]||function(){(m[n].q=m[n].q||[]).push(arguments)};
-        var s=a.createElement('script');s.async=1;s.src=v;
-        a.getElementsByTagName('head')[0].appendChild(s);
-      })(window,document,'https://t.usermaven.com/lib.js','um');
-      um('init', { key: '${process.env.NEXT_PUBLIC_USERMAVEN_KEY}', tracking_host: 'https://events.usermaven.com', autocapture: true });
-      um('pageview');
-    `,
-  }}
-/>
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${bricolage.variable}`}>
@@ -41,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {children}
 
+        {/* — CURSOR SCRIPT — */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -52,6 +38,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   el.style.top  = e.clientY + 'px';
                 }, { passive: true });
               })();
+            `,
+          }}
+        />
+
+        {/* — MICROSOFT CLARITY — */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "t4241c53ut");
             `,
           }}
         />
