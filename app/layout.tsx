@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
-import { createClient, UsermavenProvider } from "@usermaven/nextjs";
+import UsermavenWrapper from "./UsermavenProvider";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm", display: "swap" });
 const bricolage = Bricolage_Grotesque({
@@ -17,18 +17,11 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.png", apple: "/apple-icon.png" },
 };
 
-const usermavenClient = createClient({
-  key: process.env.NEXT_PUBLIC_USERMAVEN_KEY!,
-  trackingHost: "https://events.usermaven.com",
-  autocapture: true,
-  autoPageview: true,
-});
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${bricolage.variable}`}>
       <body>
-        <UsermavenProvider client={usermavenClient}>
+        <UsermavenWrapper>
           {/* — CURSOR AMBIENT LIGHT — */}
           <div className="cursor-light" id="cursorLight" aria-hidden="true" />
           <div className="noise-overlay" aria-hidden="true" />
@@ -49,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               `,
             }}
           />
-        </UsermavenProvider>
+        </UsermavenWrapper>
       </body>
     </html>
   );

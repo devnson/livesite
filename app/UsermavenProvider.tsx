@@ -1,15 +1,24 @@
-'use client'; // This directive is mandatory
+"use client";
 
-import { createClient, UsermavenProvider as Provider } from '@usermaven/nextjs';
-import { ReactNode, useMemo } from 'react';
+import { createClient, UsermavenProvider, usePageView } from "@usermaven/nextjs";
 
-export default function UsermavenProvider({ children }: { children: ReactNode }) {
-  // useMemo ensures the client is created only once during the lifecycle
-  const client = useMemo(() => createClient({
-    key: process.env.NEXT_PUBLIC_USERMAVEN_KEY!,
-    tracking_host: "https://events.usermaven.com",
-    autocapture: true, // This enables automatic tracking for your portfolio
-  }), []);
+const usermavenClient = createClient({
+  key: process.env.NEXT_PUBLIC_USERMAVEN_KEY!,
+  trackingHost: "https://events.usermaven.com",
+  autocapture: true,
+  autoPageview: true,
+});
 
-  return <Provider client={client}>{children}</Provider>;
+function PageViewTracker() {
+  usePageView(usermavenClient);
+  return null;
+}
+
+export default function UsermavenWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <UsermavenProvider client={usermavenClient}>
+      <PageViewTracker />
+      {children}
+    </UsermavenProvider>
+  );
 }
