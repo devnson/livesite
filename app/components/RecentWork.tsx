@@ -37,7 +37,7 @@ const cards: CardData[] = [
     tag: "Series B · Announcement",
     name: "Aleph — Funding Film",
     where: "Launch film → Series B announcement",
-    gif: "https://framerusercontent.com/images/MUc9I5El4kfxCqYc27XFGeOFqUo.gif",
+    gif: "/gifs/aleph.gif",
     gt: "gt-4",
     modal: {
       title: "Aleph — Funding Announcement Film",
