@@ -51,7 +51,7 @@ const cards: CardData[] = [
     tag: "Security · Assurance",
     name: "SecurityPal Vision",
     where: "SecurityPal Vision Video",
-    gif: "https://framerusercontent.com/images/ncaXWYv5fXVfX9wvB6AWJycHjog.gif",
+    gif: "/gifs/securitypalvision.gif",
     gt: "gt-2",
     modal: {
       title: "SecurityPal Film",
