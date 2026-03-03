@@ -12,23 +12,50 @@ import Team from "./components/Team";
 import FAQ from "./components/FAQ";
 import LogoStrip from "./components/Logostrip";
 import Footer from "./components/Footer";
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from "@vercel/analytics/next";
 
+const SECTION_OFFSET = 96; // should match Nav offset
 
 export default function Home() {
   return (
-    <main style={{ background: "#080808", minHeight: "100vh" }}>        <Analytics />
+    <main style={{ background: "#080808", minHeight: "100vh" }}>
       <Analytics />
       <Nav />
-      <Hero />
-      <RecentWork />
-      <Walkthroughs />
-      <Thesis />
-      <HowWeWork />
-      <Solutions />
-      <Testimonials />
-      <Team />
-      <FAQ />
+
+      <section id="top" style={{ scrollMarginTop: SECTION_OFFSET }}>
+        <Hero />
+      </section>
+
+      {/* ✅ THIS is what your nav needs */}
+      <section id="work" style={{ scrollMarginTop: SECTION_OFFSET }}>
+        <RecentWork />
+        <Walkthroughs />
+      </section>
+
+      <section id="thesis" style={{ scrollMarginTop: SECTION_OFFSET }}>
+        <Thesis />
+      </section>
+
+      <section id="how-we-work" style={{ scrollMarginTop: SECTION_OFFSET }}>
+        <HowWeWork />
+      </section>
+
+      <section id="solutions" style={{ scrollMarginTop: SECTION_OFFSET }}>
+        <Solutions />
+      </section>
+
+      <section id="testimonials" style={{ scrollMarginTop: SECTION_OFFSET }}>
+        <Testimonials />
+      </section>
+
+      <section id="team" style={{ scrollMarginTop: SECTION_OFFSET }}>
+        <Team />
+      </section>
+
+      <section id="faq" style={{ scrollMarginTop: SECTION_OFFSET }}>
+        <FAQ />
+      </section>
+
       <LogoStrip />
       <Footer />
     </main>
