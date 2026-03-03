@@ -44,14 +44,12 @@ const departments: Department[] = [
         name: "Sushan Bastola",
         role: "Founder · Product-Led Motion",
         narrative:
-          "Single accountable owner on every engagement.\n\n" +
-          "I define the narrative architecture, pressure-test the messaging, and protect the clarity bar across execution.\n\n" +
           "We don't optimize for applause.\n" +
           "We optimize for buyer understanding.\n\n" +
           "Every decision ties back to:\n" +
-          "What should the buyer understand?\n" +
-          "What should they trust?\n" +
-          "What should they do next?",
+          "1. What should the buyer understand?\n" +
+          "2. What should they trust?\n" +
+          "3. What should they do next?",
         photo: "/headshots/sushan.png",
         isFounder: true,
         isFeatured: true,
@@ -144,8 +142,6 @@ const departments: Department[] = [
 
 // ─────────────────────────────────────────────────────────────
 // PORTRAIT CARD
-// Desktop: 280px photo, overlay role/tag, narrative below
-// Mobile: 200px photo, 1-col, full narrative visible
 // ─────────────────────────────────────────────────────────────
 function PortraitCard({ m, photoH = 280 }: { m: Member; photoH?: number }) {
   const [hov, setHov] = useState(false);
@@ -160,7 +156,9 @@ function PortraitCard({ m, photoH = 280 }: { m: Member; photoH?: number }) {
       onMouseLeave={() => setHov(false)}
       style={{
         borderRadius: "14px",
-        border: `1px solid ${hov ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.08)"}`,
+        border: `1px solid ${
+          hov ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.08)"
+        }`,
         background: "rgba(255,255,255,0.025)",
         overflow: "hidden",
         transition: "border-color 0.18s",
@@ -171,7 +169,12 @@ function PortraitCard({ m, photoH = 280 }: { m: Member; photoH?: number }) {
       {/* Photo */}
       <div
         className="t-card-photo"
-        style={{ position: "relative", height: photoH, flexShrink: 0, overflow: "hidden" }}
+        style={{
+          position: "relative",
+          height: photoH,
+          flexShrink: 0,
+          overflow: "hidden",
+        }}
       >
         {m.photo ? (
           <>
@@ -195,7 +198,6 @@ function PortraitCard({ m, photoH = 280 }: { m: Member; photoH?: number }) {
                 }}
               />
             </div>
-            {/* gradient — stronger so text overlay is readable */}
             <div
               style={{
                 position: "absolute",
@@ -205,7 +207,6 @@ function PortraitCard({ m, photoH = 280 }: { m: Member; photoH?: number }) {
                 pointerEvents: "none",
               }}
             />
-            {/* Role + tag pinned to bottom of photo */}
             <div
               style={{
                 position: "absolute",
@@ -252,7 +253,6 @@ function PortraitCard({ m, photoH = 280 }: { m: Member; photoH?: number }) {
             </div>
           </>
         ) : (
-          /* No photo — initials + role in photo area */
           <div
             style={{
               position: "absolute",
@@ -307,7 +307,6 @@ function PortraitCard({ m, photoH = 280 }: { m: Member; photoH?: number }) {
         )}
       </div>
 
-      {/* Narrative below photo */}
       <div className="t-card-body" style={{ padding: "16px 18px 18px", flex: 1 }}>
         <p
           style={{
@@ -326,13 +325,71 @@ function PortraitCard({ m, photoH = 280 }: { m: Member; photoH?: number }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// FOUNDER CARD
-// Desktop: wide horizontal — photo left, content right
-// Mobile:  stacked — tall photo with overlay name, short content
+// SOCIAL ICONS (inline SVG)
+// ─────────────────────────────────────────────────────────────
+function SocialIconButton({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  const [hov, setHov] = useState(false);
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "34px",
+        height: "34px",
+        borderRadius: "10px",
+        border: `1px solid ${hov ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.10)"}`,
+        background: hov ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.02)",
+        color: hov ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.62)",
+        transition: "border-color 0.18s, background 0.18s, color 0.18s",
+        textDecoration: "none",
+      }}
+    >
+      {children}
+    </a>
+  );
+}
+
+function IconLinkedIn() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20.45 20.45H17V14.8c0-1.35-.02-3.08-1.88-3.08-1.88 0-2.17 1.46-2.17 2.98v5.75H9.52V9h3.31v1.56h.05c.46-.87 1.58-1.78 3.25-1.78 3.48 0 4.12 2.29 4.12 5.26v6.41zM5.34 7.43a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM6.92 20.45H3.76V9h3.16v11.45z" />
+    </svg>
+  );
+}
+
+function IconX() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.9 2H22l-6.78 7.75L23 22h-6.7l-5.24-6.78L5.1 22H2l7.3-8.35L1 2h6.86l4.74 6.2L18.9 2zm-1.17 18h1.72L6.93 3.93H5.1L17.73 20z" />
+    </svg>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// FOUNDER CARD (Social links added)
 // ─────────────────────────────────────────────────────────────
 function FounderRow({ m }: { m: Member }) {
   const [hov, setHov] = useState(false);
   const chips = ["Product owner", "Clarity first", "Built for distribution"];
+
+  const LINKEDIN = "https://www.linkedin.com/in/bastolasushan/";
+  const X = "https://x.com/tanoseihito";
 
   return (
     <div
@@ -341,7 +398,9 @@ function FounderRow({ m }: { m: Member }) {
       onMouseLeave={() => setHov(false)}
       style={{
         borderRadius: "16px",
-        border: `1px solid ${hov ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.10)"}`,
+        border: `1px solid ${
+          hov ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.10)"
+        }`,
         background: "rgba(255,255,255,0.02)",
         overflow: "hidden",
         transition: "border-color 0.18s",
@@ -376,7 +435,14 @@ function FounderRow({ m }: { m: Member }) {
                   border: "1px solid rgba(255,255,255,0.06)",
                 }}
               >
-                <div style={{ position: "absolute", inset: 0, transform: "scale(1.18)", transformOrigin: "50% 22%" }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    transform: "scale(1.18)",
+                    transformOrigin: "50% 22%",
+                  }}
+                >
                   <Image
                     src={m.photo}
                     alt={m.name ?? m.role}
@@ -393,14 +459,22 @@ function FounderRow({ m }: { m: Member }) {
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.25) 100%)",
+                    background:
+                      "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.25) 100%)",
                     pointerEvents: "none",
                   }}
                 />
               </div>
             </div>
           ) : (
-            <div style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center" }}>
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "grid",
+                placeItems: "center",
+              }}
+            >
               <span
                 style={{
                   fontFamily: "var(--font-dm)",
@@ -416,7 +490,14 @@ function FounderRow({ m }: { m: Member }) {
         </div>
 
         {/* Content */}
-        <div style={{ padding: "32px 32px 28px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+        <div
+          style={{
+            padding: "32px 32px 28px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
           <div>
             {m.tag && (
               <span
@@ -436,23 +517,52 @@ function FounderRow({ m }: { m: Member }) {
                   marginBottom: "18px",
                 }}
               >
-                <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80", animation: "hpulse 2s infinite", flexShrink: 0 }} />
+                <span
+                  style={{
+                    width: "6px",
+                    height: "6px",
+                    borderRadius: "50%",
+                    background: "#4ade80",
+                    animation: "hpulse 2s infinite",
+                    flexShrink: 0,
+                  }}
+                />
                 {m.tag}
               </span>
             )}
 
             <div
               style={{
-                fontFamily: "var(--font-dm)",
-                fontWeight: 900,
-                fontSize: "clamp(22px, 2.4vw, 30px)",
-                letterSpacing: "-0.03em",
-                color: "#fff",
-                lineHeight: 1.08,
-                marginBottom: "6px",
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+                gap: "16px",
+                flexWrap: "wrap",
               }}
             >
-              {m.name}
+              <div
+                style={{
+                  fontFamily: "var(--font-dm)",
+                  fontWeight: 900,
+                  fontSize: "clamp(22px, 2.4vw, 30px)",
+                  letterSpacing: "-0.03em",
+                  color: "#fff",
+                  lineHeight: 1.08,
+                  marginBottom: "6px",
+                }}
+              >
+                {m.name}
+              </div>
+
+              {/* ✅ Social row (desktop) */}
+              <div style={{ display: "flex", gap: "8px", marginTop: "2px" }}>
+                <SocialIconButton href={LINKEDIN} label="LinkedIn">
+                  <IconLinkedIn />
+                </SocialIconButton>
+                <SocialIconButton href={X} label="X">
+                  <IconX />
+                </SocialIconButton>
+              </div>
             </div>
 
             <div
@@ -482,7 +592,14 @@ function FounderRow({ m }: { m: Member }) {
             </p>
           </div>
 
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "24px" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "8px",
+              flexWrap: "wrap",
+              marginTop: "24px",
+            }}
+          >
             {chips.map((sig) => (
               <span
                 key={sig}
@@ -507,7 +624,6 @@ function FounderRow({ m }: { m: Member }) {
 
       {/* ── MOBILE ── */}
       <div className="founder-mobile">
-        {/* Photo — 55vw tall so face dominates */}
         <div
           style={{
             position: "relative",
@@ -520,7 +636,14 @@ function FounderRow({ m }: { m: Member }) {
         >
           {m.photo ? (
             <>
-              <div style={{ position: "absolute", inset: 0, transform: "scale(1.22)", transformOrigin: "50% 20%" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  transform: "scale(1.22)",
+                  transformOrigin: "50% 20%",
+                }}
+              >
                 <Image
                   src={m.photo}
                   alt={m.name ?? m.role}
@@ -537,50 +660,138 @@ function FounderRow({ m }: { m: Member }) {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: "linear-gradient(to bottom, transparent 45%, rgba(0,0,0,0.94) 100%)",
+                  background:
+                    "linear-gradient(to bottom, transparent 45%, rgba(0,0,0,0.94) 100%)",
                   pointerEvents: "none",
                 }}
               />
-              {/* Name pinned over gradient */}
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 18px" }}>
+
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  padding: "16px 18px",
+                }}
+              >
                 {m.tag && (
-                  <div style={{ display: "flex", alignItems: "center", gap: "7px", marginBottom: "8px" }}>
-                    <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#4ade80", animation: "hpulse 2s infinite" }} />
-                    <span style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "7px",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: "5px",
+                        height: "5px",
+                        borderRadius: "50%",
+                        background: "#4ade80",
+                        animation: "hpulse 2s infinite",
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontSize: "9px",
+                        fontWeight: 800,
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.55)",
+                      }}
+                    >
                       {m.tag}
                     </span>
                   </div>
                 )}
+
                 <div
                   style={{
-                    fontFamily: "var(--font-dm)",
-                    fontWeight: 900,
-                    fontSize: "20px",
-                    letterSpacing: "-0.025em",
-                    color: "#fff",
-                    lineHeight: 1.1,
-                    marginBottom: "3px",
+                    display: "flex",
+                    alignItems: "flex-end",
+                    justifyContent: "space-between",
+                    gap: "12px",
                   }}
                 >
-                  {m.name}
-                </div>
-                <div style={{ fontSize: "9.5px", fontWeight: 800, letterSpacing: "0.13em", textTransform: "uppercase", color: "rgba(255,255,255,0.44)" }}>
-                  {m.role}
+                  <div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-dm)",
+                        fontWeight: 900,
+                        fontSize: "20px",
+                        letterSpacing: "-0.025em",
+                        color: "#fff",
+                        lineHeight: 1.1,
+                        marginBottom: "3px",
+                      }}
+                    >
+                      {m.name}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "9.5px",
+                        fontWeight: 800,
+                        letterSpacing: "0.13em",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.44)",
+                      }}
+                    >
+                      {m.role}
+                    </div>
+                  </div>
+
+                  {/* ✅ Social row (mobile) */}
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <SocialIconButton href={LINKEDIN} label="LinkedIn">
+                      <IconLinkedIn />
+                    </SocialIconButton>
+                    <SocialIconButton href={X} label="X">
+                      <IconX />
+                    </SocialIconButton>
+                  </div>
                 </div>
               </div>
             </>
           ) : (
-            <div style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center" }}>
-              <span style={{ fontFamily: "var(--font-dm)", fontWeight: 900, fontSize: "44px", color: "rgba(255,255,255,0.16)" }}>
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "grid",
+                placeItems: "center",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-dm)",
+                  fontWeight: 900,
+                  fontSize: "44px",
+                  color: "rgba(255,255,255,0.16)",
+                }}
+              >
                 {m.name?.[0] ?? "S"}
               </span>
             </div>
           )}
         </div>
 
-        {/* Content below photo */}
-        <div style={{ padding: "18px 18px 20px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-          <p style={{ margin: "0 0 16px", fontSize: "13.5px", lineHeight: 1.75, color: "rgba(255,255,255,0.54)", whiteSpace: "pre-line" }}>
+        <div
+          style={{
+            padding: "18px 18px 20px",
+            borderTop: "1px solid rgba(255,255,255,0.07)",
+          }}
+        >
+          <p
+            style={{
+              margin: "0 0 16px",
+              fontSize: "13.5px",
+              lineHeight: 1.75,
+              color: "rgba(255,255,255,0.54)",
+              whiteSpace: "pre-line",
+            }}
+          >
             {m.narrative}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "7px" }}>
@@ -610,21 +821,60 @@ function FounderRow({ m }: { m: Member }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// DEPT HEADER — shared between DeptBand and Leadership
+// DEPT HEADER
 // ─────────────────────────────────────────────────────────────
-function DeptHeader({ index, label, signal }: { index: string; label: string; signal: string }) {
+function DeptHeader({
+  index,
+  label,
+  signal,
+}: {
+  index: string;
+  label: string;
+  signal: string;
+}) {
   return (
-    <div style={{ paddingBottom: "28px", borderBottom: "1px solid rgba(255,255,255,0.07)", marginBottom: "32px" }}>
-      {/* Counter eyebrow */}
-      <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: "0.16em", color: "rgba(255,255,255,0.28)", marginBottom: "10px" }}>
+    <div
+      style={{
+        paddingBottom: "28px",
+        borderBottom: "1px solid rgba(255,255,255,0.07)",
+        marginBottom: "32px",
+      }}
+    >
+      <div
+        style={{
+          fontSize: "11px",
+          fontWeight: 800,
+          letterSpacing: "0.16em",
+          color: "rgba(255,255,255,0.28)",
+          marginBottom: "10px",
+        }}
+      >
         {index}
       </div>
-      {/* Label — big and editorial */}
-      <h2 style={{ fontFamily: "var(--font-dm)", fontWeight: 800, fontSize: "clamp(28px, 4vw, 48px)", letterSpacing: "-0.032em", lineHeight: 1.0, color: "#fff", margin: "0 0 12px" }}>
+
+      <h2
+        style={{
+          fontFamily: "var(--font-dm)",
+          fontWeight: 800,
+          fontSize: "clamp(28px, 4vw, 48px)",
+          letterSpacing: "-0.032em",
+          lineHeight: 1.0,
+          color: "#fff",
+          margin: "0 0 12px",
+        }}
+      >
         {label}
       </h2>
-      {/* Signal — generous, readable */}
-      <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.44)", lineHeight: 1.7, margin: 0, maxWidth: "640px" }}>
+
+      <p
+        style={{
+          fontSize: "15px",
+          color: "rgba(255,255,255,0.44)",
+          lineHeight: 1.7,
+          margin: 0,
+          maxWidth: "640px",
+        }}
+      >
         {signal}
       </p>
     </div>
@@ -637,9 +887,12 @@ function DeptHeader({ index, label, signal }: { index: string; label: string; si
 function DeptBand({ dept }: { dept: Department }) {
   const membersNoFounder = dept.members.filter((m) => !m.isFeatured);
 
-  // Layout control: keep small teams from stretching too wide
   const gridMaxWidth =
-    membersNoFounder.length <= 1 ? "420px" : membersNoFounder.length === 2 ? "900px" : "100%";
+    membersNoFounder.length <= 1
+      ? "420px"
+      : membersNoFounder.length === 2
+      ? "900px"
+      : "100%";
 
   return (
     <section className="dept-band" style={{ opacity: 0, paddingBottom: "88px" }}>
@@ -657,7 +910,7 @@ function DeptBand({ dept }: { dept: Department }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// STRATEGY SECTION
+// STRATEGY SECTION (unchanged)
 // ─────────────────────────────────────────────────────────────
 function StrategySection() {
   const cardStyle: React.CSSProperties = {
@@ -702,50 +955,149 @@ function StrategySection() {
     },
     {
       title: "What we refuse",
-      lines: ["Generic SaaS content that proves nothing.", "Polish without hierarchy.", "Ambiguity that creates revision fatigue."],
+      lines: [
+        "Generic SaaS content that proves nothing.",
+        "Polish without hierarchy.",
+        "Ambiguity that creates revision fatigue.",
+      ],
     },
   ];
 
   const beliefs = [
-    { h: "Clarity is a competitive advantage.", b: "In complex B2B markets, the company that explains best wins." },
-    { h: "Narrative is infrastructure.", b: "Your launch, landing page, demo, and sales deck should not reinvent the story every time." },
-    { h: "Polish is secondary to hierarchy.", b: "If the idea doesn't land, no animation will save it." },
-    { h: "Trust compounds through consistency.", b: "Same language. Same logic. Every surface." },
+    {
+      h: "Clarity is a competitive advantage.",
+      b: "In complex B2B markets, the company that explains best wins.",
+    },
+    {
+      h: "Narrative is infrastructure.",
+      b: "Your launch, landing page, demo, and sales deck should not reinvent the story every time.",
+    },
+    {
+      h: "Polish is secondary to hierarchy.",
+      b: "If the idea doesn't land, no animation will save it.",
+    },
+    {
+      h: "Trust compounds through consistency.",
+      b: "Same language. Same logic. Every surface.",
+    },
   ];
 
   const principles = [
-    { k: "01", t: "Engineering > Aesthetics", d: "Design supports logic. Motion supports structure. We build from understanding outward." },
-    { k: "02", t: "Constraints First", d: "We start with the real variables: buyer psychology, technical depth, timeline, distribution — then we solve within them." },
-    { k: "03", t: "Push Back Early", d: "If something is unclear, we say it. If messaging is weak, we fix it — before production locks in." },
-    { k: "04", t: "Fewer Loops, Better Decisions", d: "We lock direction before execution. Alignment reduces revision fatigue." },
-    { k: "05", t: "Built for Distribution", d: "Everything should work beyond one upload — landing, social, sales enablement, internal decks." },
-    { k: "06", t: "Outcome Over Applause", d: "We care about what the buyer understands, believes, and does next." },
+    {
+      k: "01",
+      t: "Engineering > Aesthetics",
+      d: "Design supports logic. Motion supports structure. We build from understanding outward.",
+    },
+    {
+      k: "02",
+      t: "Constraints First",
+      d: "We start with the real variables: buyer psychology, technical depth, timeline, distribution — then we solve within them.",
+    },
+    {
+      k: "03",
+      t: "Push Back Early",
+      d: "If something is unclear, we say it. If messaging is weak, we fix it — before production locks in.",
+    },
+    {
+      k: "04",
+      t: "Fewer Loops, Better Decisions",
+      d: "We lock direction before execution. Alignment reduces revision fatigue.",
+    },
+    {
+      k: "05",
+      t: "Built for Distribution",
+      d: "Everything should work beyond one upload — landing, social, sales enablement, internal decks.",
+    },
+    {
+      k: "06",
+      t: "Outcome Over Applause",
+      d: "We care about what the buyer understands, believes, and does next.",
+    },
   ];
 
   return (
-    <div className="dept-band" style={{ opacity: 0, paddingTop: "80px", paddingBottom: "100px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-      <div style={{ fontSize: "10px", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.24)", fontWeight: 800, marginBottom: "20px" }}>
+    <div
+      className="dept-band"
+      style={{
+        opacity: 0,
+        paddingTop: "80px",
+        paddingBottom: "100px",
+        borderTop: "1px solid rgba(255,255,255,0.07)",
+      }}
+    >
+      <div
+        style={{
+          fontSize: "10px",
+          letterSpacing: "0.16em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.24)",
+          fontWeight: 800,
+          marginBottom: "20px",
+        }}
+      >
         Built Like a Startup
       </div>
 
-      <h2 style={{ fontFamily: "var(--font-dm)", fontWeight: 800, fontSize: "clamp(28px, 4vw, 48px)", letterSpacing: "-0.032em", lineHeight: 1.0, color: "#fff", margin: "0 0 60px" }}>
+      <h2
+        style={{
+          fontFamily: "var(--font-dm)",
+          fontWeight: 800,
+          fontSize: "clamp(28px, 4vw, 48px)",
+          letterSpacing: "-0.032em",
+          lineHeight: 1.0,
+          color: "#fff",
+          margin: "0 0 60px",
+        }}
+      >
         We think in systems.
         <br />
         <span style={{ fontWeight: 300 }}>We remove ambiguity early.</span>
       </h2>
 
-      {/* Row 1: 2-col — How we work | What we believe */}
-      <div className="two-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1.05fr", gap: "52px", alignItems: "start", marginBottom: "56px" }}>
+      <div
+        className="two-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1.05fr",
+          gap: "52px",
+          alignItems: "start",
+          marginBottom: "56px",
+        }}
+      >
         <div>
           <div style={sectionLabel}>How we work</div>
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.50)", lineHeight: 1.78, margin: 0 }}>
-              We operate like a product team, not a production house. We care less about making a video — we care more about building a system that scales across your launches, updates, and sales cycles.
+            <p
+              style={{
+                fontSize: "15px",
+                color: "rgba(255,255,255,0.50)",
+                lineHeight: 1.78,
+                margin: 0,
+              }}
+            >
+              We operate like a product team, not a production house. We care less
+              about making a video — we care more about building a system that
+              scales across your launches, updates, and sales cycles.
             </p>
-            <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.50)", lineHeight: 1.78, margin: 0 }}>
-              We think in constraints: buyer, stakes, timeline, channel. Then we design around reality.
+            <p
+              style={{
+                fontSize: "15px",
+                color: "rgba(255,255,255,0.50)",
+                lineHeight: 1.78,
+                margin: 0,
+              }}
+            >
+              We think in constraints: buyer, stakes, timeline, channel. Then we
+              design around reality.
             </p>
-            <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.50)", lineHeight: 1.78, margin: 0 }}>
+            <p
+              style={{
+                fontSize: "15px",
+                color: "rgba(255,255,255,0.50)",
+                lineHeight: 1.78,
+                margin: 0,
+              }}
+            >
               Speed matters. But structured speed matters more.
             </p>
           </div>
@@ -756,10 +1108,25 @@ function StrategySection() {
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {beliefs.map((item) => (
               <div key={item.h} style={cardStyle}>
-                <div style={{ fontFamily: "var(--font-dm)", fontWeight: 800, fontSize: "13.5px", letterSpacing: "-0.015em", color: "rgba(255,255,255,0.88)", marginBottom: "5px" }}>
+                <div
+                  style={{
+                    fontFamily: "var(--font-dm)",
+                    fontWeight: 800,
+                    fontSize: "13.5px",
+                    letterSpacing: "-0.015em",
+                    color: "rgba(255,255,255,0.88)",
+                    marginBottom: "5px",
+                  }}
+                >
                   {item.h}
                 </div>
-                <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.48)", lineHeight: 1.62 }}>
+                <div
+                  style={{
+                    fontSize: "13px",
+                    color: "rgba(255,255,255,0.48)",
+                    lineHeight: 1.62,
+                  }}
+                >
                   {item.b}
                 </div>
               </div>
@@ -768,19 +1135,50 @@ function StrategySection() {
         </div>
       </div>
 
-      {/* Row 2: 3-col outcome cards */}
       <div style={sectionLabel}>What this means for you</div>
-      <div className="tri-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px", marginBottom: "52px" }}>
+      <div
+        className="tri-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "10px",
+          marginBottom: "52px",
+        }}
+      >
         {founderBlocks.map((block) => (
           <div key={block.title} style={cardStyle}>
-            <div style={{ fontSize: "10px", letterSpacing: "0.13em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)", fontWeight: 800, marginBottom: "14px" }}>
+            <div
+              style={{
+                fontSize: "10px",
+                letterSpacing: "0.13em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.28)",
+                fontWeight: 800,
+                marginBottom: "14px",
+              }}
+            >
               {block.title}
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               {block.lines.map((line) => (
-                <div key={line} style={{ display: "flex", gap: "9px", alignItems: "flex-start" }}>
+                <div
+                  key={line}
+                  style={{
+                    display: "flex",
+                    gap: "9px",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <span style={dot} />
-                  <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.50)", lineHeight: 1.65 }}>{line}</span>
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      color: "rgba(255,255,255,0.50)",
+                      lineHeight: 1.65,
+                    }}
+                  >
+                    {line}
+                  </span>
                 </div>
               ))}
             </div>
@@ -788,9 +1186,15 @@ function StrategySection() {
         ))}
       </div>
 
-      {/* Row 3: Operating principles full width */}
       <div style={sectionLabel}>Our operating principles</div>
-      <div style={{ border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", overflow: "hidden", marginBottom: "40px" }}>
+      <div
+        style={{
+          border: "1px solid rgba(255,255,255,0.07)",
+          borderRadius: "12px",
+          overflow: "hidden",
+          marginBottom: "40px",
+        }}
+      >
         {principles.map((p, idx) => (
           <div
             key={p.k}
@@ -803,14 +1207,38 @@ function StrategySection() {
               borderTop: idx === 0 ? "none" : "1px solid rgba(255,255,255,0.05)",
             }}
           >
-            <div style={{ fontSize: "10px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", fontWeight: 800, paddingTop: "2px" }}>
+            <div
+              style={{
+                fontSize: "10px",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.22)",
+                fontWeight: 800,
+                paddingTop: "2px",
+              }}
+            >
               {p.k}
             </div>
             <div>
-              <div style={{ fontFamily: "var(--font-dm)", fontWeight: 800, fontSize: "13.5px", letterSpacing: "-0.015em", color: "rgba(255,255,255,0.86)", marginBottom: "4px" }}>
+              <div
+                style={{
+                  fontFamily: "var(--font-dm)",
+                  fontWeight: 800,
+                  fontSize: "13.5px",
+                  letterSpacing: "-0.015em",
+                  color: "rgba(255,255,255,0.86)",
+                  marginBottom: "4px",
+                }}
+              >
                 {p.t}
               </div>
-              <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.48)", lineHeight: 1.65 }}>
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "rgba(255,255,255,0.48)",
+                  lineHeight: 1.65,
+                }}
+              >
                 {p.d}
               </div>
             </div>
@@ -818,7 +1246,6 @@ function StrategySection() {
         ))}
       </div>
 
-      {/* CTAs */}
       <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
         <Link
           href="/#work"
@@ -869,18 +1296,36 @@ function StrategySection() {
             textDecoration: "none",
             transition: "opacity 0.15s",
           }}
-          onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.opacity = "0.88")}
-          onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.opacity = "1")}
+          onMouseEnter={(e) =>
+            ((e.currentTarget as HTMLAnchorElement).style.opacity = "0.88")
+          }
+          onMouseLeave={(e) =>
+            ((e.currentTarget as HTMLAnchorElement).style.opacity = "1")
+          }
         >
           Book a Clarity Call
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: "rotate(-45deg)" }}>
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            style={{ transform: "rotate(-45deg)" }}
+          >
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </a>
       </div>
 
-      {/* Final CTA */}
-      <div style={{ marginTop: "72px", paddingTop: "48px", borderTop: "1px solid rgba(255,255,255,0.07)", textAlign: "center" }}>
+      <div
+        style={{
+          marginTop: "72px",
+          paddingTop: "48px",
+          borderTop: "1px solid rgba(255,255,255,0.07)",
+          textAlign: "center",
+        }}
+      >
         <a
           href="https://cal.com/tanoseihito/30min"
           target="_blank"
@@ -907,11 +1352,40 @@ function StrategySection() {
             el.style.borderColor = "rgba(255,255,255,0.14)";
           }}
         >
-          <span style={{ fontFamily: "var(--font-dm)", fontSize: "14px", fontWeight: 700, color: "rgba(255,255,255,0.78)", letterSpacing: "-0.01em" }}>
+          <span
+            style={{
+              fontFamily: "var(--font-dm)",
+              fontSize: "14px",
+              fontWeight: 700,
+              color: "rgba(255,255,255,0.78)",
+              letterSpacing: "-0.01em",
+            }}
+          >
             Book a Clarity Call
           </span>
-          <span style={{ width: "36px", height: "36px", borderRadius: "50%", background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.14)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.78)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <span
+            style={{
+              width: "36px",
+              height: "36px",
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.10)",
+              border: "1px solid rgba(255,255,255,0.14)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="rgba(255,255,255,0.78)"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </span>
@@ -947,14 +1421,22 @@ export default function TeamPage() {
   }, []);
 
   const totalMembers = departments.reduce((a, d) => a + d.members.length, 0);
-  const founder = departments.flatMap((d) => d.members).find((m) => m.isFeatured) ?? departments[0]?.members?.[0];
-  // Depts shown first = 02, 03, 04 (skip 01 Leadership — shown last)
+  const founder =
+    departments.flatMap((d) => d.members).find((m) => m.isFeatured) ??
+    departments[0]?.members?.[0];
+
   const teamDepts = departments.filter((d) => d.index !== "01");
   const leadershipDept = departments.find((d) => d.index === "01");
 
   return (
-    <div style={{ background: "#000", minHeight: "100vh", color: "#f2f2f2", fontFamily: "var(--font-dm), system-ui, sans-serif" }}>
-      {/* NAV */}
+    <div
+      style={{
+        background: "#000",
+        minHeight: "100vh",
+        color: "#f2f2f2",
+        fontFamily: "var(--font-dm), system-ui, sans-serif",
+      }}
+    >
       <nav
         className="nav"
         style={{
@@ -986,9 +1468,24 @@ export default function TeamPage() {
             color: "rgba(255,255,255,0.82)",
           }}
         >
-          <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "rgba(255,255,255,0.78)" }} />
+          <span
+            style={{
+              width: "5px",
+              height: "5px",
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.78)",
+            }}
+          />
           Tanosei
-          <span style={{ color: "rgba(255,255,255,0.30)", fontWeight: 400, marginLeft: "3px" }}>Studio</span>
+          <span
+            style={{
+              color: "rgba(255,255,255,0.30)",
+              fontWeight: 400,
+              marginLeft: "3px",
+            }}
+          >
+            Studio
+          </span>
         </Link>
 
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -1002,8 +1499,14 @@ export default function TeamPage() {
               textDecoration: "none",
               transition: "color 0.15s",
             }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.88)")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.44)")}
+            onMouseEnter={(e) =>
+              ((e.currentTarget as HTMLAnchorElement).style.color =
+                "rgba(255,255,255,0.88)")
+            }
+            onMouseLeave={(e) =>
+              ((e.currentTarget as HTMLAnchorElement).style.color =
+                "rgba(255,255,255,0.44)")
+            }
           >
             ← Home
           </Link>
@@ -1022,16 +1525,23 @@ export default function TeamPage() {
               textDecoration: "none",
               transition: "opacity 0.15s",
             }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.opacity = "0.87")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.opacity = "1")}
+            onMouseEnter={(e) =>
+              ((e.currentTarget as HTMLAnchorElement).style.opacity = "0.87")
+            }
+            onMouseLeave={(e) =>
+              ((e.currentTarget as HTMLAnchorElement).style.opacity = "1")
+            }
           >
             Book a call
           </a>
         </div>
       </nav>
 
-      <div ref={pageRef} className="page" style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 28px" }}>
-        {/* ── HERO ── */}
+      <div
+        ref={pageRef}
+        className="page"
+        style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 28px" }}
+      >
         <header
           className="hero dept-band"
           style={{
@@ -1046,25 +1556,73 @@ export default function TeamPage() {
           }}
         >
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "24px" }}>
-              <span style={{ width: "18px", height: "1px", background: "rgba(255,255,255,0.22)", display: "inline-block" }} />
-              <span style={{ fontSize: "10.5px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.30)", fontWeight: 700 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                marginBottom: "24px",
+              }}
+            >
+              <span
+                style={{
+                  width: "18px",
+                  height: "1px",
+                  background: "rgba(255,255,255,0.22)",
+                  display: "inline-block",
+                }}
+              />
+              <span
+                style={{
+                  fontSize: "10.5px",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.30)",
+                  fontWeight: 700,
+                }}
+              >
                 The Team · {totalMembers} people · {departments.length} departments
               </span>
             </div>
 
-            <h1 style={{ fontFamily: "var(--font-dm)", fontWeight: 300, fontSize: "clamp(42px, 6.2vw, 76px)", letterSpacing: "-0.042em", lineHeight: 1.02, margin: "0 0 22px", color: "rgba(255,255,255,0.9)" }}>
+            <h1
+              style={{
+                fontFamily: "var(--font-dm)",
+                fontWeight: 300,
+                fontSize: "clamp(42px, 6.2vw, 76px)",
+                letterSpacing: "-0.042em",
+                lineHeight: 1.02,
+                margin: "0 0 22px",
+                color: "rgba(255,255,255,0.9)",
+              }}
+            >
               A small <strong style={{ fontWeight: 800, color: "#fff" }}>senior team.</strong>
               <br />
               Built for <strong style={{ fontWeight: 800, color: "#fff" }}>complex products.</strong>
             </h1>
 
-            <p style={{ fontSize: "15.5px", color: "rgba(255,255,255,0.44)", maxWidth: "600px", lineHeight: 1.78, margin: 0 }}>
-              Narrative, design, and motion run as one system — so the message stays intact from first direction to final delivery.
+            <p
+              style={{
+                fontSize: "15.5px",
+                color: "rgba(255,255,255,0.44)",
+                maxWidth: "600px",
+                lineHeight: 1.78,
+                margin: 0,
+              }}
+            >
+              Narrative, design, and motion run as one system — so the message stays intact
+              from first direction to final delivery.
             </p>
           </div>
 
-          <div className="hero-stats" style={{ border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", overflow: "hidden" }}>
+          <div
+            className="hero-stats"
+            style={{
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: "12px",
+              overflow: "hidden",
+            }}
+          >
             {[
               { n: "4", l: "Departments" },
               { n: "Senior", l: "Team level" },
@@ -1075,36 +1633,56 @@ export default function TeamPage() {
                 key={i}
                 style={{
                   padding: "14px 18px",
-                  background: i % 2 === 0 ? "rgba(255,255,255,0.025)" : "rgba(255,255,255,0.015)",
+                  background:
+                    i % 2 === 0 ? "rgba(255,255,255,0.025)" : "rgba(255,255,255,0.015)",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "baseline",
                   borderBottom: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
                 }}
               >
-                <span style={{ fontFamily: "var(--font-dm)", fontWeight: 800, fontSize: "17px", letterSpacing: "-0.02em", color: "#fff" }}>{s.n}</span>
-                <span style={{ fontSize: "10.5px", color: "rgba(255,255,255,0.34)", letterSpacing: "0.04em" }}>{s.l}</span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-dm)",
+                    fontWeight: 800,
+                    fontSize: "17px",
+                    letterSpacing: "-0.02em",
+                    color: "#fff",
+                  }}
+                >
+                  {s.n}
+                </span>
+                <span
+                  style={{
+                    fontSize: "10.5px",
+                    color: "rgba(255,255,255,0.34)",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  {s.l}
+                </span>
               </div>
             ))}
           </div>
         </header>
 
-        {/* ── TEAM DEPTS: 02, 03, 04 ── */}
         <div style={{ paddingTop: "72px" }}>
           {teamDepts.map((dept) => (
             <DeptBand key={dept.index} dept={dept} />
           ))}
         </div>
 
-        {/* ── LEADERSHIP (01) — always last ── */}
         {leadershipDept && founder && (
           <section className="dept-band" style={{ opacity: 0, paddingBottom: "80px" }}>
-            <DeptHeader index={leadershipDept.index} label={leadershipDept.label} signal={leadershipDept.signal} />
+            <DeptHeader
+              index={leadershipDept.index}
+              label={leadershipDept.label}
+              signal={leadershipDept.signal}
+            />
             <FounderRow m={founder} />
           </section>
         )}
 
-        {/* ── STRATEGY ── */}
         <StrategySection />
 
         <div style={{ height: "60px" }} />
@@ -1112,11 +1690,6 @@ export default function TeamPage() {
 
       <style>{`
         @keyframes hpulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-        /* ─────────────────────────────────────────────
-           Layout system: make grids stable + predictable
-           Key rule: use auto-fit instead of hard columns
-        ───────────────────────────────────────────── */
 
         .founder-desktop { display: grid; }
         .founder-mobile  { display: none; }
@@ -1128,28 +1701,23 @@ export default function TeamPage() {
           width: 100%;
         }
 
-        /* Keep the grid aligned with the text column */
         .dept-band .cards-grid{
           margin-top: 0;
         }
 
-        /* ── 980px: strategy columns collapse ── */
         @media (max-width: 980px) {
           .page     { padding: 0 24px !important; }
           .two-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
           .tri-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
         }
 
-        /* ── 860px: hero collapses ── */
         @media (max-width: 860px) {
           .hero       { grid-template-columns: 1fr !important; gap: 24px !important; }
           .hero-stats { max-width: 420px; }
         }
 
-        /* ── 640px: full mobile ── */
         @media (max-width: 640px) {
           .page { padding: 0 18px !important; }
-          /* founder: switch to stacked mobile */
           .founder-desktop { display: none !important; }
           .founder-mobile  { display: block !important; }
 
