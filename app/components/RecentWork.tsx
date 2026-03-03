@@ -21,7 +21,7 @@ type ModalData = CardData["modal"] & { gt: string };
 const cards: CardData[] = [
   {
     tag: "AI Infra · SaaS",
-    name: "DocUnlock — Feature Launch Walkthrough",
+    name: "DocUnlock — How It Works",
     where: "Explainer → landing + sales enablement",
     gif: "https://framerusercontent.com/images/yNs8rP2D4soCiX7eNIR9FJp3zI.gif",
     gt: "gt-1",
@@ -49,8 +49,8 @@ const cards: CardData[] = [
   },
   {
     tag: "Security · Assurance",
-    name: "SecurityPal Film",
-    where: "SecurityPal Brand Video",
+    name: "SecurityPal Vision",
+    where: "SecurityPal Vision Video",
     gif: "https://framerusercontent.com/images/ncaXWYv5fXVfX9wvB6AWJycHjog.gif",
     gt: "gt-2",
     modal: {
@@ -63,12 +63,12 @@ const cards: CardData[] = [
   },
   {
     tag: "B2B · Fintech",
-    name: "Niural Product Demo",
-    where: "Brand clarity → landing + outbound",
+    name: "Niural Canada Launch",
+    where: "Brand clarity → Launch + outbound",
     gif: "https://framerusercontent.com/images/BmmRR8wJ0tVQ7S2C55bfSfSRNQ.gif",
     gt: "gt-5",
     modal: {
-      title: "Niural Product Demo",
+      title: "Niural Canada Launch",
       desc: "A hard-to-explain value prop turned into an instantly legible story for buyers. Built to reduce explanation load in outbound + sales.",
       stats: [{ n: "B2B", l: "Audience" }, { n: "Product demo", l: "Type" }, { n: "Landing + outbound", l: "Used in" }],
       videoId: "qC7YyUs9YNA",
