@@ -14,7 +14,7 @@ import LogoStrip from "./components/Logostrip";
 import Footer from "./components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 
-const SECTION_OFFSET = 96; // should match Nav offset
+const SECTION_OFFSET = 96;
 
 export default function Home() {
   return (
@@ -26,7 +26,6 @@ export default function Home() {
         <Hero />
       </section>
 
-      {/* ✅ THIS is what your nav needs */}
       <section id="work" style={{ scrollMarginTop: SECTION_OFFSET }}>
         <RecentWork />
         <Walkthroughs />

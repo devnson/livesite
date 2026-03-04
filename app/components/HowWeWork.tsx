@@ -78,28 +78,29 @@ function StepCard({ step, glowRef, compact = false }: {
     }}>
       <div>
         <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: compact ? "8px" : "10px" }}>
+          {/* PILL LABEL — Bricolage */}
           <span style={{
-            fontSize: compact ? "8px" : "8.5px", fontWeight: 800,
+            fontFamily: "var(--font-bricolage)",
+            fontSize: compact ? "8px" : "8.5px", fontWeight: 500,
             letterSpacing: "0.12em", textTransform: "uppercase",
             padding: "2px 7px", borderRadius: "5px",
             background: pillBg, color: pillText, border: `1px solid ${pillBorder}`,
           }}>{step.label}</span>
-          <span style={{ fontSize: compact ? "9px" : "9.5px", color: "rgba(255,255,255,0.50)", letterSpacing: "0.06em" }}>{step.num}</span>
+          <span style={{ fontFamily: "var(--font-bricolage)", fontSize: compact ? "9px" : "9.5px", fontWeight: 300, color: "rgba(255,255,255,0.50)", letterSpacing: "0.06em" }}>{step.num}</span>
           <span style={{ marginLeft: "auto", width: compact ? "5px" : "6px", height: compact ? "5px" : "6px", borderRadius: "50%", background: accent, opacity: 0.9 }} />
         </div>
+        {/* TITLE — DM Sans */}
         <h3 style={{
-          fontFamily: "var(--font-dm)", fontWeight: 750,
+          fontFamily: "var(--font-dm)", fontWeight: 700,
           fontSize: compact ? "13px" : "13.5px",
-          letterSpacing: "-0.02em", margin: "0 0 8px",
+          letterSpacing: "-0.04em", margin: "0 0 8px",
           color: "rgba(255,255,255,0.94)", lineHeight: 1.2,
         }}>{step.title}</h3>
-        <p style={{ fontSize: compact ? "11px" : "11.5px", color: descCol, lineHeight: 1.65, margin: 0 }}>{step.desc}</p>
+        {/* DESC — Bricolage */}
+        <p style={{ fontFamily: "var(--font-bricolage)", fontSize: compact ? "11px" : "11.5px", fontWeight: 300, color: descCol, lineHeight: 1.65, margin: 0 }}>{step.desc}</p>
       </div>
       {!compact && (
-        <div style={{
-          height: "1px", width: "100%",
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent)", opacity: 0.7,
-        }} />
+        <div style={{ height: "1px", width: "100%", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent)", opacity: 0.7 }} />
       )}
     </div>
   );
@@ -132,7 +133,6 @@ export default function HowWeWork() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [stepIdx,   setStepIdx]   = useState(0);
 
-  // ── ONLY CHANGE: 1024 → 640 so tablet/split-screen stays on desktop layout ──
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640);
     check();
@@ -337,20 +337,19 @@ export default function HowWeWork() {
         <div style={{ maxWidth: "520px", margin: "0 auto", padding: "0 24px", marginBottom: "52px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
             <span style={{ width: "18px", height: "1px", background: "rgba(255,255,255,0.28)", display: "inline-block" }} />
-            <span style={{ fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", fontWeight: 600 }}>How We Work</span>
+            {/* EYEBROW — Bricolage */}
+            <span style={{ fontFamily: "var(--font-bricolage)", fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", fontWeight: 300 }}>How We Work</span>
           </div>
-          <h2 style={{ fontFamily: "var(--font-dm)", fontWeight: 850, fontSize: "clamp(26px,7vw,38px)", letterSpacing: "-0.04em", lineHeight: 1.05, margin: "0 0 10px", color: "#fff" }}>
+          {/* HEADING — DM Sans */}
+          <h2 style={{ fontFamily: "var(--font-dm)", fontWeight: 800, fontSize: "clamp(26px,7vw,38px)", letterSpacing: "-0.04em", lineHeight: 1.05, margin: "0 0 10px", color: "#fff" }}>
             <span style={{ fontWeight: 300 }}>14 days.</span> Brief to buyer-ready.
           </h2>
-          <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.60)", lineHeight: 1.7, margin: 0 }}>Predictable, fast, and built so you never have to chase us.</p>
+          {/* BODY — Bricolage */}
+          <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "13px", fontWeight: 300, color: "rgba(255,255,255,0.60)", lineHeight: 1.7, margin: 0 }}>Predictable, fast, and built so you never have to chase us.</p>
         </div>
 
         <div style={{ position: "relative", maxWidth: "520px", margin: "0 auto", padding: "0 24px" }}>
-          <div ref={mobileSpineRef} style={{
-            position: "absolute", top: 0, bottom: 0,
-            left: "50%", transform: "translateX(-50%)",
-            width: "2px", background: "rgba(255,255,255,0.09)", zIndex: 0,
-          }}>
+          <div ref={mobileSpineRef} style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: "2px", background: "rgba(255,255,255,0.09)", zIndex: 0 }}>
             <div ref={mobileOrbRef} style={{ position: "absolute", left: "50%", top: 0, width: "14px", height: "14px", borderRadius: "50%", zIndex: 8, pointerEvents: "none" }} />
             <div ref={mobileTravRef} style={{ position: "absolute", left: "50%", top: 0, width: "10px", height: "10px", borderRadius: "50%", zIndex: 7, pointerEvents: "none" }} />
           </div>
@@ -359,22 +358,9 @@ export default function HowWeWork() {
             const isLeft = side === "left";
             return (
               <div key={i} style={{ display: "flex", justifyContent: isLeft ? "flex-start" : "flex-end", position: "relative", marginBottom: "20px" }}>
-                <div ref={el => { mobileDotRefs.current[i] = el; }} style={{
-                  position: "absolute", top: "50%", left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: "10px", height: "10px", borderRadius: "50%",
-                  background: "#080808",
-                  border: "1px solid rgba(255,255,255,0.32)",
-                  boxShadow: "0 0 8px rgba(255,255,255,0.16)",
-                  zIndex: 3,
-                }} />
-                <div style={{
-                  position: "absolute", top: "50%", transform: "translateY(-50%)",
-                  ...(isLeft ? { right: "50%", marginRight: "6px" } : { left: "50%", marginLeft: "6px" }),
-                  width: "28px", height: "1px", background: "rgba(255,255,255,0.14)", zIndex: 1,
-                }} />
-                <div ref={el => { mobileCardRefs.current[i] = el; }}
-                  style={{ width: "calc(50% - 50px)", ...(isLeft ? { marginRight: "calc(50% + 10px)" } : { marginLeft: "calc(50% + 10px)" }) }}>
+                <div ref={el => { mobileDotRefs.current[i] = el; }} style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "10px", height: "10px", borderRadius: "50%", background: "#080808", border: "1px solid rgba(255,255,255,0.32)", boxShadow: "0 0 8px rgba(255,255,255,0.16)", zIndex: 3 }} />
+                <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", ...(isLeft ? { right: "50%", marginRight: "6px" } : { left: "50%", marginLeft: "6px" }), width: "28px", height: "1px", background: "rgba(255,255,255,0.14)", zIndex: 1 }} />
+                <div ref={el => { mobileCardRefs.current[i] = el; }} style={{ width: "calc(50% - 50px)", ...(isLeft ? { marginRight: "calc(50% + 10px)" } : { marginLeft: "calc(50% + 10px)" }) }}>
                   <StepCard step={step} compact />
                 </div>
               </div>
@@ -384,7 +370,7 @@ export default function HowWeWork() {
 
         <div style={{ maxWidth: "520px", margin: "48px auto 0", padding: "22px 24px 0", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
           <a href="https://cal.com/tanoseihito/30min" target="_blank" rel="noopener noreferrer"
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "11px 22px", borderRadius: "999px", border: "1px solid rgba(255,255,255,0.16)", background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.80)", fontSize: "13px", fontWeight: 650, textDecoration: "none", transition: "all 0.25s ease" }}
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "11px 22px", borderRadius: "999px", border: "1px solid rgba(255,255,255,0.16)", background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.80)", fontFamily: "var(--font-bricolage)", fontSize: "13px", fontWeight: 500, textDecoration: "none", transition: "all 0.25s ease" }}
             onMouseEnter={e => { const el = e.currentTarget; el.style.background = "rgba(255,255,255,0.92)"; el.style.color = "#000"; el.style.borderColor = "transparent"; el.style.boxShadow = "0 0 28px 8px rgba(255,255,255,0.18)"; }}
             onMouseLeave={e => { const el = e.currentTarget; el.style.background = "rgba(255,255,255,0.05)"; el.style.color = "rgba(255,255,255,0.80)"; el.style.borderColor = "rgba(255,255,255,0.16)"; el.style.boxShadow = "none"; }}>
             Book a Clarity Call
@@ -404,10 +390,12 @@ export default function HowWeWork() {
         <div ref={headerRef} style={{ opacity: 0, marginBottom: "64px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
             <span style={{ width: "18px", height: "1px", background: "rgba(255,255,255,0.28)", display: "inline-block" }} />
-            <span style={{ fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", fontWeight: 650 }}>How We Work</span>
+            {/* EYEBROW — Bricolage */}
+            <span style={{ fontFamily: "var(--font-bricolage)", fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", fontWeight: 300 }}>How We Work</span>
           </div>
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "18px" }}>
-            <h2 style={{ fontFamily: "var(--font-dm)", fontWeight: 850, fontSize: "clamp(30px,4vw,52px)", letterSpacing: "-0.04em", lineHeight: 1.0, margin: 0, color: "#fff" }}>
+            {/* HEADING — DM Sans */}
+            <h2 style={{ fontFamily: "var(--font-dm)", fontWeight: 800, fontSize: "clamp(30px,4vw,52px)", letterSpacing: "-0.04em", lineHeight: 1.0, margin: 0, color: "#fff" }}>
               <span style={{ fontWeight: 300 }}>14 days.</span> From brief<br />to buyer-ready video.
             </h2>
             <div style={{ textAlign: "right" }}>
@@ -415,11 +403,13 @@ export default function HowWeWork() {
                 {([["CLIENT SIDE", CLIENT_ACCENT], ["OUR PROCESS", TANOSEI_ACCENT]] as const).map(([label, col]) => (
                   <div key={label} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
                     <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: col, display: "inline-block" }} />
-                    <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.60)", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>{label}</span>
+                    {/* LEGEND LABEL — Bricolage */}
+                    <span style={{ fontFamily: "var(--font-bricolage)", fontSize: "10px", color: "rgba(255,255,255,0.60)", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 300 }}>{label}</span>
                   </div>
                 ))}
               </div>
-              <p style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.62)", lineHeight: 1.7, margin: 0, maxWidth: "320px" }}>Predictable, fast, and built so you never have to chase us.</p>
+              {/* BODY — Bricolage */}
+              <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "13.5px", fontWeight: 300, color: "rgba(255,255,255,0.62)", lineHeight: 1.7, margin: 0, maxWidth: "320px" }}>Predictable, fast, and built so you never have to chase us.</p>
             </div>
           </div>
         </div>
@@ -485,9 +475,11 @@ export default function HowWeWork() {
 
         {/* FOOTER */}
         <div style={{ marginTop: "62px", paddingTop: "32px", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "18px" }}>
-          <p style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", margin: 0 }}>Every sprint starts with a 30-minute call. No commitment required.</p>
+          {/* FOOTER NOTE — Bricolage */}
+          <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "13.5px", fontWeight: 300, color: "rgba(255,255,255,0.55)", margin: 0 }}>Every sprint starts with a 30-minute call. No commitment required.</p>
+          {/* FOOTER CTA — Bricolage */}
           <a href="https://cal.com/tanoseihito/30min" target="_blank" rel="noopener noreferrer"
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "11px 22px", borderRadius: "999px", border: "1px solid rgba(255,255,255,0.16)", background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.80)", fontSize: "13.5px", fontWeight: 650, textDecoration: "none", transition: "all 0.25s ease" }}
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "11px 22px", borderRadius: "999px", border: "1px solid rgba(255,255,255,0.16)", background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.80)", fontFamily: "var(--font-bricolage)", fontSize: "13.5px", fontWeight: 500, textDecoration: "none", transition: "all 0.25s ease" }}
             onMouseEnter={e => { const el = e.currentTarget; el.style.background = "rgba(255,255,255,0.92)"; el.style.color = "#000"; el.style.borderColor = "transparent"; el.style.boxShadow = "0 0 28px 8px rgba(255,255,255,0.18)"; }}
             onMouseLeave={e => { const el = e.currentTarget; el.style.background = "rgba(255,255,255,0.05)"; el.style.color = "rgba(255,255,255,0.80)"; el.style.borderColor = "rgba(255,255,255,0.16)"; el.style.boxShadow = "none"; }}>
             Book a Clarity Call
@@ -508,8 +500,8 @@ export default function HowWeWork() {
           <button onClick={() => goToStep(stepIdx + 1)} disabled={stepIdx === STEP_LABELS.length - 1} style={{ background: "none", border: "none", cursor: stepIdx === STEP_LABELS.length - 1 ? "default" : "pointer", padding: "4px 8px", borderRadius: "6px", color: stepIdx === STEP_LABELS.length - 1 ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.75)", fontSize: "14px", lineHeight: 1 }}>›</button>
           <div style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.12)", margin: "0 2px" }} />
           <button onClick={togglePlay} style={{ background: "none", border: "none", cursor: "pointer", padding: "4px 8px", color: "rgba(255,255,255,0.65)", fontSize: "12px", lineHeight: 1 }}>{isPlaying ? "⏸" : "▶"}</button>
-          <div style={{ marginLeft: "4px", fontSize: "10px", color: "rgba(255,255,255,0.55)", letterSpacing: "0.08em", whiteSpace: "nowrap" }}>{STEP_LABELS[stepIdx]}</div>
-          <div style={{ marginLeft: "6px", fontSize: "9px", color: "rgba(255,255,255,0.40)", letterSpacing: "0.06em" }}>Shift+P to exit</div>
+          <div style={{ fontFamily: "var(--font-bricolage)", marginLeft: "4px", fontSize: "10px", color: "rgba(255,255,255,0.55)", letterSpacing: "0.08em", whiteSpace: "nowrap" }}>{STEP_LABELS[stepIdx]}</div>
+          <div style={{ fontFamily: "var(--font-bricolage)", marginLeft: "6px", fontSize: "9px", color: "rgba(255,255,255,0.40)", letterSpacing: "0.06em" }}>Shift+P to exit</div>
         </div>
       )}
     </section>

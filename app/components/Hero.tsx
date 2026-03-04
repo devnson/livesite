@@ -90,7 +90,7 @@ export default function Hero() {
         paddingBottom: isMobile ? "32px" : "0",
       }}>
 
-        {/* HEADLINE */}
+        {/* HEADLINE — DM Sans, -0.04em tracking */}
         <h1
           ref={headlineRef}
           style={{
@@ -98,7 +98,7 @@ export default function Hero() {
             fontWeight: 300,
             fontSize: isMobile ? "clamp(40px, 11.5vw, 54px)" : "clamp(40px, 9.2vw, 88px)",
             lineHeight: 1.06,
-            letterSpacing: "-0.035em",
+            letterSpacing: "-0.04em",
             margin: 0,
             padding: 0,
           }}
@@ -118,26 +118,26 @@ export default function Hero() {
           </span>
         </h1>
 
-        {/* LEDE */}
+        {/* LEDE — Bricolage Grotesque */}
         <p
           ref={ledeRef}
           style={{
+            fontFamily: "var(--font-bricolage)",
             marginTop: isMobile ? "20px" : "28px",
             fontSize: isMobile ? "16px" : "17px",
             color: "rgba(255,255,255,0.48)",
             maxWidth: isMobile ? "100%" : "520px",
             lineHeight: 1.75,
-            fontWeight: 400,
+            fontWeight: 300,
             opacity: 0,
             margin: `${isMobile ? 20 : 28}px 0 0 0`,
           }}
         >
           We help GTM teams turn complex products into structured, repeatable video systems that{" "}
-          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>educate buyers, strengthen positioning, and accelerate sales.</strong>
-
+          <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 500 }}>educate buyers, strengthen positioning, and accelerate sales.</strong>
         </p>
 
-        {/* CTA BUTTONS */}
+        {/* CTA BUTTONS — Bricolage Grotesque */}
         <div
           ref={ctaRef}
           style={{
@@ -154,7 +154,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             className="premiumBtn"
-            style={{ justifyContent: "center" }}
+            style={{ justifyContent: "center", fontFamily: "var(--font-bricolage)", fontWeight: 500 }}
           >
             <div className="rimGlow" />
             <div className="btnInnerCover" />
@@ -170,7 +170,7 @@ export default function Hero() {
           <a
             href="#recent-work"
             className="ghostBtn"
-            style={{ textAlign: "center" }}
+            style={{ textAlign: "center", fontFamily: "var(--font-bricolage)", fontWeight: 300 }}
             onClick={(e) => {
               e.preventDefault();
               document.getElementById("recent-work")?.scrollIntoView({ behavior: "smooth" });
@@ -184,11 +184,12 @@ export default function Hero() {
       {/* LOGO STRIP */}
       <div ref={logoRef} style={{ width: "100%", opacity: 0 }}>
         <p style={{
+          fontFamily: "var(--font-bricolage)",
           fontSize: "10px",
           letterSpacing: "0.16em",
           textTransform: "uppercase",
           color: "rgba(255,255,255,0.22)",
-          fontWeight: 600,
+          fontWeight: 300,
           margin: "0 0 14px 0",
           textAlign: isMobile ? "left" : "center",
         }}>
@@ -196,7 +197,6 @@ export default function Hero() {
         </p>
 
         {isMobile ? (
-          /* MOBILE: auto-scrolling marquee — 28px logos matching SecurityPal */
           <>
             <style>{`
               @keyframes heroLogoScroll {
@@ -242,7 +242,6 @@ export default function Hero() {
             </div>
           </>
         ) : (
-          /* DESKTOP: static centered row — unchanged */
           <div style={{
             display: "flex",
             alignItems: "center",

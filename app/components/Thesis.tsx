@@ -29,14 +29,9 @@ export default function Thesis() {
     const els = ref.current?.querySelectorAll(".thesis-line");
     if (!els) return;
     els.forEach((el, i) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1, y: 0, duration: 0.7, delay: i * 0.08, ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 88%" },
-        }
-      );
+      gsap.fromTo(el, { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.7, delay: i * 0.08, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 88%" } });
     });
   }, []);
 
@@ -49,90 +44,67 @@ export default function Thesis() {
         borderBottom: "1px solid rgba(255,255,255,0.08)",
       }}
     >
-      <div
-        style={{
-          maxWidth: "1160px",
-          margin: "0 auto",
-          display: "grid",
-          // Stack on mobile, two columns on desktop
-          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-          gap: isMobile ? "48px" : "80px",
-          alignItems: "start",
-        }}
-      >
-        {/* LEFT: THESIS STATEMENT */}
+      <div style={{
+        maxWidth: "1160px", margin: "0 auto",
+        display: "grid",
+        gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+        gap: isMobile ? "48px" : "80px",
+        alignItems: "start",
+      }}>
+
+        {/* LEFT — HEADING: DM Sans, body: Bricolage */}
         <div>
-          <h2
-            className="thesis-line"
-            style={{
-              fontFamily: "var(--font-dm)",
-              fontWeight: 800,
-              fontSize: isMobile ? "clamp(32px, 9vw, 44px)" : "clamp(36px, 5vw, 60px)",
-              letterSpacing: "-0.035em",
-              lineHeight: 1.05,
-              margin: "0 0 24px 0",
-              color: "#fff",
-              opacity: 0,
-            }}
-          >
+          <h2 className="thesis-line" style={{
+            fontFamily: "var(--font-dm)", fontWeight: 800,
+            fontSize: isMobile ? "clamp(32px, 9vw, 44px)" : "clamp(36px, 5vw, 60px)",
+            letterSpacing: "-0.04em", lineHeight: 1.05,
+            margin: "0 0 24px 0", color: "#fff", opacity: 0,
+          }}>
             <span style={{ fontWeight: 300 }}>Complexity is a</span>{" "}
             revenue bottleneck.
           </h2>
 
-          <p
-            className="thesis-line"
-            style={{
-              fontSize: isMobile ? "15px" : "15px",
-              color: "rgba(255,255,255,0.55)",
-              lineHeight: 1.8,
-              maxWidth: isMobile ? "100%" : "400px",
-              margin: 0,
-              opacity: 0,
-            }}
-          >
+          <p className="thesis-line" style={{
+            fontFamily: "var(--font-bricolage)",
+            fontSize: "15px", fontWeight: 300,
+            color: "rgba(255,255,255,0.55)",
+            lineHeight: 1.8, maxWidth: isMobile ? "100%" : "400px",
+            margin: 0, opacity: 0,
+          }}>
             When buyers can't understand your product quickly, every part of your go-to-market works harder than it should.
           </p>
         </div>
 
-        {/* RIGHT: CONSEQUENCE LIST */}
+        {/* RIGHT — all Bricolage */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           {items.map((item, i) => (
-            <div
-              key={i}
-              className="thesis-line"
-              style={{
-                padding: "22px 0",
-                borderBottom: i < items.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none",
-                opacity: 0,
-              }}
-            >
-              <p
-                style={{
-                  fontSize: "13px",
-                  color: "rgba(255,255,255,0.32)",
-                  marginBottom: "6px",
-                  lineHeight: 1.5,
-                  textDecoration: "line-through",
-                  textDecorationColor: "rgba(255,255,255,0.18)",
-                  margin: "0 0 6px 0",
-                }}
-              >
+            <div key={i} className="thesis-line" style={{
+              padding: "22px 0",
+              borderBottom: i < items.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none",
+              opacity: 0,
+            }}>
+              <p style={{
+                fontFamily: "var(--font-bricolage)",
+                fontSize: "13px", fontWeight: 300,
+                color: "rgba(255,255,255,0.32)",
+                textDecoration: "line-through",
+                textDecorationColor: "rgba(255,255,255,0.18)",
+                margin: "0 0 6px 0", lineHeight: 1.5,
+              }}>
                 {item.problem}
               </p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "rgba(255,255,255,0.82)",
-                  lineHeight: 1.65,
-                  margin: 0,
-                  fontWeight: 450,
-                }}
-              >
+              <p style={{
+                fontFamily: "var(--font-bricolage)",
+                fontSize: "14px", fontWeight: 500,
+                color: "rgba(255,255,255,0.82)",
+                lineHeight: 1.65, margin: 0,
+              }}>
                 {item.fix}
               </p>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );

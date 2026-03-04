@@ -7,7 +7,8 @@ body {
   color: #e8e8e8;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  font-family: var(--font-dm), system-ui, sans-serif;
+  /* Bricolage Grotesque as body default — matches all page roots */
+  font-family: var(--font-bricolage), system-ui, sans-serif;
 }
 
 ::selection { background: rgba(255,255,255,0.18); color: #fff; }
@@ -15,8 +16,9 @@ body {
 ::-webkit-scrollbar-track { background: #080808; }
 ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
 
-.font-display { font-family: var(--font-bricolage), system-ui, sans-serif; }
-.font-body    { font-family: var(--font-dm), system-ui, sans-serif; }
+/* DM Sans = headings/display | Bricolage = body copy */
+.font-display { font-family: var(--font-dm), system-ui, sans-serif; }
+.font-body    { font-family: var(--font-bricolage), system-ui, sans-serif; }
 
 
 
@@ -24,10 +26,9 @@ body {
    LOGO MARQUEE — BULLETPROOF
 ========================= */
 
-
 .logoBox{
   position: relative;
-  height: 22px;   /* constant visual height */
+  height: 22px;
 }
 
 .logoImg{
@@ -55,33 +56,19 @@ body {
   text-align: center;
   font-size: 11px;
   letter-spacing: 0.18em;
-  font-weight: 650;
+  font-weight: 300;
+  font-family: var(--font-bricolage), system-ui, sans-serif;
   color: rgba(255,255,255,0.80);
   margin-bottom: 16px;
 }
 
-/* fade edges using mask (no overlay) */
 .logoRow{
   overflow: hidden;
   padding: 6px 0;
-
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 10%,
-    black 90%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 10%,
-    black 90%,
-    transparent 100%
-  );
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
-/* This wrapper moves left forever */
 .logoMarqueeInner{
   display: flex;
   width: max-content;
@@ -93,22 +80,18 @@ body {
   animation-play-state: paused;
 }
 
-/* Two identical strips side-by-side */
 .logoStrip{
   display: flex;
   align-items: center;
   gap: 44px;
-  padding-right: 44px; /* same as gap */
+  padding-right: 44px;
 }
 
-/* Moves exactly one strip width (50% because 2 strips) */
 @keyframes marqueeMove{
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-/* No pill, no border, no background */
-/* pill container */
 .logoItem{
   display:inline-flex;
   align-items:center;
@@ -120,23 +103,20 @@ body {
   text-decoration:none;
 }
 
-/* the logo box sets baseline + spacing */
 .logoBox{
   display:flex;
   align-items:center;
-  height:24px;        /* baseline height */
+  height:24px;
 }
 
-/* IMPORTANT: max-height only, not forcing width */
 .logoImg{
-  height:24px;        /* max height */
-  width:auto;         /* keep natural proportions */
+  height:24px;
+  width:auto;
   object-fit:contain;
   opacity:.92;
   display:block;
 }
 
-/* hover stays premium */
 .logoItem:hover{
   border-color: rgba(255,255,255,0.22);
   background: rgba(255,255,255,0.06);
@@ -149,7 +129,8 @@ body {
 .premiumBtn {
   position: relative; display: inline-flex; align-items: center;
   gap: 16px; padding: 8px 10px 8px 26px; border-radius: 999px;
-  cursor: pointer; color: #c8c8c8; font-family: var(--font-bricolage);
+  cursor: pointer; color: #c8c8c8;
+  font-family: var(--font-bricolage), system-ui, sans-serif;
   font-weight: 500; text-decoration: none; overflow: hidden;
   isolation: isolate; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
@@ -178,7 +159,7 @@ body {
 
 
 /* ═══════════════════════════════════════════════
-   FILM GRAIN — very subtle, not muddying contrast
+   FILM GRAIN
 ═══════════════════════════════════════════════ */
 .noise-overlay {
   position: fixed; inset: 0; z-index: 9998; pointer-events: none;
@@ -212,8 +193,18 @@ body {
 /* ═══════════════════════════════════════════════
    TYPOGRAPHY
 ═══════════════════════════════════════════════ */
-h1, h2, h3 { letter-spacing: -0.035em; line-height: 1.05; color: #ffffff; }
-p, li { line-height: 1.75; color: rgba(255,255,255,0.82); }
+h1, h2, h3 {
+  font-family: var(--font-dm), system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: #ffffff;
+}
+p, li {
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.82);
+}
 
 
 /* ═══════════════════════════════════════════════

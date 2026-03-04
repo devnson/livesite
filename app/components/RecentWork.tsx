@@ -48,7 +48,7 @@ const cards: CardData[] = [
     },
   },
   {
-    tag: "Security Reviews · Assurance · Compliance ",
+    tag: "Security Reviews · Assurance · Compliance",
     name: "SecurityPal Vision",
     where: "SecurityPal Vision Video",
     gif: "/gifs/securitypalvision.gif",
@@ -76,10 +76,10 @@ const cards: CardData[] = [
     },
   },
   {
-    tag: "Security Reviews · Assurance · Compliance ",
+    tag: "Security Reviews · Assurance · Compliance",
     name: "SecurityPal — Analytics Demo",
     where: "Demo → Customer + Demo",
-    gif: "gifs/spalanalytics.gif",
+    gif: "/gifs/spalanalytics.gif",
     gt: "gt-3",
     modal: {
       title: "SecurityPal — Analytics Demo",
@@ -151,12 +151,14 @@ function WorkCard({
         background: "linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.82) 100%)",
       }} />
 
+      {/* TAG — Bricolage */}
       <div style={{ position: "absolute", top: "12px", left: "12px", right: "12px", zIndex: 4 }}>
         <span style={{
           display: "inline-block",
           maxWidth: "100%",
+          fontFamily: "var(--font-bricolage)",
           fontSize: "9px",
-          fontWeight: 700,
+          fontWeight: 400,
           letterSpacing: "0.10em",
           textTransform: "uppercase",
           color: "rgba(255,255,255,0.82)",
@@ -177,7 +179,6 @@ function WorkCard({
         position: "absolute", inset: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
         zIndex: 3, pointerEvents: "none",
-        opacity: 1,
         transition: "opacity 0.22s",
       }}>
         <div style={{
@@ -195,6 +196,7 @@ function WorkCard({
         </div>
       </div>
 
+      {/* CARD TITLE + WHERE — DM Sans title, Bricolage subtitle */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
         padding: size === "hero" ? "22px 20px" : "14px",
@@ -205,13 +207,19 @@ function WorkCard({
           fontSize: titleSize,
           fontWeight: 600,
           color: "#ffffff",
-          letterSpacing: "-0.02em",
+          letterSpacing: "-0.04em",
           lineHeight: 1.25,
           marginBottom: "4px",
         }}>
           {card.name}
         </div>
-        <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.65)", fontWeight: 400, lineHeight: 1.4 }}>
+        <div style={{
+          fontFamily: "var(--font-bricolage)",
+          fontSize: "11px",
+          color: "rgba(255,255,255,0.65)",
+          fontWeight: 300,
+          lineHeight: 1.4,
+        }}>
           {card.where}
         </div>
       </div>
@@ -224,7 +232,7 @@ export default function RecentWork() {
   const headerRef  = useRef<HTMLDivElement>(null);
   const gridRef    = useRef<HTMLDivElement>(null);
   const btnRef     = useRef<HTMLAnchorElement>(null);
-  const [modal, setModal]     = useState<ModalData | null>(null);
+  const [modal, setModal]       = useState<ModalData | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -265,21 +273,25 @@ export default function RecentWork() {
           <div ref={headerRef} style={{ marginBottom: "28px", opacity: 0 }}>
             <div style={{
               display: "flex", alignItems: "center", gap: "10px",
+              fontFamily: "var(--font-bricolage)",
               fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase",
-              color: "rgba(255,255,255,0.52)", marginBottom: "12px", fontWeight: 600,
+              color: "rgba(255,255,255,0.52)", marginBottom: "12px", fontWeight: 300,
             }}>
               <span style={{ display: "inline-block", width: "18px", height: "1px", background: "rgba(255,255,255,0.28)", flexShrink: 0 }} />
               Recent Work
             </div>
             <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "flex-end", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", gap: "16px" }}>
+              {/* HEADING — DM Sans */}
               <h2 style={{
-                fontFamily: "var(--font-dm)", fontWeight: 700,
+                fontFamily: "var(--font-dm)",
+                fontWeight: 700,
                 fontSize: isMobile ? "clamp(24px, 7vw, 34px)" : "clamp(28px, 3.8vw, 50px)",
-                letterSpacing: "-0.035em", lineHeight: 1.06, margin: 0, color: "#fff",
+                letterSpacing: "-0.04em", lineHeight: 1.06, margin: 0, color: "#fff",
               }}>
                 Every frame built to make{" "}
-                <span style={{ color: "rgba(255,255,255,0.52)", fontWeight: 400 }}>buyers confident.</span>
+                <span style={{ color: "rgba(255,255,255,0.52)", fontWeight: 300 }}>buyers confident.</span>
               </h2>
+              {/* BUTTON — Bricolage */}
               <a
                 href="/work/"
                 style={{
@@ -288,8 +300,9 @@ export default function RecentWork() {
                   border: "1px solid rgba(255,255,255,0.16)",
                   background: "rgba(255,255,255,0.04)",
                   color: "rgba(255,255,255,0.78)",
-                  fontSize: "13px", fontWeight: 600,
-                  textDecoration: "none", fontFamily: "var(--font-dm)",
+                  fontFamily: "var(--font-bricolage)",
+                  fontSize: "13px", fontWeight: 500,
+                  textDecoration: "none",
                   whiteSpace: "nowrap", flexShrink: 0,
                   transition: "border-color 0.2s, background 0.2s, color 0.2s",
                 }}
@@ -319,22 +332,11 @@ export default function RecentWork() {
               </div>
             ) : (
               <>
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "55fr 45fr",
-                  gap: "8px",
-                  marginBottom: "8px",
-                  height: "420px",
-                }}>
+                <div style={{ display: "grid", gridTemplateColumns: "55fr 45fr", gap: "8px", marginBottom: "8px", height: "420px" }}>
                   <WorkCard card={cards[0]} onClick={() => setModal({ ...cards[0].modal, gt: cards[0].gt })} size="hero" />
                   <WorkCard card={cards[1]} onClick={() => setModal({ ...cards[1].modal, gt: cards[1].gt })} size="normal" />
                 </div>
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "8px",
-                  height: "270px",
-                }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", height: "270px" }}>
                   {cards.slice(2).map(card => (
                     <WorkCard key={card.name} card={card} onClick={() => setModal({ ...card.modal, gt: card.gt })} size="small" />
                   ))}
@@ -343,7 +345,7 @@ export default function RecentWork() {
             )}
           </div>
 
-          {/* VIEW FULL LIBRARY */}
+          {/* VIEW FULL LIBRARY — Bricolage */}
           <a
             ref={btnRef}
             href="/work/"
@@ -357,10 +359,10 @@ export default function RecentWork() {
               border: "1px solid rgba(255,255,255,0.09)",
               background: "rgba(255,255,255,0.025)",
               color: "rgba(255,255,255,0.62)",
-              fontSize: "13.5px", fontWeight: 600,
-              fontFamily: "var(--font-dm)",
+              fontFamily: "var(--font-bricolage)",
+              fontSize: "13.5px", fontWeight: 500,
               textDecoration: "none",
-              letterSpacing: "-0.01em",
+              letterSpacing: "0",
               transition: "background 0.2s, color 0.2s, border-color 0.2s",
               opacity: 0,
             }}
@@ -411,31 +413,35 @@ export default function RecentWork() {
                   <div style={{ width: "56px", height: "56px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.16)", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.4)" }}>
                     <PlayIcon />
                   </div>
-                  <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.42)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Video coming soon</span>
+                  <span style={{ fontFamily: "var(--font-bricolage)", fontSize: "11px", color: "rgba(255,255,255,0.42)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Video coming soon</span>
                 </div>
               )}
             </div>
 
             <div style={{ padding: isMobile ? "20px" : "28px 32px 32px" }}>
-              <p style={{ fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "8px", fontWeight: 600 }}>Case Study</p>
-              <h3 style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: isMobile ? "17px" : "20px", letterSpacing: "-0.025em", lineHeight: 1.2, marginBottom: "12px", color: "#fff" }}>{modal.title}</h3>
-              <p style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.75)", lineHeight: 1.75, marginBottom: "22px" }}>{modal.desc}</p>
+              {/* LABEL — Bricolage */}
+              <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "8px", fontWeight: 300 }}>Case Study</p>
+              {/* MODAL TITLE — DM Sans */}
+              <h3 style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: isMobile ? "17px" : "20px", letterSpacing: "-0.04em", lineHeight: 1.2, marginBottom: "12px", color: "#fff" }}>{modal.title}</h3>
+              {/* DESC — Bricolage */}
+              <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "13.5px", fontWeight: 300, color: "rgba(255,255,255,0.75)", lineHeight: 1.75, marginBottom: "22px" }}>{modal.desc}</p>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1px", background: "rgba(255,255,255,0.09)", borderRadius: "10px", overflow: "hidden", marginBottom: "24px" }}>
                 {modal.stats.map(s => (
                   <div key={s.l} style={{ background: "#0d0d0d", padding: "16px 10px", textAlign: "center" }}>
-                    <div style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: "15px", letterSpacing: "-0.02em", marginBottom: "4px", color: "#fff" }}>{s.n}</div>
-                    <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.52)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.l}</div>
+                    {/* STAT NUMBER — DM Sans */}
+                    <div style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: "15px", letterSpacing: "-0.04em", marginBottom: "4px", color: "#fff" }}>{s.n}</div>
+                    {/* STAT LABEL — Bricolage */}
+                    <div style={{ fontFamily: "var(--font-bricolage)", fontSize: "10px", fontWeight: 300, color: "rgba(255,255,255,0.52)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.l}</div>
                   </div>
                 ))}
               </div>
 
-              {/* Only show case study button if caseUrl exists */}
               <div style={{ display: "flex", justifyContent: modal.caseUrl ? "space-between" : "flex-end", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
                 {modal.caseUrl && (
                   <a
                     href={modal.caseUrl}
-                    style={{ padding: "11px 24px", borderRadius: "10px", background: "white", color: "black", fontSize: "13.5px", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", gap: "7px", transition: "opacity 0.15s" }}
+                    style={{ fontFamily: "var(--font-bricolage)", padding: "11px 24px", borderRadius: "10px", background: "white", color: "black", fontSize: "13.5px", fontWeight: 500, textDecoration: "none", display: "flex", alignItems: "center", gap: "7px", transition: "opacity 0.15s" }}
                     onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85"}
                     onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "1"}
                   >
@@ -444,7 +450,7 @@ export default function RecentWork() {
                 )}
                 <button
                   onClick={() => setModal(null)}
-                  style={{ padding: "11px 18px", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: "rgba(255,255,255,0.60)", fontSize: "13px", cursor: "pointer", fontFamily: "var(--font-dm)" }}
+                  style={{ fontFamily: "var(--font-bricolage)", padding: "11px 18px", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: "rgba(255,255,255,0.60)", fontSize: "13px", fontWeight: 300, cursor: "pointer" }}
                 >
                   Close
                 </button>

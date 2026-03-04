@@ -23,28 +23,9 @@ function Strip({ ariaHidden, isMobile }: { ariaHidden?: boolean; isMobile: boole
   return (
     <div className="logoStrip" aria-hidden={ariaHidden ? "true" : undefined}>
       {logos.map((logo) => (
-        <a
-          key={logo.name}
-          href={logo.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          title={`Visit ${logo.name}`}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            textDecoration: "none",
-            padding: 0,
-            margin: isMobile ? "0 20px" : "0 28px",
-            flexShrink: 0,
-          }}
-        >
-          <div
-            className="logoBox"
-            style={{
-              width: `${Math.round(logo.w * (isMobile ? 1.1 : 1.35))}px`,
-              height: "200px",
-            }}
-          >
+        <a key={logo.name} href={logo.url} target="_blank" rel="noopener noreferrer" title={`Visit ${logo.name}`}
+          style={{ display: "inline-flex", alignItems: "center", textDecoration: "none", padding: 0, margin: isMobile ? "0 20px" : "0 28px", flexShrink: 0 }}>
+          <div className="logoBox" style={{ width: `${Math.round(logo.w * (isMobile ? 1.1 : 1.35))}px`, height: "200px" }}>
             <Image src={logo.src} alt={logo.name} fill className="logoImg" sizes="200px" />
           </div>
         </a>
@@ -60,8 +41,7 @@ export default function FooterCTA() {
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 640px)");
     const apply = () => setIsMobile(mq.matches);
-    apply();
-    mq.addEventListener("change", apply);
+    apply(); mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
   }, []);
 
@@ -75,40 +55,18 @@ export default function FooterCTA() {
   return (
     <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
 
-      {/* BUTTON */}
-      <div
-        ref={ctaRef}
-        style={{
-          padding: "120px 24px",
-          textAlign: "center",
-          opacity: 0,
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div style={{
-          position: "absolute", top: "50%", left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "600px", height: "300px",
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.025)",
-          filter: "blur(80px)",
-          pointerEvents: "none",
-        }} />
+      {/* CTA BLOCK */}
+      <div ref={ctaRef} style={{ padding: "120px 24px", textAlign: "center", opacity: 0, position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "600px", height: "300px", borderRadius: "50%", background: "rgba(255,255,255,0.025)", filter: "blur(80px)", pointerEvents: "none" }} />
 
-        <p style={{
-          fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase",
-          color: "rgba(255,255,255,0.52)", marginBottom: "24px", fontWeight: 600,
-        }}>
+        {/* EYEBROW — Bricolage */}
+        <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "24px", fontWeight: 300 }}>
           Ready to start
         </p>
 
-        <a
-          href="https://cal.com/tanoseihito/30min"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="premiumBtn"
-        >
+        {/* BUTTON — Bricolage */}
+        <a href="https://cal.com/tanoseihito/30min" target="_blank" rel="noopener noreferrer" className="premiumBtn"
+          style={{ fontFamily: "var(--font-bricolage)" }}>
           <span className="rimGlow" />
           <span className="btnInnerCover" />
           <span className="btnText">Start with Clarity Call</span>
@@ -125,7 +83,10 @@ export default function FooterCTA() {
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
         <section className="logoMarquee">
           <div className="logoContainer">
-            <div className="logoKicker">TRUSTED BY TEAMS AT</div>
+            {/* KICKER — Bricolage */}
+            <div className="logoKicker" style={{ fontFamily: "var(--font-bricolage)", fontWeight: 300 }}>
+              TRUSTED BY TEAMS AT
+            </div>
             <div className="logoRow">
               <div className="logoMarqueeInner">
                 <Strip isMobile={isMobile} />
