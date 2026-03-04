@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${bricolage.variable}`}>
-      <body>
+      <body style={{ fontFamily: "var(--font-bricolage), system-ui, sans-serif" }}>
         {/* — CURSOR AMBIENT LIGHT — */}
         <div className="cursor-light" id="cursorLight" aria-hidden="true" />
         <div className="noise-overlay" aria-hidden="true" />
