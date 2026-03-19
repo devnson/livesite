@@ -564,8 +564,67 @@ export default function RebrandPage() {
           </div>
           <h2 style={{ fontFamily: "var(--font-dm)", fontSize: "clamp(22px, 3.5vw, 34px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#ffffff", margin: "0 0 10px" }}>Theory applied.</h2>
           <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "15px", fontWeight: 300, color: "rgba(255,255,255,0.50)", lineHeight: 1.85, margin: "0 0 24px" }}>The identity across logo, motion, interface, and communication.</p>
-          <div style={{ borderRadius: "14px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)", aspectRatio: "16/5", display: "flex", alignItems: "center", justifyContent: "center", backgroundImage: "radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)", backgroundSize: "24px 24px" }}>
-            <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "11px", fontWeight: 300, color: "rgba(255,255,255,0.18)", letterSpacing: "0.10em", textTransform: "uppercase", margin: 0 }}>Application visuals — coming soon</p>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: "12px",
+            }}
+          >
+            <div
+              style={{
+                borderRadius: "14px",
+                overflow: "hidden",
+                border: "1px solid rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.02)",
+                aspectRatio: "16 / 9",
+              }}
+            >
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "block",
+                  objectFit: "cover",
+                  background: "#0b0b0b",
+                }}
+              >
+                <source src="/tanoseilogos/theoryapplied1.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            <div
+              style={{
+                borderRadius: "14px",
+                overflow: "hidden",
+                border: "1px solid rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.02)",
+                aspectRatio: "16 / 9",
+              }}
+            >
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "block",
+                  objectFit: "cover",
+                  background: "#0b0b0b",
+                }}
+              >
+                <source src="/tanoseilogos/theoryapplied2.mp4" type="video/mp4" />
+              </video>
+            </div>
           </div>
         </div>
 
