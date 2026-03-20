@@ -152,7 +152,7 @@ export default function RebrandPage() {
           <div className="hero-el" style={{ opacity: 0, display: "flex", alignItems: "center", gap: "16px", marginBottom: "44px" }}>
             <span style={{ fontFamily: "var(--font-bricolage)", fontSize: "10px", fontWeight: 300, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)" }}>Tanosei Studio</span>
             <span style={{ width: "24px", height: "1px", background: "rgba(255,255,255,0.14)" }} />
-            <span style={{ fontFamily: "var(--font-bricolage)", fontSize: "10px", fontWeight: 300, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)" }}>2025</span>
+            <span style={{ fontFamily: "var(--font-bricolage)", fontSize: "10px", fontWeight: 300, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)" }}>2026</span>
             <span style={{ width: "24px", height: "1px", background: "rgba(255,255,255,0.14)" }} />
             <span style={{ fontFamily: "var(--font-bricolage)", fontSize: "10px", fontWeight: 300, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)" }}>Brand Identity</span>
           </div>
@@ -209,7 +209,7 @@ export default function RebrandPage() {
           />
         </div>
         <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "13px", fontWeight: 300, color: "rgba(255,255,255,0.28)", margin: "14px 0 0", lineHeight: 1.6 }}>
-          The Geometric Rebirth — Tanosei Studio, 2025
+          The Geometric Rebirth — Tanosei Studio, 2026
         </p>
       </section>
 
