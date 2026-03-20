@@ -166,7 +166,7 @@ export default function Testimonials() {
 
           <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "10px" : "12px", paddingTop: isMobile ? "12px" : "16px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
             <div style={{ width: `${avatar}px`, height: `${avatar}px`, borderRadius: "50%", flexShrink: 0, overflow: "hidden", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.14)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-bricolage)", fontSize: isMobile ? "11px" : "12px", fontWeight: 500, color: "rgba(255,255,255,0.55)" }}>
-              {t.headshot ? <img src={t.headshot} alt={t.name || ""} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : initials}
+              {t.headshot ? <img src={t.headshot} alt={t.name || ""} referrerPolicy="no-referrer" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : initials}
             </div>
             <div>
               {/* NAME — DM Sans */}
