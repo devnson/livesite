@@ -10,19 +10,19 @@ const row1 = [
   {
     quote: "We'd been trying to visualize productivity concepts for social for years. Sushan understood the brand instinctively and kept delivering across three years without us having to re-explain ourselves.",
     name: "Ashutosh Priyadarshy", role: "Founder", company: "Sunsama", detail: "Productivity · Social Content",
-    headshot: "https://media.licdn.com/dms/image/v2/C4D03AQEsfB4yQxh1rQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1516525779905?e=1773878400&v=beta&t=eSAfUJhEeZalrDX2Fu4XnAT95xD0hTinaIIMeaAcvq0",
+    headshot: "/customerface/ashu_sunsama.jpeg",
     videoId: "", linkedin: "https://www.linkedin.com/in/ashutoshpriyadarshy/",
   },
   {
     quote: "The process was frictionless. We had a complex concept, a tight timeline, and they just moved, clean system, no back-and-forth. The whole team was impressed.",
     name: "Lucas Goransky", role: "Co-founder", company: "Aleph", detail: "Fintech · Series B",
-    headshot: "https://media.licdn.com/dms/image/v2/D4D03AQFtv5upv1ad3g/profile-displayphoto-scale_400_400/B4DZfB26VGGUAg-/0/1751304087625?e=1773878400&v=beta&t=67zhD5R7x72865ZICP4U7loAjl6_JCZ5M9MLzskuXd0",
+    headshot: "/customerface/lucas_aleph.jpg",
     videoId: "", linkedin: "https://www.linkedin.com/in/lucasgoransky/",
   },
   {
     quote: "Despite the complexity of what we're building, they made a good video, it enabled us for the clarity and the decks we made that were used for enterprise customers, the complexity got easy to understand.",
     name: "Kathryn Wu", role: "Co-founder", company: "Openmart", detail: "B2B Commerce · Seed",
-    headshot: "https://media.licdn.com/dms/image/v2/D5603AQEN_mLXZdnWbA/profile-displayphoto-scale_400_400/B56Zhsyjg7HQAk-/0/1754171849346?e=1773878400&v=beta&t=3OWE2VwmYaszvXR8VAU-hwTJLOPvr0HsaruaWstc0Zk",
+    headshot: "/customerface/kathrynwu_openmart.webp",
     videoId: "", linkedin: "https://www.linkedin.com/in/kathrynwoohoo/",
   },
   {
@@ -36,7 +36,7 @@ const row1 = [
   {
     quote: "What stuck with me wasn't just the output it was the framework they brought. For a single video project, they gave us a clear lens on how creative strategy should work.",
     name: "Nabin Banskota", role: "Co-founder", company: "Niural AI", detail: "HR Tech · Series A",
-    headshot: "https://media.licdn.com/dms/image/v2/D5603AQEY5CWac6klMQ/profile-displayphoto-scale_400_400/B56ZfhAbICGQAk-/0/1751826674923?e=1773878400&v=beta&t=WFwJYbkO8bsNcZnojZl8WKWjPrMRvDWIIMQs4PV94Ws",
+    headshot: "/customerface/nabin.webp",
     videoId: "", linkedin: "https://www.linkedin.com/in/nabinbanskota/",
   },
 ];
@@ -45,19 +45,19 @@ const row2 = [
   {
     quote: "Worked with him for three years, consistent quality, zero re-briefing. Sushan just gets it, the brand, the tone, the audience. That's rare.",
     name: "Ashutosh Priyadarshy", role: "Founder", company: "Sunsama", detail: "Productivity · Social Content",
-    headshot: "https://media.licdn.com/dms/image/v2/C4D03AQEsfB4yQxh1rQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1516525779905?e=1773878400&v=beta&t=eSAfUJhEeZalrDX2Fu4XnAT95xD0hTinaIIMeaAcvq0",
+    headshot: "/customerface/ashu_sunsama.jpeg",
     videoId: "", linkedin: "https://www.linkedin.com/in/ashutoshpriyadarshy/",
   },
   {
     quote: "We had complex customs automation to explain to an audience that's skeptical by default. They made it legible without losing the technical credibility.",
     name: "Sepehr F.", role: "Founder", company: "DocUnlock", detail: "Trade Compliance · AI",
-    headshot: "https://media.licdn.com/dms/image/v2/D5603AQEepBbTI5j0Yw/profile-displayphoto-shrink_400_400/B56ZVEI0CUHsAo-/0/1740604916477?e=1773878400&v=beta&t=ETt3C1q9NHvtfp1f3Q-MkxtMiko4IdfmXwm41T0ize4",
+    headshot: "/customerface/sephr_docunlock.jpeg",
     videoId: "", linkedin: "https://www.linkedin.com/in/sepehr-f/",
   },
   {
     quote: "Efficiency was the word that kept coming up internally. They have a system, and it showed in how smooth the whole process was.",
-    name: "Yucheng He", role: "Co-founder", company: "Openmart", detail: "B2B Commerce · Seed",
-    headshot: "https://media.licdn.com/dms/image/v2/D5635AQGNVyV6K0ZBXA/profile-framedphoto-shrink_400_400/B56ZYcg6kWH0Ak-/0/1744235113112?e=1772870400&v=beta&t=CiFSsAl5YQlOI77YuWjr5fN_GPg2sux3MT7OeKutlSA",
+    name: "Richard He", role: "Co-founder", company: "Openmart", detail: "B2B Commerce · Seed",
+    headshot: "/customerface/Richardhe_openmart.jpg",
     videoId: "", linkedin: "https://www.linkedin.com/in/yuchenghe/",
   },
   {
@@ -66,14 +66,14 @@ const row2 = [
   },
   {
     quote: "The video made our workflow feel trustworthy not just explainable. That distinction mattered a lot for the kind of buyers we're going after.",
-    name: "Jonathan Moberger", role: "Marketing", company: "DocUnlock", detail: "Trade Compliance · AI",
-    headshot: "https://media.licdn.com/dms/image/v2/D4E03AQFaKE9crxHfOw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1681855699853?e=1773878400&v=beta&t=9TBeKtwNuOZ5GtkrYEuXNcYFMY2Z_EC9C2rM4qJb7vw",
+    name: "Jack Moberger", role: "Marketing", company: "DocUnlock", detail: "Trade Compliance · AI",
+    headshot: "/customerface/jack_docunlock.png",
     videoId: "", linkedin: "https://www.linkedin.com/in/jmoberger/",
   },
   {
     quote: "We wanted to launch something on Canada market, their creativity made it easier. They synced well with our team and delivered great work on a tight timeline.",
     name: "Nabin Banskota", role: "Co-founder", company: "Niural AI", detail: "HR Tech · Series A",
-    headshot: "https://media.licdn.com/dms/image/v2/D5603AQEY5CWac6klMQ/profile-displayphoto-scale_400_400/B56ZfhAbICGQAk-/0/1751826674923?e=1773878400&v=beta&t=WFwJYbkO8bsNcZnojZl8WKWjPrMRvDWIIMQs4PV94Ws",
+    headshot: "/customerface/nabin.webp",
     videoId: "", linkedin: "https://www.linkedin.com/in/nabinbanskota/",
   },
 ];
@@ -166,7 +166,7 @@ export default function Testimonials() {
 
           <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "10px" : "12px", paddingTop: isMobile ? "12px" : "16px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
             <div style={{ width: `${avatar}px`, height: `${avatar}px`, borderRadius: "50%", flexShrink: 0, overflow: "hidden", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.14)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-bricolage)", fontSize: isMobile ? "11px" : "12px", fontWeight: 500, color: "rgba(255,255,255,0.55)" }}>
-              {t.headshot ? <img src={t.headshot} alt={t.name || ""} referrerPolicy="no-referrer" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : initials}
+              {t.headshot ? <img src={t.headshot} alt={t.name || ""} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : initials}
             </div>
             <div>
               {/* NAME — DM Sans */}
