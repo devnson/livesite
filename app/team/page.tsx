@@ -109,7 +109,7 @@ function FounderRow({ m }: { m: Member }) {
   const [hov, setHov] = useState(false);
   const chips = ["Product owner", "Clarity first", "Built for distribution"];
   const LINKEDIN = "https://www.linkedin.com/in/bastolasushan/";
-  const X = "https://x.com/tanoseihito";
+  const X = "https://x.com/srbastola";
 
   return (
     <div className="founder-wrap" onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
