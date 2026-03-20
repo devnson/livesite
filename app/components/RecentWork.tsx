@@ -62,7 +62,7 @@ const cards: CardData[] = [
     },
   },
   {
-    tag: "Brand Identity · 2025",
+    tag: "Brand Identity · 2026",
     name: "Tanosei — The Geometric Rebirth",
     where: "Rebrand film → identity system launch",
     gif: "/tanoseilogos/theoryapplied1.mp4",
@@ -70,7 +70,7 @@ const cards: CardData[] = [
     modal: {
       title: "The Geometric Rebirth — Tanosei Studio",
       desc: "A brand film introducing the new Tanosei identity system — built from first principles using circle, triangle, and square. A clearer expression of how Tanosei thinks, operates, and builds.",
-      stats: [{ n: "2025", l: "Year" }, { n: "Brand Film", l: "Format" }, { n: "Identity Launch", l: "Type" }],
+      stats: [{ n: "2026", l: "Year" }, { n: "Brand Film", l: "Format" }, { n: "Identity Launch", l: "Type" }],
       videoId: "c1AJKi7gANA",
       caseUrl: "/journal/rebrand",
     },
