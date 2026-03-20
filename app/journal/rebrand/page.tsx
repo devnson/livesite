@@ -169,7 +169,7 @@ export default function RebrandPage() {
           {/* Subline + shape buttons side by side */}
           <div className="hero-el" style={{ opacity: 0, display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "32px", maxWidth: "900px" }}>
             <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "17px", fontWeight: 300, color: "rgba(255,255,255,0.55)", lineHeight: 1.8, maxWidth: "480px", margin: 0 }}>
-              A new identity built on first principles: circle, triangle, square — and a clearer expression of how Tanosei thinks, operates, and builds.
+              A new identity built on first principles: circle, triangle, square and a clearer expression of how Tanosei thinks, operates, and builds.
             </p>
 
             {/* Three shapes — clickable */}
