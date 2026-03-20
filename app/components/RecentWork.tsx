@@ -20,6 +20,20 @@ type ModalData = CardData["modal"] & { gt: string };
 
 const cards: CardData[] = [
   {
+    tag: "Brand Identity · 2025",
+    name: "Tanosei — The Geometric Rebirth",
+    where: "Rebrand film → identity system launch",
+    gif: "/tanoseilogos/logo_form.png",
+    gt: "gt-0",
+    modal: {
+      title: "The Geometric Rebirth — Tanosei Studio",
+      desc: "A brand film introducing the new Tanosei identity system — built from first principles using circle, triangle, and square. A clearer expression of how Tanosei thinks, operates, and builds.",
+      stats: [{ n: "2025", l: "Year" }, { n: "Brand Film", l: "Format" }, { n: "Identity Launch", l: "Type" }],
+      videoId: "c1AJKi7gANA",
+      caseUrl: "/journal/rebrand",
+    },
+  },
+  {
     tag: "AI Infra · SaaS",
     name: "DocUnlock — How It Works",
     where: "Explainer → landing + sales enablement",
@@ -179,7 +193,6 @@ function WorkCard({
         position: "absolute", inset: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
         zIndex: 3, pointerEvents: "none",
-        transition: "opacity 0.22s",
       }}>
         <div style={{
           width: "54px", height: "54px",
@@ -196,7 +209,7 @@ function WorkCard({
         </div>
       </div>
 
-      {/* CARD TITLE + WHERE — DM Sans title, Bricolage subtitle */}
+      {/* CARD TITLE + WHERE */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
         padding: size === "hero" ? "22px 20px" : "14px",
@@ -281,7 +294,6 @@ export default function RecentWork() {
               Recent Work
             </div>
             <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "flex-end", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", gap: "16px" }}>
-              {/* HEADING — DM Sans */}
               <h2 style={{
                 fontFamily: "var(--font-dm)",
                 fontWeight: 700,
@@ -291,7 +303,6 @@ export default function RecentWork() {
                 Every frame built to make{" "}
                 <span style={{ color: "rgba(255,255,255,0.52)", fontWeight: 300 }}>buyers confident.</span>
               </h2>
-              {/* BUTTON — Bricolage */}
               <a
                 href="/work/"
                 style={{
@@ -336,7 +347,7 @@ export default function RecentWork() {
                   <WorkCard card={cards[0]} onClick={() => setModal({ ...cards[0].modal, gt: cards[0].gt })} size="hero" />
                   <WorkCard card={cards[1]} onClick={() => setModal({ ...cards[1].modal, gt: cards[1].gt })} size="normal" />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", height: "270px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", height: "270px" }}>
                   {cards.slice(2).map(card => (
                     <WorkCard key={card.name} card={card} onClick={() => setModal({ ...card.modal, gt: card.gt })} size="small" />
                   ))}
@@ -345,7 +356,7 @@ export default function RecentWork() {
             )}
           </div>
 
-          {/* VIEW FULL LIBRARY — Bricolage */}
+          {/* VIEW FULL LIBRARY */}
           <a
             ref={btnRef}
             href="/work/"
@@ -362,7 +373,6 @@ export default function RecentWork() {
               fontFamily: "var(--font-bricolage)",
               fontSize: "13.5px", fontWeight: 500,
               textDecoration: "none",
-              letterSpacing: "0",
               transition: "background 0.2s, color 0.2s, border-color 0.2s",
               opacity: 0,
             }}
@@ -419,19 +429,14 @@ export default function RecentWork() {
             </div>
 
             <div style={{ padding: isMobile ? "20px" : "28px 32px 32px" }}>
-              {/* LABEL — Bricolage */}
               <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", marginBottom: "8px", fontWeight: 300 }}>Case Study</p>
-              {/* MODAL TITLE — DM Sans */}
               <h3 style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: isMobile ? "17px" : "20px", letterSpacing: "-0.04em", lineHeight: 1.2, marginBottom: "12px", color: "#fff" }}>{modal.title}</h3>
-              {/* DESC — Bricolage */}
               <p style={{ fontFamily: "var(--font-bricolage)", fontSize: "13.5px", fontWeight: 300, color: "rgba(255,255,255,0.75)", lineHeight: 1.75, marginBottom: "22px" }}>{modal.desc}</p>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1px", background: "rgba(255,255,255,0.09)", borderRadius: "10px", overflow: "hidden", marginBottom: "24px" }}>
                 {modal.stats.map(s => (
                   <div key={s.l} style={{ background: "#0d0d0d", padding: "16px 10px", textAlign: "center" }}>
-                    {/* STAT NUMBER — DM Sans */}
                     <div style={{ fontFamily: "var(--font-dm)", fontWeight: 700, fontSize: "15px", letterSpacing: "-0.04em", marginBottom: "4px", color: "#fff" }}>{s.n}</div>
-                    {/* STAT LABEL — Bricolage */}
                     <div style={{ fontFamily: "var(--font-bricolage)", fontSize: "10px", fontWeight: 300, color: "rgba(255,255,255,0.52)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.l}</div>
                   </div>
                 ))}
@@ -445,7 +450,7 @@ export default function RecentWork() {
                     onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85"}
                     onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "1"}
                   >
-                    View full case study →
+                    {modal.caseUrl.startsWith("/journal") ? "Read the journal entry →" : "View full case study →"}
                   </a>
                 )}
                 <button
