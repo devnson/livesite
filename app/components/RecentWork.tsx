@@ -20,17 +20,17 @@ type ModalData = CardData["modal"] & { gt: string };
 
 const cards: CardData[] = [
   {
-    tag: "Brand Identity · 2025",
-    name: "Tanosei — The Geometric Rebirth",
-    where: "Rebrand film → identity system launch",
-    gif: "/tanoseilogos/logo_form.png",
-    gt: "gt-0",
+    tag: "Security Reviews · Assurance · Compliance",
+    name: "SecurityPal Vision",
+    where: "SecurityPal Vision Video",
+    gif: "/gifs/securitypalvision.gif",
+    gt: "gt-2",
     modal: {
-      title: "The Geometric Rebirth — Tanosei Studio",
-      desc: "A brand film introducing the new Tanosei identity system — built from first principles using circle, triangle, and square. A clearer expression of how Tanosei thinks, operates, and builds.",
-      stats: [{ n: "2025", l: "Year" }, { n: "Brand Film", l: "Format" }, { n: "Identity Launch", l: "Type" }],
-      videoId: "c1AJKi7gANA",
-      caseUrl: "/journal/rebrand",
+      title: "SecurityPal Film",
+      desc: "A platform-native series designed for repeatable distribution — not a one-off post. Built for clarity + recall.",
+      stats: [{ n: "Series", l: "Format" }, { n: "Weekly cadence", l: "System" }, { n: "Social", l: "Used in" }],
+      videoId: "azDJfHvwpEY",
+      caseUrl: "/case-studies/securitypal-case",
     },
   },
   {
@@ -62,17 +62,17 @@ const cards: CardData[] = [
     },
   },
   {
-    tag: "Security Reviews · Assurance · Compliance",
-    name: "SecurityPal Vision",
-    where: "SecurityPal Vision Video",
-    gif: "/gifs/securitypalvision.gif",
-    gt: "gt-2",
+    tag: "Brand Identity · 2025",
+    name: "Tanosei — The Geometric Rebirth",
+    where: "Rebrand film → identity system launch",
+    gif: "/tanoseilogos/theoryapplied1.mp4",
+    gt: "gt-0",
     modal: {
-      title: "SecurityPal Film",
-      desc: "A platform-native series designed for repeatable distribution — not a one-off post. Built for clarity + recall.",
-      stats: [{ n: "Series", l: "Format" }, { n: "Weekly cadence", l: "System" }, { n: "Social", l: "Used in" }],
-      videoId: "azDJfHvwpEY",
-      caseUrl: "/case-studies/securitypal-case",
+      title: "The Geometric Rebirth — Tanosei Studio",
+      desc: "A brand film introducing the new Tanosei identity system — built from first principles using circle, triangle, and square. A clearer expression of how Tanosei thinks, operates, and builds.",
+      stats: [{ n: "2025", l: "Year" }, { n: "Brand Film", l: "Format" }, { n: "Identity Launch", l: "Type" }],
+      videoId: "c1AJKi7gANA",
+      caseUrl: "/journal/rebrand",
     },
   },
   {
@@ -146,19 +146,34 @@ function WorkCard({
         boxShadow: hovered ? "0 24px 64px rgba(0,0,0,0.7)" : "none",
       }}
     >
-      <img
-        src={card.gif}
-        alt=""
-        style={{
-          position: "absolute", inset: 0,
-          width: "100%", height: "100%",
-          objectFit: "cover",
-          opacity: hovered ? 0.92 : 0.82,
-          transform: hovered ? "scale(1.04)" : "scale(1)",
-          transition: "opacity 0.4s, transform 0.6s cubic-bezier(0.2,0.8,0.3,1)",
-        }}
-        onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-      />
+      {card.gif.endsWith(".mp4") ? (
+        <video
+          autoPlay loop muted playsInline
+          style={{
+            position: "absolute", inset: 0,
+            width: "100%", height: "100%",
+            objectFit: "cover",
+            opacity: hovered ? 0.92 : 0.82,
+            transition: "opacity 0.4s",
+          }}
+        >
+          <source src={card.gif} type="video/mp4" />
+        </video>
+      ) : (
+        <img
+          src={card.gif}
+          alt=""
+          style={{
+            position: "absolute", inset: 0,
+            width: "100%", height: "100%",
+            objectFit: "cover",
+            opacity: hovered ? 0.92 : 0.82,
+            transform: hovered ? "scale(1.04)" : "scale(1)",
+            transition: "opacity 0.4s, transform 0.6s cubic-bezier(0.2,0.8,0.3,1)",
+          }}
+          onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+        />
+      )}
 
       <div style={{
         position: "absolute", inset: 0,

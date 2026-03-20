@@ -6,20 +6,21 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 const links = [
-  { label: "Work",      id: "work" },
-  { label: "Solutions", id: "solutions" },
-  { label: "Process",   id: "how-we-work" },
-  { label: "Team",      id: "team" },
+  { label: "Work",      id: "work",        href: null },
+  { label: "Solutions", id: "solutions",   href: null },
+  { label: "Process",   id: "how-we-work", href: null },
+  { label: "Team",      id: "team",        href: null },
+  { label: "Journal",   id: null,          href: "/journal" },
 ];
 
 export default function Nav() {
   const router   = useRouter();
   const pathname = usePathname();
 
-  const [scrolled,    setScrolled]    = useState(false);
-  const [open,        setOpen]        = useState(false);
-  const [isMobile,    setIsMobile]    = useState(false);
-  const [btnHovered,  setBtnHovered]  = useState(false);
+  const [scrolled,   setScrolled]   = useState(false);
+  const [open,       setOpen]       = useState(false);
+  const [isMobile,   setIsMobile]   = useState(false);
+  const [btnHovered, setBtnHovered] = useState(false);
 
   const NAV_OFFSET = 96;
 
@@ -31,8 +32,10 @@ export default function Nav() {
     window.history.replaceState(null, "", `/#${id}`);
   }, []);
 
-  const handleNav = useCallback((id: string) => {
+  const handleNav = useCallback((id: string | null, href: string | null) => {
     setOpen(false);
+    if (href) { router.push(href); return; }
+    if (!id) return;
     if (pathname === "/") { scrollToId(id); return; }
     router.push(`/#${id}`);
     setTimeout(() => scrollToId(id), 50);
@@ -55,6 +58,8 @@ export default function Nav() {
     window.addEventListener("resize", onResize);
     return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onResize); };
   }, []);
+
+  const isJournalActive = pathname.startsWith("/journal");
 
   return (
     <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "14px 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -83,16 +88,19 @@ export default function Nav() {
         {/* DESKTOP NAV LINKS — Bricolage */}
         {!isMobile && (
           <ul style={{ display: "flex", alignItems: "center", gap: "32px", listStyle: "none", margin: 0, padding: 0 }}>
-            {links.map((link) => (
-              <li key={link.label}>
-                <button type="button" onClick={() => handleNav(link.id)}
-                  style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", fontFamily: "var(--font-bricolage)", fontSize: "13.5px", fontWeight: 300, color: "rgba(255,255,255,0.45)", letterSpacing: "0.01em", transition: "color 0.18s" }}
-                  onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.88)")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}>
-                  {link.label}
-                </button>
-              </li>
-            ))}
+            {links.map((link) => {
+              const isActive = link.href ? pathname.startsWith(link.href) : false;
+              return (
+                <li key={link.label}>
+                  <button type="button" onClick={() => handleNav(link.id, link.href)}
+                    style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", fontFamily: "var(--font-bricolage)", fontSize: "13.5px", fontWeight: isActive ? 500 : 300, color: isActive ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.45)", letterSpacing: "0.01em", transition: "color 0.18s" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.88)")}
+                    onMouseLeave={e => (e.currentTarget.style.color = isActive ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.45)")}>
+                    {link.label}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         )}
 
@@ -100,7 +108,7 @@ export default function Nav() {
         {!isMobile && (
           <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             {/* GHOST BUTTON — Bricolage */}
-            <button type="button" onClick={() => handleNav("how-we-work")}
+            <button type="button" onClick={() => handleNav("how-we-work", null)}
               style={{ padding: "9px 18px", borderRadius: "999px", border: "1px solid transparent", background: "transparent", fontFamily: "var(--font-bricolage)", fontSize: "13px", fontWeight: 300, color: "rgba(255,255,255,0.45)", transition: "color 0.18s, border-color 0.18s", whiteSpace: "nowrap", cursor: "pointer" }}
               onMouseEnter={e => { e.currentTarget.style.color = "rgba(255,255,255,0.85)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
               onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.45)"; e.currentTarget.style.borderColor = "transparent"; }}>
@@ -135,8 +143,8 @@ export default function Nav() {
       {isMobile && open && (
         <div style={{ position: "absolute", top: "78px", left: "16px", right: "16px", background: "rgba(10,10,10,0.97)", backdropFilter: "blur(28px)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "20px", padding: "20px 24px", display: "flex", flexDirection: "column", gap: "16px", boxShadow: "0 12px 40px rgba(0,0,0,0.6)" }}>
           {links.map((link) => (
-            <button key={link.label} type="button" onClick={() => handleNav(link.id)}
-              style={{ fontFamily: "var(--font-bricolage)", background: "transparent", border: "none", textAlign: "left", padding: "4px 0", cursor: "pointer", fontSize: "15px", fontWeight: 300, color: "rgba(255,255,255,0.6)" }}>
+            <button key={link.label} type="button" onClick={() => handleNav(link.id, link.href)}
+              style={{ fontFamily: "var(--font-bricolage)", background: "transparent", border: "none", textAlign: "left", padding: "4px 0", cursor: "pointer", fontSize: "15px", fontWeight: 300, color: link.href && pathname.startsWith(link.href) ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.6)" }}>
               {link.label}
             </button>
           ))}
