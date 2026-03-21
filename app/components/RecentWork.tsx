@@ -65,7 +65,7 @@ const cards: CardData[] = [
     tag: "Brand Identity · 2026",
     name: "Tanosei — The Geometric Rebirth",
     where: "Rebrand film → identity system launch",
-    gif: "/tanoseilogos/theoryapplied1.mp4",
+    gif: "/gifs/rebrand.gif",
     gt: "gt-0",
     modal: {
       title: "The Geometric Rebirth — Tanosei Studio",
