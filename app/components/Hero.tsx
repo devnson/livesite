@@ -8,7 +8,6 @@ type Logo = { name: string; src: string; w: number; url: string };
 const logos: Logo[] = [
   { name: "Composio",    src: "/logos/white/Composio.svg",    w: 90,  url: "https://www.linkedin.com/company/composiohq/" },
   { name: "DocUnlock",   src: "/logos/white/docunlock.svg",   w: 80,  url: "https://www.linkedin.com/company/docunlock-ai" },
-  { name: "Niural",      src: "/logos/white/niural.svg",      w: 90,  url: "https://www.linkedin.com/company/niural/" },
   { name: "reAlpha",     src: "/logos/white/realpha.svg",     w: 80,  url: "https://www.linkedin.com/company/realpha-homes/" },
   { name: "SecurityPal", src: "/logos/white/SecurityPal.svg", w: 110, url: "https://www.linkedin.com/company/securitypalhq/" },
   { name: "Thera",       src: "/logos/white/thera.svg",       w: 72,  url: "https://www.linkedin.com/company/getthera/" },

@@ -12,7 +12,6 @@ const links: Record<string, { label: string; href: string }[]> = {
     { label: "SecurityPal", href: "#" },
     { label: "Aleph",       href: "#" },
     { label: "DocUnlock",   href: "#" },
-    { label: "NiuralAI",   href: "#" },
   ],
   Services: [
     { label: "Sales Enablement",   href: "#" },
