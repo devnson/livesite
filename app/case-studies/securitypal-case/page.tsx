@@ -84,8 +84,6 @@ const cs = {
   finalLineB: "When proof becomes visible, deals move faster.",
   related: [
     { slug: "docunlock-case", client: "DocUnlock", tag: "Enterprise Clarity", headline: "Turning operational complexity into buyer-visible proof.", thumb: "" },
-    { slug: "thera-oceans", client: "Thera × Oceans", tag: "Customer Story", headline: "Customer narrative built for sales velocity and trust.", thumb: "" },
-    { slug: "niural-case", client: "Niural", tag: "Systems Story", headline: "Making back-office infrastructure feel inevitable.", thumb: "" },
   ],
   next: { slug: "docunlock-case", client: "DocUnlock", subject: "Enterprise Operations Clarity", headline: "How DocUnlock made operational work instantly legible." },
 };
