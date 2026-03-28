@@ -46,7 +46,6 @@ const cs = {
   related: [
     { slug: "securitypal-case", client: "SecurityPal", tag: "Enterprise Narrative", headline: "Making operational work buyer-visible — with calm, credible proof.", thumb: "" },
     { slug: "docunlock-case", client: "DocUnlock", tag: "Feature Clarity", headline: "Turning complex workflows into a story buyers understand instantly.", thumb: "" },
-    { slug: "thera-oceans", client: "Thera × Oceans", tag: "Customer Story", headline: "A customer narrative designed for trust and sales velocity.", thumb: "" },
   ],
   next: { slug: "securitypal-case", client: "SecurityPal", subject: "Enterprise Narrative", headline: "Making enterprise operations visible — before the demo." },
 };
