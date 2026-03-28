@@ -57,7 +57,6 @@ const cs = {
   testimonialQuote: "Tanosei understood the product before we even sent the brief. The final film made the workflow feel safe to trust — and it became the asset we point to everywhere.",
   related: [
     { slug: "securitypal-case", client: "SecurityPal", tag: "Enterprise Narrative", headline: "How SecurityPal reduced 20-minute sales explanations to a 90-second video.", thumb: "" },
-    { slug: "thera-oceans", client: "Thera × Oceans", tag: "Case Study Series", headline: "How Thera turned written customer stories into a 3-part outbound video series.", thumb: "" },
     { slug: "aleph-case", client: "Aleph", tag: "Funding Announcement", headline: "How Aleph announced their Series B with an investor-grade film.", thumb: "" },
   ],
   next: { slug: "securitypal-case", client: "SecurityPal", subject: "Enterprise Narrative", headline: "How SecurityPal reduced 20-minute sales explanations to a 90-second video." },
